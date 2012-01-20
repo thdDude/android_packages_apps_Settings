@@ -62,6 +62,7 @@ public class QuickSettingsUtil {
     public static final String TILE_NFC = "toggleNfc";
     public static final String TILE_VOLUME = "toggleVolume";
     public static final String TILE_DAYDREAM = "toggleDaydream";
+    public static final String TILE_FCHARGE = "toggleFCharge";
 
     private static final String TILE_DELIMITER = "|";
     protected static ArrayList<String> TILES_DEFAULT = new ArrayList<String>();
@@ -123,9 +124,6 @@ public class QuickSettingsUtil {
         TILES.put(TILE_SETTINGS, new QuickSettingsUtil.TileInfo(
                 TILE_SETTINGS, R.string.title_tile_settings,
                 "com.android.systemui:drawable/ic_qs_settings"));
-        TILES.put(TILE_SLEEP, new QuickSettingsUtil.TileInfo(
-                TILE_SLEEP, R.string.title_tile_sleep,
-                "com.android.systemui:drawable/ic_qs_sleep"));
         TILES.put(TILE_SOUND, new QuickSettingsUtil.TileInfo(
                 TILE_SOUND, R.string.title_tile_sound,
                 "com.android.systemui:drawable/ic_qs_ring_on"));
@@ -153,7 +151,9 @@ public class QuickSettingsUtil {
         TILES.put(TILE_DAYDREAM, new QuickSettingsUtil.TileInfo(
                 TILE_DAYDREAM, R.string.screensaver_settings_title,
                 "com.android.systemui:drawable/ic_qs_clock_circle"));
-
+        TILES.put(TILE_FCHARGE, new QuickSettingsUtil.TileInfo(
+                TILE_FCHARGE, R.string.title_tile_fcharge,
+                "com.android.systemui:drawable/ic_qs_fcharge_off"));
 // These toggles are not available yet.  Comment out for now
 //        if(PhoneConstants.LTE_ON_CDMA_TRUE == TelephonyManager.getDefault().getLteOnCdmaMode() ||
 //           TelephonyManager.getDefault().getLteOnGsmMode() != 0) {

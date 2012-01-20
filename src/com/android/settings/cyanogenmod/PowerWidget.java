@@ -16,6 +16,7 @@
 
 package com.android.settings.cyanogenmod;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -66,6 +67,9 @@ public class PowerWidget extends SettingsPreferenceFragment implements
     private static final String ENABLE_TOGGLE_BAR = "enable_toggle_bar";
     private static final String TOGGLE_ICON_ON_COLOR = "toggle_icon_color_on";
     private static final String TOGGLE_ICON_OFF_COLOR = "toggle_icon_color_off";
+
+    public static final String FAST_CHARGE_DIR = "/sys/kernel/fast_charge";
+    public static final String FAST_CHARGE_FILE = "force_fast_charge";
 
     private CheckBoxPreference mPowerWidget;
     private CheckBoxPreference mPowerWidgetHideOnChange;
@@ -322,7 +326,12 @@ public class PowerWidget extends SettingsPreferenceFragment implements
                 PowerWidgetUtil.BUTTONS.remove(PowerWidgetUtil.BUTTON_WIFIAP);
                 prefButtonsModes.removePreference(mNetworkMode);
             }
-
+	    // Dont show fast charge option if not supported
+            File fastcharge = new File(FAST_CHARGE_DIR, FAST_CHARGE_FILE);
+            if (!fastcharge.exists()) {
+                PowerWidgetUtil.BUTTONS.remove(PowerWidgetUtil.BUTTON_FCHARGE);
+            }
+            
             // fill that checkbox map!
             for (PowerWidgetUtil.ButtonInfo button : PowerWidgetUtil.BUTTONS.values()) {
                 // create a checkbox
