@@ -38,10 +38,12 @@ public class StatusBar extends SettingsPreferenceFragment implements OnPreferenc
     private static final String STATUS_BAR_BRIGHTNESS_CONTROL = "status_bar_brightness_control";
     private static final String STATUS_BAR_SIGNAL = "status_bar_signal";
     private static final String STATUS_BAR_NOTIF_COUNT = "status_bar_notif_count";
+    private static final String STATUS_BAR_TRANSPARENCY = "status_bar_transparency";
     private static final String STATUS_BAR_CATEGORY_GENERAL = "status_bar_general";
 
     private ListPreference mStatusBarBattery;
     private ListPreference mStatusBarCmSignal;
+    private ListPreference mStatusbarTransparency;
     private CheckBoxPreference mStatusBarBrightnessControl;
     private CheckBoxPreference mStatusBarNotifCount;
     private PreferenceCategory mPrefCategoryGeneral;
@@ -57,6 +59,7 @@ public class StatusBar extends SettingsPreferenceFragment implements OnPreferenc
         mStatusBarBrightnessControl = (CheckBoxPreference) prefSet.findPreference(STATUS_BAR_BRIGHTNESS_CONTROL);
         mStatusBarBattery = (ListPreference) prefSet.findPreference(STATUS_BAR_BATTERY);
         mStatusBarCmSignal = (ListPreference) prefSet.findPreference(STATUS_BAR_SIGNAL);
+        mStatusbarTransparency = (ListPreference) prefSet.findPreference(STATUS_BAR_TRANSPARENCY);
         mStatusBarBrightnessControl.setChecked((Settings.System.getInt(getActivity().getApplicationContext().getContentResolver(),
                 Settings.System.STATUS_BAR_BRIGHTNESS_CONTROL, 0) == 1));
 
@@ -74,6 +77,11 @@ public class StatusBar extends SettingsPreferenceFragment implements OnPreferenc
         mStatusBarBattery.setValue(String.valueOf(statusBarBattery));
         mStatusBarBattery.setSummary(mStatusBarBattery.getEntry());
         mStatusBarBattery.setOnPreferenceChangeListener(this);
+
+        int statusBarTransparency = Settings.System.getInt(getActivity().getApplicationContext().getContentResolver(),
+                Settings.System.STATUS_BAR_TRANSPARENCY, 100);
+        mStatusbarTransparency.setValue(String.valueOf(statusBarTransparency));
+        mStatusbarTransparency.setOnPreferenceChangeListener(this);
 
         int signalStyle = Settings.System.getInt(getActivity().getApplicationContext().getContentResolver(),
                 Settings.System.STATUS_BAR_SIGNAL_TEXT, 0);
@@ -105,7 +113,12 @@ public class StatusBar extends SettingsPreferenceFragment implements OnPreferenc
                     Settings.System.STATUS_BAR_BATTERY, statusBarBattery);
             mStatusBarBattery.setSummary(mStatusBarBattery.getEntries()[index]);
             return true;
-        } else if (preference == mStatusBarCmSignal) {
+        } else if (preference == mStatusbarTransparency) {
+            int statusBarTransparency = Integer.valueOf((String) newValue);
+            Settings.System.putInt(getActivity().getApplicationContext().getContentResolver(),
+                    Settings.System.STATUS_BAR_TRANSPARENCY, statusBarTransparency);
+            return true;
+    	} else if (preference == mStatusBarCmSignal) {
             int signalStyle = Integer.valueOf((String) newValue);
             int index = mStatusBarCmSignal.findIndexOfValue((String) newValue);
             Settings.System.putInt(getActivity().getApplicationContext().getContentResolver(),
