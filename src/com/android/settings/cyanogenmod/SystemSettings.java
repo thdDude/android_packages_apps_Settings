@@ -55,6 +55,7 @@ public class SystemSettings extends SettingsPreferenceFragment {
                 updateBatteryPulseDescription();
             }
         }
+
     }
 
     private void updateLightPulseDescription() {
