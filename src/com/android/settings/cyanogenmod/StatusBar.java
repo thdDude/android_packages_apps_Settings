@@ -42,10 +42,12 @@ public class StatusBar extends SettingsPreferenceFragment implements OnPreferenc
     private static final String STATUS_BAR_NOTIF_COUNT = "status_bar_notif_count";
     private static final String STATUS_BAR_TRANSPARENCY = "status_bar_transparency";
     private static final String STATUS_BAR_CATEGORY_GENERAL = "status_bar_general";
+    private static final String NOTIFICATION_PANEL_TRANSPARENCY = "notification_panel_transparency";
 
     private ListPreference mStatusBarBattery;
     private ListPreference mStatusBarCmSignal;
     private SeekBarPreference mStatusbarTransparency;
+    private SeekBarPreference mNotificationpanelTransparency;
     private CheckBoxPreference mStatusBarBrightnessControl;
     private CheckBoxPreference mStatusBarNotifCount;
     private PreferenceCategory mPrefCategoryGeneral;
@@ -62,19 +64,32 @@ public class StatusBar extends SettingsPreferenceFragment implements OnPreferenc
         mStatusBarBattery = (ListPreference) prefSet.findPreference(STATUS_BAR_BATTERY);
         mStatusBarCmSignal = (ListPreference) prefSet.findPreference(STATUS_BAR_SIGNAL);
 
-        float defaultAlpha;
+        float statusbarAlpha;
         try{
-            defaultAlpha = Settings.System.getFloat(getActivity()
+            statusbarAlpha = Settings.System.getFloat(getActivity()
                      .getContentResolver(), Settings.System.STATUS_BAR_TRANSPARENCY);
         } catch (Exception e) {
-            defaultAlpha = 0.0f;
+            statusbarAlpha = 0.0f;
                      Settings.System.putFloat(getActivity().getContentResolver(), Settings.System.STATUS_BAR_TRANSPARENCY, 0.0f);
         }
         mStatusbarTransparency = (SeekBarPreference) prefSet.findPreference(STATUS_BAR_TRANSPARENCY);
         mStatusbarTransparency.setProperty(Settings.System.STATUS_BAR_TRANSPARENCY);
-        mStatusbarTransparency.setInitValue((int) (defaultAlpha * 100));
+        mStatusbarTransparency.setInitValue((int) (statusbarAlpha * 100));
         mStatusbarTransparency.setOnPreferenceChangeListener(this);
 
+        float notificationAlpha;
+        try{
+            notificationAlpha = Settings.System.getFloat(getActivity()
+                     .getContentResolver(), Settings.System.NOTIFICATION_PANEL_TRANSPARENCY);
+        } catch (Exception e) {
+            notificationAlpha = 0.0f;
+                     Settings.System.putFloat(getActivity().getContentResolver(), Settings.System.NOTIFICATION_PANEL_TRANSPARENCY, 0.0f);
+        }
+
+        mNotificationpanelTransparency = (SeekBarPreference) prefSet.findPreference(NOTIFICATION_PANEL_TRANSPARENCY);
+        mNotificationpanelTransparency.setProperty(Settings.System.STATUS_BAR_TRANSPARENCY);
+        mNotificationpanelTransparency.setInitValue((int) (notificationAlpha * 100));
+        mNotificationpanelTransparency.setOnPreferenceChangeListener(this);
 
         mStatusBarBrightnessControl.setChecked((Settings.System.getInt(getActivity().getApplicationContext().getContentResolver(),
                 Settings.System.STATUS_BAR_BRIGHTNESS_CONTROL, 0) == 1));
@@ -129,6 +144,13 @@ public class StatusBar extends SettingsPreferenceFragment implements OnPreferenc
             Log.e("R", "value: " + val / 100);
             Settings.System.putFloat(getActivity().getApplicationContext().getContentResolver(),
                     Settings.System.STATUS_BAR_TRANSPARENCY,
+                    val / 100);
+            return true;
+        } else if (preference == mNotificationpanelTransparency) {
+            float val = Float.parseFloat((String) newValue);
+            Log.e("R", "value: " + val / 100);
+            Settings.System.putFloat(getActivity().getApplicationContext().getContentResolver(),
+                    Settings.System.NOTIFICATION_PANEL_TRANSPARENCY,
                     val / 100);
             return true;
     	} else if (preference == mStatusBarCmSignal) {

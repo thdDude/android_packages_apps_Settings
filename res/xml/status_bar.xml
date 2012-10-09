@@ -28,6 +28,10 @@
         android:key="status_bar_transparency"
         android:title="@string/status_bar_transparency_title" />
 
+    <com.android.settings.widget.SeekBarPreference
+            android:key="notification_panel_transparency"
+            android:title="@string/notification_panel_transparency_title" />
+
     <PreferenceScreen
         android:key="statusbar_clock"
         android:fragment="com.android.settings.cyanogenmod.StatusBarClock"

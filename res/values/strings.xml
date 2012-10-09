@@ -4563,6 +4563,8 @@
     <string name="kill_app_longpress_timeout_1000">1000ms</string>
     <string name="kill_app_longpress_timeout_500">500ms</string>
 
+    <string name="notification_panel_transparency_title">Notification Panel Transparency</string>
+
     <string name="lock_screen_title">Lock screen</string>
 
     <!-- Lock Screen Shortcuts -->
