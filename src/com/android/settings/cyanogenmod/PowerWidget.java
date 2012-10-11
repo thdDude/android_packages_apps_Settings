@@ -62,10 +62,14 @@ public class PowerWidget extends SettingsPreferenceFragment implements
     private static final String UI_EXP_WIDGET_HIDE_SCROLLBAR = "expanded_hide_scrollbar";
     private static final String UI_EXP_WIDGET_HAPTIC_FEEDBACK = "expanded_haptic_feedback";
 
+    private static final String UI_EXP_VOLUME = "expanded_volume";
+
     private CheckBoxPreference mPowerWidget;
     private CheckBoxPreference mPowerWidgetHideOnChange;
     private CheckBoxPreference mPowerWidgetHideScrollBar;
     private ListPreference mPowerWidgetHapticFeedback;
+
+    private CheckBoxPreference mVolume;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -99,6 +103,10 @@ public class PowerWidget extends SettingsPreferenceFragment implements
             mPowerWidgetHapticFeedback.setValue(Integer.toString(Settings.System.getInt(
                     getActivity().getApplicationContext().getContentResolver(),
                     Settings.System.EXPANDED_HAPTIC_FEEDBACK, 2)));
+
+            mVolume = (CheckBoxPreference) prefSet.findPreference(UI_EXP_VOLUME);
+            mVolume.setChecked((Settings.System.getInt(getActivity().getApplicationContext()
+                    .getContentResolver(), Settings.System.PHONE_STATUS_BAR_VOLUME, 0) == 1));
         }
     }
 
@@ -132,6 +140,10 @@ public class PowerWidget extends SettingsPreferenceFragment implements
             Settings.System.putInt(getActivity().getApplicationContext().getContentResolver(),
                     Settings.System.EXPANDED_HIDE_SCROLLBAR,
                     value ? 1 : 0);
+        } else if (preference == mVolume) {
+            value = mVolume.isChecked();
+            Settings.System.putInt(getActivity().getApplicationContext().getContentResolver(),
+                    Settings.System.PHONE_STATUS_BAR_VOLUME, value ? 1 : 0);
         } else {
             // If we didn't handle it, let preferences handle it.
             return super.onPreferenceTreeClick(preferenceScreen, preference);

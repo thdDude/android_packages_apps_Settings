@@ -17,6 +17,10 @@
 <PreferenceScreen
     xmlns:android="http://schemas.android.com/apk/res/android">
 
+        <CheckBoxPreference
+            android:key="expanded_volume"
+            android:title="@string/title_expanded_volume" />
+
     <!-- Notification drawer Power Widget -->
     <PreferenceCategory
        android:title="@string/power_widget_title">

@@ -4888,4 +4888,7 @@
     <string name="adb_notify_summary">Display a notification when USB debugging is connected</string>
 
     <!-- **** CYANOGENMOD ADDITIONS END **** -->
+
+    <string name="title_expanded_volume">Volume slider</string>
+
 </resources>
