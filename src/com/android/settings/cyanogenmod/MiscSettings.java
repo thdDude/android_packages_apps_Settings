@@ -36,11 +36,14 @@ import com.android.settings.R;
 import com.android.settings.SettingsPreferenceFragment;
 import com.android.settings.Utils;
 
-public class MiscSettings extends SettingsPreferenceFragment implements OnPreferenceChangeListener {
-
+    public class MiscSettings extends SettingsPreferenceFragment implements OnPreferenceChangeListener {
+    private static final String KILL_APP_LONGPRESS_BACK = "kill_app_longpress_back";
+    private static final String KEY_KILL_APP_LONGPRESS_TIMEOUT = "kill_app_longpress_timeout";
     private static final String KEY_HIGH_END_GFX = "high_end_gfx";
 	
     private CheckBoxPreference mHighEndGfx;
+    private CheckBoxPreference mKillAppLongpressBack;
+    private ListPreference mKillAppLongpressTimeout;
 
     private ContentResolver mContentResolver;
 
@@ -60,10 +63,46 @@ public class MiscSettings extends SettingsPreferenceFragment implements OnPrefer
                 mHighEndGfx.setChecked((Settings.System.getInt(getContentResolver(),
                                                                Settings.System.HIGH_END_GFX_ENABLED, 0) == 1));
             }
+
+        mKillAppLongpressBack = (CheckBoxPreference) findPreference(KILL_APP_LONGPRESS_BACK);
+
+        mKillAppLongpressTimeout = (ListPreference) findPreference(KEY_KILL_APP_LONGPRESS_TIMEOUT);
+        mKillAppLongpressTimeout.setOnPreferenceChangeListener(this);
+
+        int statusKillAppLongpressTimeout = Settings.System.getInt(getActivity().getApplicationContext().getContentResolver(),
+                 Settings.System.KILL_APP_LONGPRESS_TIMEOUT, 1500);
+        mKillAppLongpressTimeout.setValue(String.valueOf(statusKillAppLongpressTimeout));
+        mKillAppLongpressTimeout.setSummary(mKillAppLongpressTimeout.getEntry());
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        updateKillAppLongpressBackOptions();
+    }
+
+    private void writeKillAppLongpressBackOptions() {
+        Settings.System.putInt(getActivity().getContentResolver(),
+                Settings.System.KILL_APP_LONGPRESS_BACK,
+                mKillAppLongpressBack.isChecked() ? 1 : 0);
+    }
+
+    private void updateKillAppLongpressBackOptions() {
+        mKillAppLongpressBack.setChecked(Settings.System.getInt(
+            getActivity().getContentResolver(), Settings.System.KILL_APP_LONGPRESS_BACK, 0) != 0);
     }
 
     public boolean onPreferenceChange(Preference preference, Object objValue) {
-        return true;
+	if (preference == mKillAppLongpressTimeout) {
+            int statusKillAppLongpressTimeout = Integer.valueOf((String) objValue);
+            int index = mKillAppLongpressTimeout.findIndexOfValue((String) objValue);
+            Settings.System.putInt(getActivity().getApplicationContext().getContentResolver(),
+                    Settings.System.KILL_APP_LONGPRESS_TIMEOUT, statusKillAppLongpressTimeout);
+            mKillAppLongpressTimeout.setSummary(mKillAppLongpressTimeout.getEntries()[index]);
+            return true;
+        }
+
+        return false;
     }
 
     public boolean onPreferenceTreeClick(PreferenceScreen preferenceScreen, Preference preference) {
@@ -71,6 +110,8 @@ public class MiscSettings extends SettingsPreferenceFragment implements OnPrefer
 	if (preference == mHighEndGfx) {
             Settings.System.putInt(getContentResolver(),
                                    Settings.System.HIGH_END_GFX_ENABLED, mHighEndGfx.isChecked() ? 1 : 0);
+        } else if (preference == mKillAppLongpressBack) {
+            writeKillAppLongpressBackOptions();
         } else {
             // If we didn't handle it, let preferences handle it.
             return super.onPreferenceTreeClick(preferenceScreen, preference);
