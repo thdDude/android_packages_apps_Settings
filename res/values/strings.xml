@@ -4859,7 +4859,14 @@
     <string name="adb_notify">USB debugging notify</string>
     <string name="adb_notify_summary">Display a notification when USB debugging is connected</string>
     <!-- **** CYANOGENMOD ADDITIONS END **** -->
-
     <string name="title_expanded_volume">Volume slider</string>
+
+    <!-- Misc Settings -->
+    <string name="misc_settings_title">Misc settings</string>
+	
+     <!-- High End Gfx Effects -->
+     <string name="display_category_advanced_title">Advanced</string>
+     <string name="high_end_gfx_title">High end graphic effects</string>
+     <string name="high_end_gfx_summary">Enable graphic effects on lower end devices</string>
 
 </resources>

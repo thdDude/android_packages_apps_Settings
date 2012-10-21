@@ -86,5 +86,4 @@ public class SystemSettings extends SettingsPreferenceFragment {
     public void onPause() {
         super.onPause();
     }
-
 }
