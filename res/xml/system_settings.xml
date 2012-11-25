@@ -24,6 +24,11 @@
         android:fragment="com.android.settings.cyanogenmod.PowerWidget"
         android:title="@string/notification_drawer_title" />
 
+    <PreferenceScreen
+        android:key="statusbar_clock"
+        android:fragment="com.android.settings.cyanogenmod.StatusBarClock"
+        android:title="@string/statusbar_clock_title" />
+
     <com.android.settings.WarnedListPreference
         android:key="font_size"
         android:title="@string/title_font_size"
