@@ -19,6 +19,7 @@
     android:title="@string/status_bar_title">
 
     <!-- Status bar tweaks -->
+<!-- 
     <PreferenceCategory
         android:title="@string/status_bar_clock_title">
 
@@ -35,7 +36,7 @@
             android:entryValues="@array/values_status_bar_am_pm" />
 
     </PreferenceCategory>
-
+-->
     <PreferenceCategory
         android:key="status_bar_general"
         android:title="@string/status_bar_general_title">
