@@ -4496,17 +4496,17 @@
 
     <!-- Statusbar Clock Settings  -->
     <string name="statusbar_clock_title">Statusbar clock</string>
-    <string name="clock_title_enable">Left/Right/None</string>
+    <string name="clock_title_enable">Right / Center / None</string>
     <string name="title_clock_ampm_entries">Am/Pm style</string>
     <string name="enable_clock_weekday">Weekday style</string>
     <string name="status_bar_clock_color_title">Set color</string>
     <string name="right_clock">Right clock</string>
     <string name="center_clock">Center clock</string>
     <string name="no_clock">No clock</string>
+    <string name="status_bar_am_pm_info">24-hour clock is enabled</string>
     <string name="dont_show">Don\'t show</string>
     <string name="small_am_pm">Small AM/PM</string>
     <string name="regular_am_pm">Regular AM/PM</string>
-    <string name="protekk_oclock">ProTekk O\'Clock</string>
     <string name="small_weekday">Small weekday</string>
     <string name="regular_weekday">Regular weekday</string>
 
