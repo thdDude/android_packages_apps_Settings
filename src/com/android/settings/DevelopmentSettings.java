@@ -131,6 +131,8 @@ public class DevelopmentSettings extends PreferenceFragment
             = "immediately_destroy_activities";
     private static final String APP_PROCESS_LIMIT_KEY = "app_process_limit";
 
+    private static final String KILL_APP_LONGPRESS_BACK = "kill_app_longpress_back";
+
     private static final String SHOW_ALL_ANRS_KEY = "show_all_anrs";
 
     private static final String TAG_CONFIRM_ENFORCE = "confirm_enforce";
@@ -186,6 +188,7 @@ public class DevelopmentSettings extends PreferenceFragment
     private ListPreference mAppProcessLimit;
 
     private CheckBoxPreference mShowAllANRs;
+    private CheckBoxPreference mKillAppLongpressBack;
 
     private ListPreference mRootAccess;
     private Object mSelectedRootValue;
@@ -287,6 +290,8 @@ public class DevelopmentSettings extends PreferenceFragment
         mAllPrefs.add(mShowAllANRs);
         mResetCbPrefs.add(mShowAllANRs);
 
+        mKillAppLongpressBack = findAndInitCheckboxPref(KILL_APP_LONGPRESS_BACK);
+
         Preference hdcpChecking = findPreference(HDCP_CHECKING_KEY);
         if (hdcpChecking != null) {
             mAllPrefs.add(hdcpChecking);
@@ -295,7 +300,9 @@ public class DevelopmentSettings extends PreferenceFragment
 
         mRootAccess = (ListPreference) findPreference(ROOT_ACCESS_KEY);
         mRootAccess.setOnPreferenceChangeListener(this);
-        removeRootOptionsIfRequired();
+        if (!removeRootOptionsIfRequired()) {
+            mAllPrefs.add(mRootAccess);
+        }
     }
 
     private CheckBoxPreference findAndInitCheckboxPref(String key) {
@@ -308,13 +315,16 @@ public class DevelopmentSettings extends PreferenceFragment
         return pref;
     }
 
-    private void removeRootOptionsIfRequired() {
+    private boolean removeRootOptionsIfRequired() {
         // user builds don't get root, and eng always gets root
         if (!Build.IS_DEBUGGABLE || "eng".equals(Build.TYPE)) {
             if (mRootAccess != null) {
                 getPreferenceScreen().removePreference(mRootAccess);
+                return true;
             }
         }
+
+        return false;
     }
 
     @Override
@@ -400,6 +410,8 @@ public class DevelopmentSettings extends PreferenceFragment
             mEnabledSwitch.setChecked(mLastEnabledState);
             setPrefsEnabledState(mLastEnabledState);
         }
+
+        updateKillAppLongpressBackOptions();
     }
 
     void updateCheckBox(CheckBoxPreference checkBox, boolean value) {
@@ -459,6 +471,7 @@ public class DevelopmentSettings extends PreferenceFragment
             }
         }
         resetDebuggerOptions();
+        resetRootAccessOptions();
         writeAnimationScaleOption(0, mWindowAnimationScale, null);
         writeAnimationScaleOption(1, mTransitionAnimationScale, null);
         writeAnimationScaleOption(2, mAnimatorDurationScale, null);
@@ -492,6 +505,19 @@ public class DevelopmentSettings extends PreferenceFragment
         updateRootAccessOptions();
     }
 
+    private void resetRootAccessOptions() {
+        String oldValue = SystemProperties.get(ROOT_ACCESS_PROPERTY, "1");
+        SystemProperties.set(ROOT_ACCESS_PROPERTY, "1");
+        if (!oldValue.equals("1") && "1".equals(SystemProperties.get("service.adb.root", "0"))) {
+            SystemProperties.set("service.adb.root", "0");
+            Settings.Secure.putInt(getActivity().getContentResolver(),
+                    Settings.Secure.ADB_ENABLED, 0);
+            Settings.Secure.putInt(getActivity().getContentResolver(),
+                    Settings.Secure.ADB_ENABLED, 1);
+        }
+        updateRootAccessOptions();
+    }
+
     private void updateHdcpValues() {
         int index = 1; // Defaults to drm-only. Needs to match with R.array.hdcp_checking_values
         ListPreference hdcpChecking = (ListPreference) findPreference(HDCP_CHECKING_KEY);
@@ -511,6 +537,17 @@ public class DevelopmentSettings extends PreferenceFragment
         }
     }
 
+    private void writeKillAppLongpressBackOptions() {
+        Settings.Secure.putInt(getActivity().getContentResolver(),
+                Settings.Secure.KILL_APP_LONGPRESS_BACK,
+                mKillAppLongpressBack.isChecked() ? 1 : 0);
+    }
+
+    private void updateKillAppLongpressBackOptions() {
+        mKillAppLongpressBack.setChecked(Settings.Secure.getInt(
+            getActivity().getContentResolver(), Settings.Secure.KILL_APP_LONGPRESS_BACK, 0) != 0);
+    }
+        
     private void updatePasswordSummary() {
         try {
             if (mBackupManager.hasBackupPassword()) {
@@ -726,7 +763,7 @@ public class DevelopmentSettings extends PreferenceFragment
     private void updateHardwareUiOptions() {
         updateCheckBox(mForceHardwareUi, SystemProperties.getBoolean(HARDWARE_UI_PROPERTY, false));
     }
-    
+
     private void writeHardwareUiOptions() {
         SystemProperties.set(HARDWARE_UI_PROPERTY, mForceHardwareUi.isChecked() ? "true" : "false");
         pokeSystemProperties();
@@ -1119,6 +1156,8 @@ public class DevelopmentSettings extends PreferenceFragment
             writeShowHwOverdrawOptions();
         } else if (preference == mDebugLayout) {
             writeDebugLayoutOptions();
+        } else if (preference == mKillAppLongpressBack) {
+            writeKillAppLongpressBackOptions();
         }
 
         return false;
