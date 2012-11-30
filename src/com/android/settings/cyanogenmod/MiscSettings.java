@@ -22,6 +22,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.os.RemoteException;
 import android.os.ServiceManager;
+import android.os.SystemProperties;
 import android.preference.CheckBoxPreference;
 import android.preference.ListPreference;
 import android.preference.Preference;
@@ -40,6 +41,7 @@ import com.android.settings.Utils;
     private static final String KILL_APP_LONGPRESS_BACK = "kill_app_longpress_back";
     private static final String KEY_KILL_APP_LONGPRESS_TIMEOUT = "kill_app_longpress_timeout";
     private static final String KEY_HIGH_END_GFX = "high_end_gfx";
+    private static final String USE_HIGH_END_GFX_PROP = "persist.sys.use_high_end_gfx";
 	
     private CheckBoxPreference mHighEndGfx;
     private CheckBoxPreference mKillAppLongpressBack;
@@ -60,8 +62,8 @@ import com.android.settings.Utils;
             if(isHighEndGfx) {
                 getPreferenceScreen().removePreference(mHighEndGfx);
             } else {
-                mHighEndGfx.setChecked((Settings.System.getInt(getContentResolver(),
-                                                               Settings.System.HIGH_END_GFX_ENABLED, 0) == 1));
+                mHighEndGfx.setChecked(SystemProperties.getBoolean(USE_HIGH_END_GFX_PROP, 
+		false));
             }
 
         mKillAppLongpressBack = (CheckBoxPreference) findPreference(KILL_APP_LONGPRESS_BACK);
@@ -108,8 +110,7 @@ import com.android.settings.Utils;
     public boolean onPreferenceTreeClick(PreferenceScreen preferenceScreen, Preference preference) {
         boolean value;
 	if (preference == mHighEndGfx) {
-            Settings.System.putInt(getContentResolver(),
-                                   Settings.System.HIGH_END_GFX_ENABLED, mHighEndGfx.isChecked() ? 1 : 0);
+		SystemProperties.set(USE_HIGH_END_GFX_PROP, mHighEndGfx.isChecked() ? "1" : "0");
         } else if (preference == mKillAppLongpressBack) {
             writeKillAppLongpressBackOptions();
         } else {
