@@ -91,7 +91,7 @@ public class PowerMenu extends SettingsPreferenceFragment {
             getPreferenceScreen().removePreference(mUserPref);
         } else {
             mUserPref.setChecked((Settings.System.getInt(getContentResolver(),
-                    Settings.System.POWER_MENU_USER_ENABLED, 1) == 1));
+                    Settings.System.POWER_MENU_USER_ENABLED, 0) == 1));
         }
 
         mSilentPref = (CheckBoxPreference) findPreference(KEY_SILENT);
