@@ -67,8 +67,6 @@ public class PowerWidget extends SettingsPreferenceFragment implements
     private static final String TOGGLE_ICON_ON_COLOR = "toggle_icon_color_on";
     private static final String TOGGLE_ICON_OFF_COLOR = "toggle_icon_color_off";
 
-    private static final String UI_EXP_VOLUME = "expanded_volume";
-
     private CheckBoxPreference mPowerWidget;
     private CheckBoxPreference mPowerWidgetHideOnChange;
     private CheckBoxPreference mPowerWidgetHideScrollBar;
@@ -78,8 +76,6 @@ public class PowerWidget extends SettingsPreferenceFragment implements
 
     private Preference mToggleIconOnColor;
     private Preference mToggleIconOffColor;
-
-    private CheckBoxPreference mVolume;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -116,7 +112,6 @@ public class PowerWidget extends SettingsPreferenceFragment implements
             mPowerWidgetHapticFeedback.setValue(Integer.toString(Settings.System.getInt(
                     getActivity().getApplicationContext().getContentResolver(),
                     Settings.System.EXPANDED_HAPTIC_FEEDBACK, 2)));
-
             mEnableToggleColors.setChecked((Settings.System.getInt(getActivity().getApplicationContext()
                     .getContentResolver(),
                     Settings.System.ENABLE_TOGGLE_COLORS, 0) == 1));
@@ -125,12 +120,9 @@ public class PowerWidget extends SettingsPreferenceFragment implements
                     .getContentResolver(),
                     Settings.System.ENABLE_TOGGLE_BAR, 0) == 1));
 
-            mVolume = (CheckBoxPreference) prefSet.findPreference(UI_EXP_VOLUME);
-            mVolume.setChecked((Settings.System.getInt(getActivity().getApplicationContext()
-                    .getContentResolver(), Settings.System.PHONE_STATUS_BAR_VOLUME, 0) == 1));
+           mToggleIconOnColor = (Preference) prefSet.findPreference(TOGGLE_ICON_ON_COLOR);
+           mToggleIconOffColor = (Preference) prefSet.findPreference(TOGGLE_ICON_OFF_COLOR);
 
-        mToggleIconOnColor = (Preference) prefSet.findPreference(TOGGLE_ICON_ON_COLOR);
-        mToggleIconOffColor = (Preference) prefSet.findPreference(TOGGLE_ICON_OFF_COLOR);
         }
     }
 
@@ -164,12 +156,6 @@ public class PowerWidget extends SettingsPreferenceFragment implements
             Settings.System.putInt(getActivity().getApplicationContext().getContentResolver(),
                     Settings.System.EXPANDED_HIDE_SCROLLBAR,
                     value ? 1 : 0);
-        } else if (preference == mVolume) {
-            value = mVolume.isChecked();
-            Settings.System.putInt(getActivity().getApplicationContext().getContentResolver(),
-                    Settings.System.PHONE_STATUS_BAR_VOLUME, value ? 1 : 0);
-
-
         } else if (preference == mEnableToggleColors) {
             value = mEnableToggleColors.isChecked();
             Settings.System.putInt(getActivity().getApplicationContext().getContentResolver(),
