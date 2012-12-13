@@ -1200,6 +1200,7 @@
         <item>32</item>
         <item>28</item>
         <item>24</item>
+    </string-array>
 
     <string-array name="hardware_keys_action_entries" translatable="false">
         <item>@string/hardware_keys_action_nothing</item>
