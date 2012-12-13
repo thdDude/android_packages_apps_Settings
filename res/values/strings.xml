@@ -4453,23 +4453,6 @@
     <string name="mem_info">Memory</string>
     <!-- About phone screen, status item label -->
 
-    <!-- Anonymous Statistics #CM -->
-    <!-- About device screen, list item title. Takes the user to the screen about opting in or out of anonymous statistics. -->
-    <string name="anonymous_statistics_title">CyanogenMod statistics</string>
-    <string name="anonymous_statistics_summary">Help make CyanogenMod better by opting into anonymous statistics reporting</string>
-    <string name="anonymous_statistics_warning_title">About</string>
-    <string name="anonymous_statistics_warning">Opting into CyanogenMod Statistics will allow non-personal data to be submitted to the
-        developers of CyanogenMod to track unique installations across devices. The information submitted includes an unique identifier,
-        which does not compromise your privacy or personal data. The data is submitted during each boot.\n\nFor an example of the data that is submitted, tap on Preview Data.</string>
-    <string name="enable_reporting_title">Enable reporting</string>
-    <string name="preview_data_title">Preview data</string>
-    <string name="preview_data_summary">%s</string>
-    <string name="view_stats_title">View stats</string>
-    <string name="anonymous_learn_more">Learn more</string>
-
-    <!-- Anonymous Statistics - Notification -->
-    <string name="anonymous_notification_desc">Enable or Disable CyanogenMod Statistics</string>
-
     <!-- Anonymous Statistics - Preview -->
     <string name="preview_id_title">Unique ID</string>
     <string name="preview_device_title">Device</string>
@@ -4493,6 +4476,50 @@
 
     <!-- Notification Drawer  -->
     <string name="notification_drawer_title">Notification drawer</string>
+
+    <!-- Statusbar Clock Settings  -->
+    <string name="statusbar_clock_title">Statusbar clock</string>
+    <string name="clock_title_enable">Right / Center / None</string>
+    <string name="title_clock_ampm_entries">Am/Pm style</string>
+    <string name="enable_clock_weekday">Weekday style</string>
+    <string name="status_bar_clock_color_title">Set color</string>
+    <string name="right_clock">Right clock</string>
+    <string name="center_clock">Center clock</string>
+    <string name="no_clock">No clock</string>
+    <string name="status_bar_am_pm_info">24-hour clock is enabled</string>
+    <string name="dont_show">Don\'t show</string>
+    <string name="small_am_pm">Small AM/PM</string>
+    <string name="regular_am_pm">Regular AM/PM</string>
+    <string name="small_weekday">Small weekday</string>
+    <string name="regular_weekday">Regular weekday</string>
+
+    <string name="dialog_indicator_color_title">Select color</string>
+
+    <!--- Navigation bar -->
+    <string name="navigation_bar_title">Navigation bar settings</string>
+    <string name="navigation_controls_title">Show Navigation bar</string>
+    <string name="combined_bar_navigation_color_title">Button color</string>
+    <string name="combined_bar_navigation_glow_title">Button glow effect</string>
+    <string name="combined_bar_navigation_glow_color_title">Button glow color</string>
+    <string name="combined_bar_navigation_quick_glow_title">Shorter button glow</string>
+
+    <string name="navigation_bar_height">Navbar height</string>
+    <string name="navigation_bar_height_48">48dp (default)</string>
+    <string name="navigation_bar_height_44">44dp</string>
+    <string name="navigation_bar_height_40">40dp</string>
+    <string name="navigation_bar_height_36">36dp</string>
+    <string name="navigation_bar_height_32">32dp</string>
+    <string name="navigation_bar_height_28">28dp</string>
+    <string name="navigation_bar_height_24">24dp</string>
+
+    <!--- Kill app longpress back -->
+    <string name="kill_app_longpress_timeout">Longpress back kill timeout</string>
+    <string name="kill_app_longpress_timeout_3000">3000ms</string>
+    <string name="kill_app_longpress_timeout_2500">2500ms</string>
+    <string name="kill_app_longpress_timeout_2000">2000ms</string>
+    <string name="kill_app_longpress_timeout_1500">1500ms (default)</string>
+    <string name="kill_app_longpress_timeout_1000">1000ms</string>
+    <string name="kill_app_longpress_timeout_500">500ms</string>
 
     <string name="lock_screen_title">Lock screen</string>
 
@@ -4910,14 +4937,6 @@
     <string name="kill_app_longpress_back">Kill app back button</string>
     <string name="kill_app_longpress_back_summary">Kill the foreground app by long-pressing the back key</string>
 
-    <!-- Change Log strings -->
-    <string name="changelog_title">View changelog</string>
-    <string name="changelog_dialog">Changelog</string>
-    <string name="changelog_loading">Loading changelog...</string>
-    <string name="changelog_error">Unable to load changelog</string>
-    <string name="changelog_unknown">Unknown</string>
-    <string name="changelog_version">Version</string>
-
     <!-- Power menu enable disable -->
     <string name="power_menu_title">Power menu</string>
     <string name="power_menu_reboot_title">Reboot menu</string>
@@ -4928,10 +4947,6 @@
     <string name="power_menu_user_title">User switcher</string>
     <string name="power_menu_silent_title">Sound panel</string>
 
-    <!-- CM Updater -->
-    <string name="cmupdate_settings_title">CyanogenMod updates</string>
-    <string name="cmupdate_settings_summary">Check for, view or install available updates</string>
-
     <!-- Advanced, Device specific (DeviceParts) settings  -->
     <string name="advanced_settings_title">Advanced</string>
 
@@ -4941,11 +4956,7 @@
 
     <!-- Status bar  -->
     <string name="status_bar_title">Status bar</string>
-    <string name="status_bar_clock_title">Clock</string>
     <string name="status_bar_general_title">General</string>
-    <string name="status_bar_show_clock_title">Show clock</string>
-    <string name="status_bar_am_pm_title">AM/PM style</string>
-    <string name="status_bar_am_pm_info">24-hour clock is enabled</string>
     <string name="status_bar_battery_title">Battery status style</string>
     <string name="status_bar_signal_text_title">Signal status style</string>
     <string name="status_bar_style_icon">Icon</string>
@@ -4963,6 +4974,15 @@
     <string name="display_category_wakeup_options_title">Wakeup options</string>
     <string name="pref_volume_wake_title">Volume rocker wake</string>
     <string name="pref_volume_wake_summary">Pressing the volume rocker up/down will wake the device</string>
+
+    <!-- Power Widget toggle color -->
+    <string name="toggle_color_title">Toggles color and bar</string>
+    <string name="enable_toggle_colors_title">Enable toggle colors</string>
+    <string name="enable_toggle_bar_title">Enable toggle bar</string>
+    <string name="toggle_icon_color_on_title">Color icons (on)</string>
+    <string name="toggle_icon_color_on_summary">Sets color for activated toggle icons</string>
+    <string name="toggle_icon_color_off_title">Color icons (off)</string>
+    <string name="toggle_icon_color_off_summary">Sets color for not activated toggle icons</string>
 
     <!-- Setting checkbox summary for displaying USB debugging notification -->
     <string name="adb_notify">USB debugging notify</string>
@@ -4990,4 +5010,14 @@
     <string name="lockscreen_buttons_toggle_sound">Toggle sound</string>
 
     <!-- **** CYANOGENMOD ADDITIONS END **** -->
+    <string name="title_expanded_volume">Volume slider</string>
+
+    <!-- Misc Settings -->
+    <string name="misc_settings_title">Misc settings</string>
+	
+     <!-- High End Gfx Effects -->
+     <string name="display_category_advanced_title">Advanced</string>
+     <string name="high_end_gfx_title">High end graphic effects</string>
+     <string name="high_end_gfx_summary">Enable graphic effects on lower end devices</string>
+
 </resources>

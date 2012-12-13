@@ -19,7 +19,6 @@ package com.android.settings;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageManager.NameNotFoundException;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.SELinux;
@@ -33,8 +32,10 @@ import android.util.Log;
 import android.widget.Toast;
 
 import java.io.BufferedReader;
+import java.io.FileInputStream;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -70,9 +71,9 @@ public class DeviceInfoSettings extends SettingsPreferenceFragment {
     private static final String KEY_MOD_BUILD_DATE = "build_date";
     private static final String KEY_DEVICE_CPU = "device_cpu";
     private static final String KEY_DEVICE_MEMORY = "device_memory";
-    private static final String KEY_CM_UPDATES = "cm_updates";
 
     static final int TAPS_TO_BE_A_DEVELOPER = 7;
+
     long[] mHits = new long[3];
     int mDevHitCountdown;
     Toast mDevHitToast;
@@ -110,13 +111,6 @@ public class DeviceInfoSettings extends SettingsPreferenceFragment {
 
         String cpuInfo = getCPUInfo();
         String memInfo = getMemInfo();
-
-        // Only the owner should see the Updater settings, if it exists
-        if (UserHandle.myUserId() == UserHandle.USER_OWNER) {
-            removePreferenceIfPackageNotInstalled(findPreference(KEY_CM_UPDATES));
-        } else {
-            getPreferenceScreen().removePreference(findPreference(KEY_CM_UPDATES));
-        }
 
         if (cpuInfo != null) {
             setStringSummary(KEY_DEVICE_CPU, cpuInfo);
@@ -413,23 +407,5 @@ public class DeviceInfoSettings extends SettingsPreferenceFragment {
         } catch (IOException e) {}
 
         return result;
-    }
-
-    private boolean removePreferenceIfPackageNotInstalled(Preference preference) {
-        String intentUri=((PreferenceScreen) preference).getIntent().toUri(1);
-        Pattern pattern = Pattern.compile("component=([^/]+)/");
-        Matcher matcher = pattern.matcher(intentUri);
-
-        String packageName=matcher.find()?matcher.group(1):null;
-        if(packageName != null) {
-            try {
-                getPackageManager().getPackageInfo(packageName, 0);
-            } catch (NameNotFoundException e) {
-                Log.e(LOG_TAG,"package "+packageName+" not installed, hiding preference.");
-                getPreferenceScreen().removePreference(preference);
-                return true;
-            }
-        }
-        return false;
     }
 }

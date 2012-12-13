@@ -26,6 +26,7 @@ import java.util.Map;
 import java.util.Set;
 
 import android.app.ListFragment;
+import android.content.ContentResolver;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.content.res.Resources;
@@ -61,11 +62,20 @@ public class PowerWidget extends SettingsPreferenceFragment implements
     private static final String UI_EXP_WIDGET_HIDE_ONCHANGE = "expanded_hide_onchange";
     private static final String UI_EXP_WIDGET_HIDE_SCROLLBAR = "expanded_hide_scrollbar";
     private static final String UI_EXP_WIDGET_HAPTIC_FEEDBACK = "expanded_haptic_feedback";
+    private static final String ENABLE_TOGGLE_COLORS = "enable_toggle_colors";
+    private static final String ENABLE_TOGGLE_BAR = "enable_toggle_bar";
+    private static final String TOGGLE_ICON_ON_COLOR = "toggle_icon_color_on";
+    private static final String TOGGLE_ICON_OFF_COLOR = "toggle_icon_color_off";
 
     private CheckBoxPreference mPowerWidget;
     private CheckBoxPreference mPowerWidgetHideOnChange;
     private CheckBoxPreference mPowerWidgetHideScrollBar;
     private ListPreference mPowerWidgetHapticFeedback;
+    private CheckBoxPreference mEnableToggleColors;
+    private CheckBoxPreference mEnableToggleBar;
+
+    private Preference mToggleIconOnColor;
+    private Preference mToggleIconOffColor;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -87,6 +97,9 @@ public class PowerWidget extends SettingsPreferenceFragment implements
             mPowerWidgetHapticFeedback.setOnPreferenceChangeListener(this);
             mPowerWidgetHapticFeedback.setSummary(mPowerWidgetHapticFeedback.getEntry());
 
+            mEnableToggleColors = (CheckBoxPreference) prefSet.findPreference(ENABLE_TOGGLE_COLORS);
+            mEnableToggleBar = (CheckBoxPreference) prefSet.findPreference(ENABLE_TOGGLE_BAR);
+
             mPowerWidget.setChecked((Settings.System.getInt(getActivity().getApplicationContext()
                     .getContentResolver(),
                     Settings.System.EXPANDED_VIEW_WIDGET, 0) == 1));
@@ -99,6 +112,17 @@ public class PowerWidget extends SettingsPreferenceFragment implements
             mPowerWidgetHapticFeedback.setValue(Integer.toString(Settings.System.getInt(
                     getActivity().getApplicationContext().getContentResolver(),
                     Settings.System.EXPANDED_HAPTIC_FEEDBACK, 2)));
+            mEnableToggleColors.setChecked((Settings.System.getInt(getActivity().getApplicationContext()
+                    .getContentResolver(),
+                    Settings.System.ENABLE_TOGGLE_COLORS, 0) == 1));
+
+            mEnableToggleBar.setChecked((Settings.System.getInt(getActivity().getApplicationContext()
+                    .getContentResolver(),
+                    Settings.System.ENABLE_TOGGLE_BAR, 0) == 1));
+
+           mToggleIconOnColor = (Preference) prefSet.findPreference(TOGGLE_ICON_ON_COLOR);
+           mToggleIconOffColor = (Preference) prefSet.findPreference(TOGGLE_ICON_OFF_COLOR);
+
         }
     }
 
@@ -132,6 +156,33 @@ public class PowerWidget extends SettingsPreferenceFragment implements
             Settings.System.putInt(getActivity().getApplicationContext().getContentResolver(),
                     Settings.System.EXPANDED_HIDE_SCROLLBAR,
                     value ? 1 : 0);
+        } else if (preference == mEnableToggleColors) {
+            value = mEnableToggleColors.isChecked();
+            Settings.System.putInt(getActivity().getApplicationContext().getContentResolver(),
+                    Settings.System.ENABLE_TOGGLE_COLORS,
+                    value ? 1 : 0);
+        } else if (preference == mEnableToggleBar) {
+            value = mEnableToggleBar.isChecked();
+            Settings.System.putInt(getActivity().getApplicationContext().getContentResolver(),
+                    Settings.System.ENABLE_TOGGLE_BAR,
+                    value ? 1 : 0);
+
+        } else if (preference == mToggleIconOnColor) {
+            ColorPickerDialog cp = new ColorPickerDialog(getActivity(),
+                    mStatusBarColorListener, Settings.System.getInt(getActivity()
+                    .getApplicationContext()
+                    .getContentResolver(), Settings.System.TOGGLE_ICON_ON_COLOR, 0xFF33B5E5));
+            cp.setDefaultColor(0xFF33B5E5);
+            cp.show();
+            return true;
+        } else if (preference == mToggleIconOffColor) {
+            ColorPickerDialog cp = new ColorPickerDialog(getActivity(),
+                    mNotificationPanelColorListener, Settings.System.getInt(getActivity()
+                    .getApplicationContext()
+                    .getContentResolver(), Settings.System.TOGGLE_ICON_OFF_COLOR, 0xFFFFBB33));
+            cp.setDefaultColor(0xFFFFBB33);
+            cp.show();
+            return true;
         } else {
             // If we didn't handle it, let preferences handle it.
             return super.onPreferenceTreeClick(preferenceScreen, preference);
@@ -139,6 +190,26 @@ public class PowerWidget extends SettingsPreferenceFragment implements
 
         return true;
     }
+
+    ColorPickerDialog.OnColorChangedListener mStatusBarColorListener =
+        new ColorPickerDialog.OnColorChangedListener() {
+            public void colorChanged(int color) {
+                Settings.System.putInt(getContentResolver(),
+                        Settings.System.TOGGLE_ICON_ON_COLOR, color);
+            }
+            public void colorUpdate(int color) {
+            }
+    };
+
+    ColorPickerDialog.OnColorChangedListener mNotificationPanelColorListener =
+        new ColorPickerDialog.OnColorChangedListener() {
+            public void colorChanged(int color) {
+                Settings.System.putInt(getContentResolver(),
+                        Settings.System.TOGGLE_ICON_OFF_COLOR, color);
+            }
+            public void colorUpdate(int color) {
+            }
+    };
 
     public static class PowerWidgetChooser extends SettingsPreferenceFragment
             implements Preference.OnPreferenceChangeListener {
@@ -575,5 +646,4 @@ public class PowerWidget extends SettingsPreferenceFragment implements
             }
         }
     }
-
 }

@@ -145,6 +145,38 @@
         <item>1800000</item>
     </string-array>
     
+    <!-- clock stuff -->
+    <string-array name="clock_style_entries" translatable="false">
+        <item>@string/right_clock</item>
+        <item>@string/center_clock</item>
+        <item>@string/no_clock</item>
+    </string-array>
+    <string-array name="clock_style_values" translatable="false">
+        <item>1</item>
+        <item>2</item>
+        <item>0</item>
+    </string-array>
+    <string-array name="clock_ampm_entries" translatable="false">
+        <item>@string/dont_show</item>
+        <item>@string/small_am_pm</item>
+        <item>@string/regular_am_pm</item>
+    </string-array>
+    <string-array name="clock_ampm_values" translatable="false">
+        <item>2</item>
+        <item>1</item>
+        <item>0</item>
+    </string-array>
+    <string-array name="clock_weekday_entries" translatable="false">
+        <item>@string/dont_show</item>
+        <item>@string/small_weekday</item>
+        <item>@string/regular_weekday</item>
+    </string-array>
+    <string-array name="clock_weekday_values" translatable="false">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+    </string-array>
+
     <string-array name="entries_font_size">
         <item msgid="6490061470416867723">Small</item>
         <item msgid="3579015730662088893">Normal</item>
@@ -1102,18 +1134,6 @@
         <item>0</item>
     </string-array>
 
-    <string-array name="entries_status_bar_am_pm">
-        <item>Normal</item>
-        <item>Small</item>
-        <item>None</item>
-    </string-array>
-
-    <string-array name="values_status_bar_am_pm" translatable="false">
-        <item>0</item>
-        <item>1</item>
-        <item>2</item>
-    </string-array>
-
     <string-array name="entries_status_bar_battery" translatable="false">
         <item>@string/status_bar_style_icon</item>
         <item>@string/status_bar_battery_status_percentage</item>
@@ -1140,6 +1160,46 @@
         <item>0</item>
         <item>1</item>
         <item>2</item>
+    </string-array>
+
+    <!--- Kill app longpress back -->
+    <string-array name="kill_app_longpress_timeout_entries" translatable="false">
+        <item>@string/kill_app_longpress_timeout_3000</item>
+        <item>@string/kill_app_longpress_timeout_2500</item>
+        <item>@string/kill_app_longpress_timeout_2000</item>
+        <item>@string/kill_app_longpress_timeout_1500</item>
+        <item>@string/kill_app_longpress_timeout_1000</item>
+        <item>@string/kill_app_longpress_timeout_500</item>
+    </string-array>
+
+    <string-array name="kill_app_longpress_timeout_values" translatable="false">
+        <item>3000</item>
+        <item>2500</item>
+        <item>2000</item>
+        <item>1500</item>
+        <item>1000</item>
+        <item>500</item>
+    </string-array>
+
+    <!--- Nav buttons height -->
+    <string-array name="nav_buttons_height_entries" translatable="false">
+        <item>@string/navigation_bar_height_48</item>
+        <item>@string/navigation_bar_height_44</item>
+        <item>@string/navigation_bar_height_40</item>
+        <item>@string/navigation_bar_height_36</item>
+        <item>@string/navigation_bar_height_32</item>
+        <item>@string/navigation_bar_height_28</item>
+        <item>@string/navigation_bar_height_24</item>
+    </string-array>
+
+    <string-array name="nav_buttons_height_values" translatable="false">
+        <item>48</item>
+        <item>44</item>
+        <item>40</item>
+        <item>36</item>
+        <item>32</item>
+        <item>28</item>
+        <item>24</item>
     </string-array>
 
     <string-array name="hardware_keys_action_entries" translatable="false">
