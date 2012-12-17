@@ -21,6 +21,7 @@ import android.content.ContentResolver;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.preference.CheckBoxPreference;
+import android.preference.ListPreference;
 import android.preference.MultiSelectListPreference;
 import android.preference.Preference;
 import android.preference.Preference.OnPreferenceChangeListener;
@@ -57,7 +58,7 @@ public class QuickSettings extends SettingsPreferenceFragment implements OnPrefe
     CheckBoxPreference mDynamicBugReport;
     CheckBoxPreference mDynamicWifi;
     CheckBoxPreference mDynamicIme;
-    CheckBoxPreference mQuickPulldown;
+    ListPreference mQuickPulldown;
     CheckBoxPreference mCollapsePanel;
 
     @Override
@@ -74,11 +75,15 @@ public class QuickSettings extends SettingsPreferenceFragment implements OnPrefe
         PackageManager pm = getPackageManager();
         ContentResolver resolver = getActivity().getApplicationContext().getContentResolver();
 
-        mQuickPulldown = (CheckBoxPreference) prefSet.findPreference(QUICK_PULLDOWN);
+        mQuickPulldown = (ListPreference) findPreference(QUICK_PULLDOWN);
         if (!Utils.isPhone(getActivity())) {
             prefSet.removePreference(mQuickPulldown);
         } else {
-            mQuickPulldown.setChecked(Settings.System.getInt(resolver, Settings.System.QS_QUICK_PULLDOWN, 0) == 1);
+        int statusQuickPulldown = Settings.System.getInt(getContentResolver(),
+                 Settings.System.QS_QUICK_PULLDOWN, 0);
+        mQuickPulldown.setValue(String.valueOf(statusQuickPulldown));
+        mQuickPulldown.setSummary(mQuickPulldown.getEntry());
+        mQuickPulldown.setOnPreferenceChangeListener(this);
         }
 
         mCollapsePanel = (CheckBoxPreference) prefSet.findPreference(COLLAPSE_PANEL);
@@ -137,10 +142,6 @@ public class QuickSettings extends SettingsPreferenceFragment implements OnPrefe
             Settings.System.putInt(resolver, Settings.System.QS_DYNAMIC_WIFI,
                     mDynamicWifi.isChecked() ? 1 : 0);
             return true;
-        } else if (preference == mQuickPulldown) {
-            Settings.System.putInt(resolver, Settings.System.QS_QUICK_PULLDOWN,
-                    mQuickPulldown.isChecked() ? 1 : 0);
-            return true;
         } else if (preference == mCollapsePanel) {
             Settings.System.putInt(resolver, Settings.System.QS_COLLAPSE_PANEL,
                     mCollapsePanel.isChecked() ? 1 : 0);
@@ -170,8 +171,17 @@ public class QuickSettings extends SettingsPreferenceFragment implements OnPrefe
             Settings.System.putString(getActivity().getApplicationContext().getContentResolver(),
                     Settings.System.EXPANDED_RING_MODE, TextUtils.join(SEPARATOR, arrValue));
             updateSummary(TextUtils.join(SEPARATOR, arrValue), mRingMode, R.string.pref_ring_mode_summary);
+            return true;
         }
-        return true;
+	else if (preference == mQuickPulldown) {
+            int statusQuickPulldown = Integer.valueOf((String) newValue);
+            int index = mQuickPulldown.findIndexOfValue((String) newValue);
+            Settings.System.putInt(getContentResolver(),
+                    Settings.System.QS_QUICK_PULLDOWN, statusQuickPulldown);
+            mQuickPulldown.setSummary(mQuickPulldown.getEntries()[index]);
+            return true;
+        }
+        return false;
     }
 
     private void updateSummary(String val, MultiSelectListPreference pref, int defSummary) {

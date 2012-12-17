@@ -1181,6 +1181,19 @@
         <item>500</item>
     </string-array>
 
+    <!--- Quicksettings Panel -->
+    <string-array name="quick_pulldown_entries">
+        <item>@string/quick_pulldown_off</item>
+        <item>@string/quick_pulldown_on</item>
+        <item>@string/quick_pulldown_on_off</item>
+    </string-array>
+
+    <string-array name="quick_pulldown_values">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+    </string-array>
+
     <!--- Nav buttons height -->
     <string-array name="nav_buttons_height_entries" translatable="false">
         <item>@string/navigation_bar_height_48</item>

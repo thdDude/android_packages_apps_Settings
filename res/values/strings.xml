@@ -5062,7 +5062,11 @@
 
     <string name="title_general">General</string>
     <string name="title_quick_pulldown">Quick pulldown</string>
-    <string name="summary_quick_pulldown">Show Quick Settings when pulling down notification bar near the right side of the screen</string>
+    <string name="quick_pulldown_off">Disabled</string>
+    <string name="quick_pulldown_on">Enabled</string>
+    <string name="quick_pulldown_on_off">Enabled if no notification</string>
+    <string name="summary_quick_pulldown">Either to show Quick Settings when pulling down notification bar near the right side of the screen, or to show it, when there are no pending notifications</string>
+
     <string name="title_collapse_panel">Auto close panel</string>
     <string name="summary_collapse_panel">Close the notification panel upon toggle</string>
 
