@@ -4921,7 +4921,7 @@
     <string name="title_toggle_screentimeout">Toggle Screen timeout</string>
     <string name="title_toggle_mobiledata">Toggle Mobile data</string>
     <string name="title_toggle_lockscreen">Toggle Lock screen</string>
-    <string name="title_toggle_networkmode">Toggle 2G/3G</string>
+    <string name="title_toggle_networkmode">Toggle network mode</string>
     <string name="title_toggle_autorotate">Toggle Orientation</string>
     <string name="title_toggle_airplane">Toggle Airplane mode</string>
     <string name="title_toggle_flashlight">Toggle LED flashlight</string>
@@ -5040,12 +5040,9 @@
     <string name="title_tile_brightness">Brightness</string>
     <string name="title_tile_sleep">Go to sleep</string>
     <string name="title_tile_gps">GPS</string>
-    <string name="title_tile_flashlight">LED flashlight</string>
+    <string name="title_tile_torch">Torch</string>
     <string name="title_tile_lockscreen">Lock screen</string>
     <string name="title_tile_lte">LTE</string>
-    <string name="title_tile_media_play_pause">Media: Play/Pause</string>
-    <string name="title_tile_media_next">Media: Skip to Next</string>
-    <string name="title_tile_media_previous">Media: Skip to Previous</string>
     <string name="title_tile_mobiledata">Mobile data</string>
     <string name="title_tile_profile">Profile</string>
     <string name="title_tile_autorotate">Orientation</string>
@@ -5057,7 +5054,7 @@
     <string name="title_tile_wifi">Wi-Fi</string>
     <string name="title_tile_wimax">WiMAX</string>
     <string name="title_tile_user">User switcher</string>
-    <string name="title_tile_networkmode">2G/3G</string>
+    <string name="title_tile_networkmode">Network mode</string>
 
     <string name="title_dynamic_tiles">Dynamic tiles</string>
     <string name="dynamic_tiles_note_title">Note</string>
@@ -5069,13 +5066,14 @@
 
     <string name="title_general">General</string>
     <string name="title_quick_pulldown">Quick pulldown</string>
+
     <string name="quick_pulldown_off">Disabled</string>
-    <string name="quick_pulldown_on">Enabled</string>
+    <string name="quick_pulldown_left">Left</string>
+    <string name="quick_pulldown_right">Right</string>
     <string name="quick_pulldown_on_off">Enabled if no notification</string>
-    <string name="summary_quick_pulldown">Either to show Quick Settings when pulling down notification bar near the right side of the screen, or to show it, when there are no pending notifications</string>
 
     <string name="title_collapse_panel">Auto close panel</string>
-    <string name="summary_collapse_panel">Close the notification panel upon toggle</string>
+    <string name="summary_collapse_panel">Close the Quick Settings panel upon toggle</string>
 
     <!-- Reset tiles -->
     <string name="tiles_reset_title">Reset</string>
@@ -5087,6 +5085,9 @@
     <string name="volume_key_cursor_control_on">Volume up/down moves cursor left/right</string>
     <string name="volume_key_cursor_control_on_reverse">Volume up/down moves cursor right/left</string>
 
+    <!-- Wireless display -->
+    <string name="pref_wifi_disable_hdcp_title">Skip HDCP negotiation</string>
+    <string name="pref_wifi_disable_hdcp_summary">Try this option if you can connect but don\'t get any output</string>
     <!-- **** CYANOGENMOD ADDITIONS END **** -->
     <string name="title_expanded_volume">Volume slider</string>
 

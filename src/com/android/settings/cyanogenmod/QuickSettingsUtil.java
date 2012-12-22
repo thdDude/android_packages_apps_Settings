@@ -53,11 +53,8 @@ public class QuickSettingsUtil {
     public static final String TILE_NETWORKMODE = "toggleNetworkMode";
     public static final String TILE_AUTOROTATE = "toggleAutoRotate";
     public static final String TILE_AIRPLANE = "toggleAirplane";
-    public static final String TILE_FLASHLIGHT = "toggleFlashlight";
+    public static final String TILE_TORCH = "toggleFlashlight";  // Keep old string for compatibility
     public static final String TILE_SLEEP = "toggleSleepMode";
-    public static final String TILE_MEDIA_PLAY_PAUSE = "toggleMediaPlayPause";
-    public static final String TILE_MEDIA_PREVIOUS = "toggleMediaPrevious";
-    public static final String TILE_MEDIA_NEXT = "toggleMediaNext";
     public static final String TILE_LTE = "toggleLte";
     public static final String TILE_WIMAX = "toggleWimax";
     public static final String TILE_PROFILE = "toggleProfile";
@@ -67,8 +64,10 @@ public class QuickSettingsUtil {
             + TILE_DELIMITER + TILE_BRIGHTNESS
             + TILE_DELIMITER + TILE_SETTINGS
             + TILE_DELIMITER + TILE_WIFI
-            + TILE_DELIMITER + TILE_BLUETOOTH
-            + TILE_DELIMITER + TILE_SOUND;
+            + TILE_DELIMITER + TILE_MOBILEDATA
+            + TILE_DELIMITER + TILE_BATTERY
+            + TILE_DELIMITER + TILE_AIRPLANE
+            + TILE_DELIMITER + TILE_BLUETOOTH;
     /**
      * END OF DATA MATCHING BLOCK
      */
@@ -79,6 +78,9 @@ public class QuickSettingsUtil {
         TILES.put(TILE_AIRPLANE, new QuickSettingsUtil.TileInfo(
                 TILE_AIRPLANE, R.string.title_tile_airplane,
                 "com.android.systemui:drawable/ic_qs_airplane_off"));
+        TILES.put(TILE_AUTOROTATE, new QuickSettingsUtil.TileInfo(
+                TILE_AUTOROTATE, R.string.title_tile_autorotate,
+                "com.android.systemui:drawable/ic_qs_auto_rotate"));
         TILES.put(TILE_BATTERY, new QuickSettingsUtil.TileInfo(
                 TILE_BATTERY, R.string.title_tile_battery,
                 "com.android.systemui:drawable/ic_qs_battery_neutral"));
@@ -88,9 +90,6 @@ public class QuickSettingsUtil {
         TILES.put(TILE_BRIGHTNESS, new QuickSettingsUtil.TileInfo(
                 TILE_BRIGHTNESS, R.string.title_tile_brightness,
                 "com.android.systemui:drawable/ic_qs_brightness_auto_off"));
-        TILES.put(TILE_FLASHLIGHT, new QuickSettingsUtil.TileInfo(
-                TILE_FLASHLIGHT, R.string.title_tile_flashlight,
-                "com.android.systemui:drawable/ic_qs_flashlight_off"));
         TILES.put(TILE_SLEEP, new QuickSettingsUtil.TileInfo(
                 TILE_SLEEP, R.string.title_tile_sleep,
                 "com.android.systemui:drawable/ic_qs_sleep"));
@@ -103,47 +102,41 @@ public class QuickSettingsUtil {
         TILES.put(TILE_MOBILEDATA, new QuickSettingsUtil.TileInfo(
                 TILE_MOBILEDATA, R.string.title_tile_mobiledata,
                 "com.android.systemui:drawable/ic_qs_signal_4"));
-        TILES.put(TILE_AUTOROTATE, new QuickSettingsUtil.TileInfo(
-                TILE_AUTOROTATE, R.string.title_tile_autorotate,
-                "com.android.systemui:drawable/ic_qs_auto_rotate"));
+        TILES.put(TILE_NETWORKMODE, new QuickSettingsUtil.TileInfo(
+                TILE_NETWORKMODE, R.string.title_tile_networkmode,
+                "com.android.systemui:drawable/ic_qs_2g3g_on"));
+        TILES.put(TILE_PROFILE, new QuickSettingsUtil.TileInfo(
+                TILE_PROFILE, R.string.title_tile_profile,
+                "com.android.systemui:drawable/ic_qs_profiles"));
         TILES.put(TILE_SETTINGS, new QuickSettingsUtil.TileInfo(
                 TILE_SETTINGS, R.string.title_tile_settings,
                 "com.android.systemui:drawable/ic_qs_settings"));
+        TILES.put(TILE_SLEEP, new QuickSettingsUtil.TileInfo(
+                TILE_SLEEP, R.string.title_tile_sleep,
+                "com.android.systemui:drawable/ic_qs_sleep"));
         TILES.put(TILE_SOUND, new QuickSettingsUtil.TileInfo(
                 TILE_SOUND, R.string.title_tile_sound,
                 "com.android.systemui:drawable/ic_qs_ring_on"));
+        TILES.put(TILE_SYNC, new QuickSettingsUtil.TileInfo(
+                TILE_SYNC, R.string.title_tile_sync,
+                "com.android.systemui:drawable/ic_qs_sync_off"));
+        TILES.put(TILE_TORCH, new QuickSettingsUtil.TileInfo(
+                TILE_TORCH, R.string.title_tile_torch,
+                "com.android.systemui:drawable/ic_qs_torch_off"));
         TILES.put(TILE_WIFI, new QuickSettingsUtil.TileInfo(
                 TILE_WIFI, R.string.title_tile_wifi,
                 "com.android.systemui:drawable/ic_qs_wifi_4"));
         TILES.put(TILE_WIFIAP, new QuickSettingsUtil.TileInfo(
                 TILE_WIFIAP, R.string.title_tile_wifiap,
                 "com.android.systemui:drawable/ic_qs_wifi_ap_neutral"));
-        TILES.put(TILE_PROFILE, new QuickSettingsUtil.TileInfo(
-                TILE_PROFILE, R.string.title_tile_profile,
-                "com.android.systemui:drawable/ic_qs_profiles"));
         TILES.put(TILE_USER, new QuickSettingsUtil.TileInfo(
                 TILE_USER, R.string.title_tile_user,
                 "com.android.systemui:drawable/ic_qs_default_user"));
 
 // These toggles are not available yet.  Comment out for now
-//        TILES.put(TILE_NETWORKMODE, new QuickSettingsUtil.TileInfo(
-//                TILE_NETWORKMODE, R.string.title_tile_networkmode,
-//                "com.android.systemui:drawable/stat_2g3g_on"));
 //        TILES.put(TILE_SCREENTIMEOUT, new QuickSettingsUtil.TileInfo(
 //                TILE_SCREENTIMEOUT, R.string.title_tile_screentimeout,
 //                "com.android.systemui:drawable/stat_screen_timeout_on"));
-//        TILES.put(TILE_SYNC, new QuickSettingsUtil.TileInfo(
-//                TILE_SYNC, R.string.title_tile_sync,
-//                "com.android.systemui:drawable/stat_sync_on"));
-//        TILES.put(TILE_MEDIA_PREVIOUS, new QuickSettingsUtil.TileInfo(
-//                TILE_MEDIA_PREVIOUS, R.string.title_tile_media_previous,
-//                "com.android.systemui:drawable/stat_media_previous"));
-//       TILES.put(TILE_MEDIA_PLAY_PAUSE, new QuickSettingsUtil.TileInfo(
-//                TILE_MEDIA_PLAY_PAUSE, R.string.title_tile_media_play_pause,
-//                "com.android.systemui:drawable/stat_media_play"));
-//        TILES.put(TILE_MEDIA_NEXT, new QuickSettingsUtil.TileInfo(
-//                TILE_MEDIA_NEXT, R.string.title_tile_media_next,
-//                "com.android.systemui:drawable/stat_media_next"));
 //        if(PhoneConstants.LTE_ON_CDMA_TRUE == TelephonyManager.getDefault().getLteOnCdmaMode() ||
 //           TelephonyManager.getDefault().getLteOnGsmMode() != 0) {
 //            TILES.put(TILE_LTE, new QuickSettingsUtil.TileInfo(
