@@ -254,9 +254,11 @@ public class QuickSettings extends SettingsPreferenceFragment implements OnPrefe
 
     private void updatePulldownSummary() {
         ContentResolver resolver = getActivity().getApplicationContext().getContentResolver();
-        int summaryId;
+        int summaryIdCm;
+        int summaryIdAokp;
         int directionId;
-        summaryId = R.string.summary_quick_pulldown;
+        summaryIdCm = R.string.summary_quick_pulldown_cm;
+        summaryIdAokp = R.string.summary_quick_pulldown_aokp;
         String value = Settings.System.getString(resolver, Settings.System.QS_QUICK_PULLDOWN);
         String[] pulldownArray = getResources().getStringArray(R.array.quick_pulldown_values);
         if (pulldownArray[0].equals(value)) {
@@ -267,17 +269,17 @@ public class QuickSettings extends SettingsPreferenceFragment implements OnPrefe
             directionId = R.string.quick_pulldown_right;
             mQuickPulldown.setValueIndex(1);
             mQuickPulldown.setSummary(getResources().getString(directionId)
-                    + " " + getResources().getString(summaryId));
+                    + " " + getResources().getString(summaryIdCm));
         } else if (pulldownArray[2].equals(value)){
             directionId = R.string.quick_pulldown_left;
             mQuickPulldown.setValueIndex(2);
             mQuickPulldown.setSummary(getResources().getString(directionId)
-                    + " " + getResources().getString(summaryId));
+                    + " " + getResources().getString(summaryIdCm));
         } else {
             directionId = R.string.quick_pulldown_on_off;
             mQuickPulldown.setValueIndex(3);
             mQuickPulldown.setSummary(getResources().getString(directionId)
-                    + " " + getResources().getString(summaryId));
+                    + " " + getResources().getString(summaryIdAokp));
         }
     }
 
