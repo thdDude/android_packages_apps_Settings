@@ -5080,13 +5080,15 @@
     <string name="title_dynamic_ime">IME changer</string>
     <string name="title_dynamic_wifi">Wi-Fi display</string>
 
-    <string name="title_general">General</string>
+   <string name="title_general">General</string>
     <string name="title_quick_pulldown">Quick pulldown</string>
-
     <string name="summary_quick_pulldown">%1$s edge of the status bar pulls down Quick Settings</string>
     <string name="quick_pulldown_summary_left">Left</string>
     <string name="quick_pulldown_summary_right">Right</string>
     <string name="quick_pulldown_off">Off</string>
+    <string name="quick_pulldown_left">Left</string>
+    <string name="quick_pulldown_right">Right</string>
+
     <string name="quick_pulldown_on_off">If no notifications</string>
     <string name="quick_pulldown_summary_on_off">Enabled if no notifications for the current user are pending</string>
 
@@ -5123,5 +5125,16 @@
      <string name="display_category_advanced_title">Advanced</string>
      <string name="high_end_gfx_title">High end graphic effects</string>
      <string name="high_end_gfx_summary">Enable graphic effects on lower end devices</string>
+
+     <!-- Battery Bar -->
+    <string name="status_bar_battery_bar_title">Battery bar style</string>
+    <string name="battery_bar">Battery bar location</string>
+    <string name="battery_bar_color">Battery bar color</string>
+    <string name="battery_bar_cat">Battery bar style</string>
+    <string name="battery_bar_style_title">Battery bar alignment</string>
+    <string name="battery_bar_thickness_title">Battery bar thickness</string>
+    <string name="battery_bar_animate_title">Charging animation</string>
+    <string name="battery_bar_animate_summary">The charging animation may result in a poor user expe
+rience. Better keep it disabled on lower end devices.</string>
 
 </resources>
