@@ -40,7 +40,6 @@ public class StatusBarBatteryStyle extends SettingsPreferenceFragment implements
     private static final String PREF_BATT_BAR = "battery_bar_list";
     private static final String PREF_BATT_BAR_STYLE = "battery_bar_style";
     private static final String PREF_BATT_BAR_COLOR = "battery_bar_color";
-    private static final String PREF_BATT_BAR_COLOR_LOW = "battery_bar_color_low";
     private static final String PREF_BATT_BAR_WIDTH = "battery_bar_thickness";
     private static final String PREF_BATT_ANIMATE = "battery_bar_animate";
 
@@ -49,7 +48,6 @@ public class StatusBarBatteryStyle extends SettingsPreferenceFragment implements
     private ListPreference mBatteryBarThickness;
     private CheckBoxPreference mBatteryBarChargingAnimation;
     private Preference mBatteryBarColor;
-    private Preference mBatteryBarColorLow;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -79,8 +77,6 @@ public class StatusBarBatteryStyle extends SettingsPreferenceFragment implements
         mBatteryBarStyle.setSummary(mBatteryBarStyle.getEntry());
 
         mBatteryBarColor = (Preference) prefSet.findPreference(PREF_BATT_BAR_COLOR);
-
-        mBatteryBarColorLow = (Preference) prefSet.findPreference(PREF_BATT_BAR_COLOR_LOW);
 
         mBatteryBarChargingAnimation = (CheckBoxPreference) findPreference(PREF_BATT_ANIMATE);
         mBatteryBarChargingAnimation.setChecked(Settings.System.getInt(
@@ -131,16 +127,9 @@ public class StatusBarBatteryStyle extends SettingsPreferenceFragment implements
 
  	if (preference == mBatteryBarColor) {
             ColorPickerDialog cp = new ColorPickerDialog(getActivity(),
-                    mColorListenerBarColor, Settings.System.getInt(getActivity().getApplicationContext()
+                    mColorListener, Settings.System.getInt(getActivity().getApplicationContext()
                     .getContentResolver(), Settings.System.STATUSBAR_BATTERY_BAR_COLOR, 0xFF33B5E5));
             cp.setDefaultColor(0xFF33B5E5);
-            cp.show();
-            return true;
-        } else if (preference == mBatteryBarColorLow) {
-            ColorPickerDialog cp = new ColorPickerDialog(getActivity(),
-                    mColorListenerBarColorLow, Settings.System.getInt(getActivity().getApplicationContext()
-                    .getContentResolver(), Settings.System.STATUSBAR_BATTERY_BAR_COLOR_LOW, 0xFFFF4444));
-            cp.setDefaultColor(0xFFFF4444);
             cp.show();
             return true;
         } else if (preference == mBatteryBarChargingAnimation) {
@@ -160,31 +149,19 @@ public class StatusBarBatteryStyle extends SettingsPreferenceFragment implements
             mBatteryBarThickness.setEnabled(false);
             mBatteryBarChargingAnimation.setEnabled(false);
             mBatteryBarColor.setEnabled(false);
-            mBatteryBarColorLow.setEnabled(false);
         } else {
             mBatteryBarStyle.setEnabled(true);
             mBatteryBarThickness.setEnabled(true);
             mBatteryBarChargingAnimation.setEnabled(true);
             mBatteryBarColor.setEnabled(true);
-            mBatteryBarColorLow.setEnabled(true);
         }
     }
 
-    ColorPickerDialog.OnColorChangedListener mColorListenerBarColor =
+    ColorPickerDialog.OnColorChangedListener mColorListener =
         new ColorPickerDialog.OnColorChangedListener() {
             public void colorChanged(int color) {
                 Settings.System.putInt(getContentResolver(),
                         Settings.System.STATUSBAR_BATTERY_BAR_COLOR, color);
-            }
-            public void colorUpdate(int color) {
-            }
-    };
-
-    ColorPickerDialog.OnColorChangedListener mColorListenerBarColorLow =
-        new ColorPickerDialog.OnColorChangedListener() {
-            public void colorChanged(int color) {
-                Settings.System.putInt(getContentResolver(),
-                        Settings.System.STATUSBAR_BATTERY_BAR_COLOR_LOW, color);
             }
             public void colorUpdate(int color) {
             }
