@@ -111,6 +111,8 @@ import com.android.settings.Utils;
         boolean value;
 	if (preference == mHighEndGfx) {
 		SystemProperties.set(USE_HIGH_END_GFX_PROP, mHighEndGfx.isChecked() ? "1" : "0");
+            	Settings.System.putInt(getContentResolver(),
+                	Settings.System.HIGH_END_GFX_ENABLED, mHighEndGfx.isChecked() ? 1 : 0);
         } else if (preference == mKillAppLongpressBack) {
             writeKillAppLongpressBackOptions();
         } else {

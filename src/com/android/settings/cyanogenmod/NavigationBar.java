@@ -76,14 +76,8 @@ public class NavigationBar extends SettingsPreferenceFragment implements OnPrefe
 	IWindowManager windowManager = IWindowManager.Stub.asInterface(
                 ServiceManager.getService(Context.WINDOW_SERVICE));
 
-	/*boolean mShowNavBar;
-	try {
-	mShowNavBar = windowManager.hasNavigationBar();
-        } catch (RemoteException e) {
-	mShowNavBar = false;
-        }*/
         mNavigationControls.setChecked(Settings.System.getInt(getContentResolver(),
-                        Settings.System.NAVIGATION_CONTROLS, 0) == 1);
+                        Settings.System.NAVIGATION_CONTROLS, 1) == 1);
 
         mNavButtonsHeight = (ListPreference) findPreference(KEY_NAV_BUTTONS_HEIGHT);
         mNavButtonsHeight.setOnPreferenceChangeListener(this);
