@@ -5152,6 +5152,8 @@
      <string name="high_end_gfx_title">High end graphic effects</string>
      <string name="high_end_gfx_summary">Enable graphic effects on lower end devices</string>
 
+    <string name="recent_task_manager_button_title">Show Task Manager Button on Recents Panel</string>
+
      <!-- Battery Bar -->
     <string name="status_bar_battery_bar_title">Battery bar style</string>
     <string name="battery_bar">Battery bar location</string>

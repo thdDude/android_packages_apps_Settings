@@ -42,8 +42,10 @@ import com.android.settings.Utils;
     private static final String KEY_KILL_APP_LONGPRESS_TIMEOUT = "kill_app_longpress_timeout";
     private static final String KEY_HIGH_END_GFX = "high_end_gfx";
     private static final String USE_HIGH_END_GFX_PROP = "persist.sys.use_high_end_gfx";
+    private static final String RECENT_TASK_MANAGER_BUTTON = "recent_task_manager_button";
 	
     private CheckBoxPreference mHighEndGfx;
+    private CheckBoxPreference mTaskManager;
     private CheckBoxPreference mKillAppLongpressBack;
     private ListPreference mKillAppLongpressTimeout;
 
@@ -75,6 +77,12 @@ import com.android.settings.Utils;
                  Settings.System.KILL_APP_LONGPRESS_TIMEOUT, 1500);
         mKillAppLongpressTimeout.setValue(String.valueOf(statusKillAppLongpressTimeout));
         mKillAppLongpressTimeout.setSummary(mKillAppLongpressTimeout.getEntry());
+
+        mTaskManager = (CheckBoxPreference) findPreference(RECENT_TASK_MANAGER_BUTTON);
+        mTaskManager.setChecked(Settings.System.getInt(
+            	getActivity().getApplicationContext().getContentResolver(),
+			Settings.System.RECENT_TASK_MANAGER_BUTTON, 0) != 0);
+
     }
 
     @Override
@@ -114,7 +122,10 @@ import com.android.settings.Utils;
             	Settings.System.putInt(getContentResolver(),
                 	Settings.System.HIGH_END_GFX_ENABLED, mHighEndGfx.isChecked() ? 1 : 0);
         } else if (preference == mKillAppLongpressBack) {
-            writeKillAppLongpressBackOptions();
+            	writeKillAppLongpressBackOptions();
+	} else if (preference == mTaskManager) {
+            	Settings.System.putInt(getContentResolver(),
+                	Settings.System.RECENT_TASK_MANAGER_BUTTON, mTaskManager.isChecked() ? 1 : 0);
         } else {
             // If we didn't handle it, let preferences handle it.
             return super.onPreferenceTreeClick(preferenceScreen, preference);

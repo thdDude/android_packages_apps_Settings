@@ -36,4 +36,8 @@
             android:entries="@array/kill_app_longpress_timeout_entries"
             android:entryValues="@array/kill_app_longpress_timeout_values" />
 
+        <CheckBoxPreference
+            android:key="recent_task_manager_button"
+            android:title="@string/recent_task_manager_button_title" />
+
 </PreferenceScreen>
