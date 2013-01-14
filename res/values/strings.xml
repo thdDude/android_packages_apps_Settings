@@ -5418,4 +5418,7 @@ rience. Better keep it disabled on lower end devices.</string>
     <string name="set">Set</string>
     <string name="ics_color">Holo</string>
 
+    <string name="status_bar_tablet_title">Tablet Tweaks</string>
+    <string name="tablet_ui_title">Tablet UI</string>
+
 </resources>

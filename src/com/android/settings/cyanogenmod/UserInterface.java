@@ -13,6 +13,7 @@ import java.util.Random;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.ActivityNotFoundException;
+import android.content.ContentResolver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -24,6 +25,7 @@ import android.graphics.drawable.Drawable;
 import android.graphics.Rect;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.ServiceManager;
 import android.os.SystemProperties;
 import android.preference.CheckBoxPreference;
 import android.preference.ListPreference;
@@ -35,6 +37,7 @@ import android.provider.MediaStore;
 import android.provider.Settings;
 import android.text.Spannable;
 import android.view.Display;
+import android.view.IWindowManager;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -50,12 +53,17 @@ import com.android.settings.util.Helpers;
 public class UserInterface extends SettingsPreferenceFragment {
 
     public static final String TAG = "UserInterface";
+    private static final String KEY_TABLET_UI = "tablet_ui";
 
     Preference mLcdDensity;
+    private CheckBoxPreference mTabletUI;
 
     int newDensityValue;
 
     DensityChanger densityFragment;
+
+    private ContentResolver mContentResolver;
+    private Context mContext;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -74,17 +82,33 @@ public class UserInterface extends SettingsPreferenceFragment {
         }
 
         mLcdDensity.setSummary(getResources().getString(R.string.current_lcd_density) + currentProperty);
+
+        mTabletUI = (CheckBoxPreference) findPreference(KEY_TABLET_UI);
+        mTabletUI.setChecked(Settings.System.getInt(mContentResolver,
+                        Settings.System.TABLET_MODE, 0) == 1);
     }
 
 
     @Override
     public boolean onPreferenceTreeClick(PreferenceScreen preferenceScreen,
             Preference preference) {
+	boolean value;
         if (preference == mLcdDensity) {
             ((PreferenceActivity) getActivity())
             .startPreferenceFragment(new DensityChanger(), true);
             return true;
-        }
+        } else if (preference == mTabletUI) {
+            value = mTabletUI.isChecked();
+            Settings.System.putInt(getContentResolver(), Settings.System.TABLET_MODE,
+                    value ? 1 : 0);
+            IWindowManager wm = IWindowManager.Stub.asInterface(ServiceManager.checkService(
+                    Context.WINDOW_SERVICE));
+            try {
+                wm.clearForcedDisplaySize(Display.DEFAULT_DISPLAY);
+            } catch (Exception e) {
+            }
+            return true;
+	}
         return super.onPreferenceTreeClick(preferenceScreen, preference);
     }
 }
