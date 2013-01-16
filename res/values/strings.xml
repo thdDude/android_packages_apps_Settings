@@ -5416,7 +5416,12 @@ rience. Better keep it disabled on lower end devices.</string>
     <string name="set">Set</string>
     <string name="ics_color">Holo</string>
 
-    <string name="status_bar_tablet_title">Tablet Tweaks</string>
     <string name="tablet_ui_title">Tablet UI</string>
+
+    <string name="dual_pane_prefs_title">Dual pane preferences</string>
+    <string name="dual_pane_prefs_summary">Choose when to use dual pane preferences</string>
+    <string name="dual_pane_prefs_on">Always</string>
+    <string name="dual_pane_prefs_off">Never</string>
+    <string name="dual_pane_prefs_landscape">Only in landscape</string>
 
 </resources>

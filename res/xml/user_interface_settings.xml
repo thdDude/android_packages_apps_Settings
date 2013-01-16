@@ -11,6 +11,14 @@
             android:title="@string/lcd_density_title"
             android:summary="@string/lcd_density_summary" />
 
+    <ListPreference
+        android:key="dual_pane_prefs"
+        android:dialogTitle="@string/dual_pane_prefs_title"
+        android:title="@string/dual_pane_prefs_title"
+        android:summary="@string/dual_pane_prefs_summary"
+        android:entries="@array/entries_dual_pane_prefs"
+        android:entryValues="@array/values_dual_pane_prefs" />
+
         <CheckBoxPreference
             android:key="tablet_ui"
             android:title="@string/tablet_ui_title" />

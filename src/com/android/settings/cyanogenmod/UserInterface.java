@@ -54,9 +54,11 @@ public class UserInterface extends SettingsPreferenceFragment {
 
     public static final String TAG = "UserInterface";
     private static final String KEY_TABLET_UI = "tablet_ui";
+    private static final String DUAL_PANE_PREFS = "dual_pane_prefs";
 
     Preference mLcdDensity;
     private CheckBoxPreference mTabletUI;
+    private ListPreference mDualPanePrefs;
 
     int newDensityValue;
 
@@ -86,6 +88,20 @@ public class UserInterface extends SettingsPreferenceFragment {
         mTabletUI = (CheckBoxPreference) findPreference(KEY_TABLET_UI);
         mTabletUI.setChecked(Settings.System.getInt(mContentResolver,
                         Settings.System.TABLET_MODE, 0) == 1);
+
+        mDualPanePrefs = (ListPreference) prefSet.findPreference(DUAL_PANE_PREFS);
+        mDualPanePrefs.setOnPreferenceChangeListener(this);
+    }
+
+    public boolean onPreferenceChange(Preference preference, Object newValue) {
+        if (preference == mDualPanePrefs) {
+            int value = Integer.valueOf((String) newValue);
+            Settings.System.putInt(getActivity().getApplicationContext().getContentResolver(),
+                    Settings.System.DUAL_PANE_PREFS, value);
+            getActivity().recreate();
+            return true;
+        }
+        return false;
     }
 
 
