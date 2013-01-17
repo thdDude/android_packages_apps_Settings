@@ -30,6 +30,7 @@ import android.os.SystemProperties;
 import android.preference.CheckBoxPreference;
 import android.preference.ListPreference;
 import android.preference.Preference;
+import android.preference.Preference.OnPreferenceChangeListener;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceGroup;
 import android.preference.PreferenceScreen;
@@ -50,7 +51,7 @@ import com.android.settings.R;
 import com.android.settings.util.CMDProcessor;
 import com.android.settings.util.Helpers;
 
-public class UserInterface extends SettingsPreferenceFragment {
+public class UserInterface extends SettingsPreferenceFragment implements OnPreferenceChangeListener {
 
     public static final String TAG = "UserInterface";
     private static final String KEY_TABLET_UI = "tablet_ui";
@@ -89,7 +90,7 @@ public class UserInterface extends SettingsPreferenceFragment {
         mTabletUI.setChecked(Settings.System.getInt(mContentResolver,
                         Settings.System.TABLET_MODE, 0) == 1);
 
-        mDualPanePrefs = (ListPreference) prefSet.findPreference(DUAL_PANE_PREFS);
+        mDualPanePrefs = (ListPreference) prefs.findPreference(DUAL_PANE_PREFS);
         mDualPanePrefs.setOnPreferenceChangeListener(this);
     }
 
