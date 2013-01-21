@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2012 cyanogenmodroms
+ * Copyright (C) 2012 slimroms
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -231,20 +231,10 @@ public class NavRingTargets extends SettingsPreferenceFragment implements
                 File f = new File(Uri.parse(customIconUri).getPath());
                 if (f.exists())
                     pAction.setIcon(resize(new BitmapDrawable(res, f.getAbsolutePath())));
-            }
-
-            if (customIconUri != null && !customIconUri.equals("")
-                    && customIconUri.startsWith("file")) {
-                // it's an icon the user chose from the gallery here
-                File icon = new File(Uri.parse(customIconUri).getPath());
-                if (icon.exists())
-                    pAction.setIcon(resize(new BitmapDrawable(getResources(), icon
-                            .getAbsolutePath())));
-
             } else if (customIconUri != null && !customIconUri.equals("")) {
                 // here they chose another app icon
                 try {
-                    pAction.setIcon(resize(pm.getActivityIcon(Intent.parseUri(customIconUri, 0))));
+                    pAction.setIcon(resize(pm.getActivityIcon(Intent.parseUri(uri, 0))));
                 } catch (NameNotFoundException e) {
                     e.printStackTrace();
                 } catch (URISyntaxException e) {
