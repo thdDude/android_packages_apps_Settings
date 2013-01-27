@@ -1726,6 +1726,7 @@
         <activity android:name=".cyanogenmod.QuickSettings" />
 
         <activity android:name=".cyanogenmod.StatusBarBatteryStyle" />
+	<activity android:name=".cyanogenmod.StatusBarStyle" />
 
         <activity android:name=".cyanogenmod.NavbarSettings" />
         <activity android:name=".cyanogenmod.NavRingTargets" />
