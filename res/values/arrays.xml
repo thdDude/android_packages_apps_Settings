@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <!-- Copyright (C) 2007 The Android Open Source Project
      Copyright (C) 2013 The CyanogenMod Project
 
@@ -1331,7 +1331,7 @@
         <item>SOUND</item>
     </string-array>
 
-    <!--- Volume key cursor control -->
+    <!-- Volume key cursor control -->
     <string-array name="volume_key_cursor_control_entries" translatable="false">
         <item>@string/volume_key_cursor_control_off</item>
         <item>@string/volume_key_cursor_control_on</item>
@@ -1369,7 +1369,7 @@
         <item>3</item>
     </string-array>
 
-    <!--- Sms security limit -->
+    <!-- Sms security limit -->
     <string-array name="sms_security_check_limit_entries" translatable="false">
         <item>@string/sms_security_check_limit_default</item>
         <item>50</item>
@@ -1383,8 +1383,6 @@
         <item>100</item>
         <item>200</item>
     </string-array>
-
-    <!-- **** CYANOGENMOD EDITS END **** -->
 
     <!-- PropModder -->
     <string-array name="entries_wifi_scan" translatable="false">
@@ -1880,4 +1878,18 @@
         <item>320</item>
     </string-array>
 
+    <!-- Custom lock screen background-->
+    <string-array name="lockscreen_background_entries" translatable="false">
+        <item>@string/lockscreen_background_color_fill</item>
+        <item>@string/lockscreen_background_custom_image</item>
+        <item>@string/lockscreen_background_default_wallpaper</item>
+    </string-array>
+
+    <string-array name="lockscreen_background_values" translatable="false">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+    </string-array>
+
+    <!-- **** CYANOGENMOD ADDITIONS END **** -->
 </resources>
