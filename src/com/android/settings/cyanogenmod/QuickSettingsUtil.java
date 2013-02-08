@@ -63,6 +63,7 @@ public class QuickSettingsUtil {
     public static final String TILE_VOLUME = "toggleVolume";
     public static final String TILE_DAYDREAM = "toggleDaydream";
     public static final String TILE_FCHARGE = "toggleFCharge";
+    public static final String TILE_QUIETHOURS = "toggleQuietHours";
 
     private static final String TILE_DELIMITER = "|";
     protected static ArrayList<String> TILES_DEFAULT = new ArrayList<String>();
@@ -121,6 +122,9 @@ public class QuickSettingsUtil {
         TILES.put(TILE_PROFILE, new QuickSettingsUtil.TileInfo(
                 TILE_PROFILE, R.string.title_tile_profile,
                 "com.android.systemui:drawable/ic_qs_profiles"));
+        TILES.put(TILE_QUIETHOURS, new QuickSettingsUtil.TileInfo(
+                TILE_QUIETHOURS, R.string.title_tile_quiet_hours,
+                "com.android.systemui:drawable/ic_qs_quiet_hours_off"));
         TILES.put(TILE_SETTINGS, new QuickSettingsUtil.TileInfo(
                 TILE_SETTINGS, R.string.title_tile_settings,
                 "com.android.systemui:drawable/ic_qs_settings"));
