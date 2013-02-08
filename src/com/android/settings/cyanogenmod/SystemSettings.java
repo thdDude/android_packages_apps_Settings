@@ -94,7 +94,6 @@ public class SystemSettings extends SettingsPreferenceFragment {
             // Secondary user is logged in, remove all primary user specific preferences
             prefScreen.removePreference(findPreference(KEY_BATTERY_LIGHT));
             prefScreen.removePreference(findPreference(KEY_HARDWARE_KEYS));
-            prefScreen.removePreference(findPreference(KEY_NAVIGATION_BAR));
             prefScreen.removePreference(findPreference(KEY_STATUS_BAR));
             prefScreen.removePreference(findPreference(KEY_QUICK_SETTINGS));
             prefScreen.removePreference(findPreference(KEY_POWER_MENU));
