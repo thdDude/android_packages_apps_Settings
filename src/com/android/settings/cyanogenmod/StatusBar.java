@@ -87,7 +87,7 @@ public class StatusBar extends SettingsPreferenceFragment implements OnPreferenc
         }
 
         mNotificationpanelTransparency = (SeekBarPreference) prefSet.findPreference(NOTIFICATION_PANEL_TRANSPARENCY);
-        mNotificationpanelTransparency.setProperty(Settings.System.STATUS_BAR_TRANSPARENCY);
+        mNotificationpanelTransparency.setProperty(Settings.System.NOTIFICATION_PANEL_TRANSPARENCY);
         mNotificationpanelTransparency.setInitValue((int) (notificationAlpha * 100));
         mNotificationpanelTransparency.setOnPreferenceChangeListener(this);
 
@@ -141,14 +141,12 @@ public class StatusBar extends SettingsPreferenceFragment implements OnPreferenc
             return true;
        } else if (preference == mStatusbarTransparency) {
             float val = Float.parseFloat((String) newValue);
-            Log.e("R", "value: " + val / 100);
-            Settings.System.putFloat(getActivity().getApplicationContext().getContentResolver(),
+             Settings.System.putFloat(getActivity().getApplicationContext().getContentResolver(),
                     Settings.System.STATUS_BAR_TRANSPARENCY,
                     val / 100);
             return true;
         } else if (preference == mNotificationpanelTransparency) {
             float val = Float.parseFloat((String) newValue);
-            Log.e("R", "value: " + val / 100);
             Settings.System.putFloat(getActivity().getApplicationContext().getContentResolver(),
                     Settings.System.NOTIFICATION_PANEL_TRANSPARENCY,
                     val / 100);
