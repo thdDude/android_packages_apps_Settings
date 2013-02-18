@@ -24,7 +24,6 @@ import android.os.ServiceManager;
 import android.preference.CheckBoxPreference;
 import android.preference.ListPreference;
 import android.preference.Preference;
-import android.preference.Preference.OnPreferenceChangeListener;
 import android.preference.PreferenceCategory;
 import android.preference.PreferenceScreen;
 import android.provider.Settings;
@@ -35,14 +34,10 @@ import com.android.settings.R;
 import com.android.settings.SettingsPreferenceFragment;
 import com.android.settings.Utils;
 
-    public class MiscSettings extends SettingsPreferenceFragment implements OnPreferenceChangeListener {
-    private static final String KILL_APP_LONGPRESS_BACK = "kill_app_longpress_back";
-    private static final String KEY_KILL_APP_LONGPRESS_TIMEOUT = "kill_app_longpress_timeout";
+    public class MiscSettings extends SettingsPreferenceFragment {
     private static final String RECENT_TASK_MANAGER_BUTTON = "recent_task_manager_button";
 	
     private CheckBoxPreference mTaskManager;
-    private CheckBoxPreference mKillAppLongpressBack;
-    private ListPreference mKillAppLongpressTimeout;
 
     private ContentResolver mContentResolver;
 
@@ -54,16 +49,6 @@ import com.android.settings.Utils;
         PreferenceScreen prefSet = getPreferenceScreen();
         mContentResolver = getActivity().getApplicationContext().getContentResolver();
 
-        mKillAppLongpressBack = (CheckBoxPreference) findPreference(KILL_APP_LONGPRESS_BACK);
-
-        mKillAppLongpressTimeout = (ListPreference) findPreference(KEY_KILL_APP_LONGPRESS_TIMEOUT);
-        mKillAppLongpressTimeout.setOnPreferenceChangeListener(this);
-
-        int statusKillAppLongpressTimeout = Settings.System.getInt(getActivity().getApplicationContext().getContentResolver(),
-                 Settings.System.KILL_APP_LONGPRESS_TIMEOUT, 1500);
-        mKillAppLongpressTimeout.setValue(String.valueOf(statusKillAppLongpressTimeout));
-        mKillAppLongpressTimeout.setSummary(mKillAppLongpressTimeout.getEntry());
-
         mTaskManager = (CheckBoxPreference) findPreference(RECENT_TASK_MANAGER_BUTTON);
         mTaskManager.setChecked(Settings.System.getInt(
             	getActivity().getApplicationContext().getContentResolver(),
@@ -71,41 +56,9 @@ import com.android.settings.Utils;
 
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        updateKillAppLongpressBackOptions();
-    }
-
-    private void writeKillAppLongpressBackOptions() {
-        Settings.System.putInt(getActivity().getContentResolver(),
-                Settings.System.KILL_APP_LONGPRESS_BACK,
-                mKillAppLongpressBack.isChecked() ? 1 : 0);
-    }
-
-    private void updateKillAppLongpressBackOptions() {
-        mKillAppLongpressBack.setChecked(Settings.System.getInt(
-            getActivity().getContentResolver(), Settings.System.KILL_APP_LONGPRESS_BACK, 0) != 0);
-    }
-
-    public boolean onPreferenceChange(Preference preference, Object objValue) {
-	if (preference == mKillAppLongpressTimeout) {
-            int statusKillAppLongpressTimeout = Integer.valueOf((String) objValue);
-            int index = mKillAppLongpressTimeout.findIndexOfValue((String) objValue);
-            Settings.System.putInt(getActivity().getApplicationContext().getContentResolver(),
-                    Settings.System.KILL_APP_LONGPRESS_TIMEOUT, statusKillAppLongpressTimeout);
-            mKillAppLongpressTimeout.setSummary(mKillAppLongpressTimeout.getEntries()[index]);
-            return true;
-        }
-
-        return false;
-    }
-
     public boolean onPreferenceTreeClick(PreferenceScreen preferenceScreen, Preference preference) {
         boolean value;
-	if (preference == mKillAppLongpressBack) {
-            	writeKillAppLongpressBackOptions();
-	} else if (preference == mTaskManager) {
+	if (preference == mTaskManager) {
             	Settings.System.putInt(getContentResolver(),
                 	Settings.System.RECENT_TASK_MANAGER_BUTTON, mTaskManager.isChecked() ? 1 : 0);
         } else {
