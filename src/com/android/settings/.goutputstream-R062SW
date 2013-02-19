@@ -613,21 +613,6 @@ public class DevelopmentSettings extends PreferenceFragment
         }
     }
 
-<<<<<<< HEAD
-    
-=======
-    private void writeKillAppLongpressBackOptions() {
-        Settings.Secure.putInt(getActivity().getContentResolver(),
-                Settings.Secure.KILL_APP_LONGPRESS_BACK,
-                mKillAppLongpressBack.isChecked() ? 1 : 0);
-    }
-
-    private void updateKillAppLongpressBackOptions() {
-        mKillAppLongpressBack.setChecked(Settings.Secure.getInt(
-            getActivity().getContentResolver(), Settings.Secure.KILL_APP_LONGPRESS_BACK, 0) != 0);
-    }
-
->>>>>>> ab9ecc34fbed8526ef6a5b31ab3ce7b398cd1eb9
     private void updatePasswordSummary() {
         try {
             if (mBackupManager.hasBackupPassword()) {
@@ -1263,16 +1248,10 @@ public class DevelopmentSettings extends PreferenceFragment
             writeShowHwOverdrawOptions();
         } else if (preference == mDebugLayout) {
             writeDebugLayoutOptions();
-<<<<<<< HEAD
-	}
-=======
-        } else if (preference == mKillAppLongpressBack) {
-            writeKillAppLongpressBackOptions();
-        } else if (preference == mAdvancedReboot) {
+	} else if (preference == mAdvancedReboot) {
             writeAdvancedRebootOptions();
         }
 
->>>>>>> ab9ecc34fbed8526ef6a5b31ab3ce7b398cd1eb9
         return false;
     }
 
