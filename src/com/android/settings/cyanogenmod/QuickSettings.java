@@ -23,6 +23,7 @@ import static com.android.internal.util.cm.QSConstants.TILE_NFC;
 import static com.android.internal.util.cm.QSConstants.TILE_PROFILE;
 import static com.android.internal.util.cm.QSConstants.TILE_WIFIAP;
 import static com.android.internal.util.cm.QSConstants.TILE_LTE;
+import static com.android.internal.util.cm.QSConstants.TILE_FCHARGE;
 import static com.android.internal.util.cm.QSUtils.deviceSupportsBluetooth;
 import static com.android.internal.util.cm.QSUtils.deviceSupportsImeSwitcher;
 import static com.android.internal.util.cm.QSUtils.deviceSupportsLte;
@@ -236,7 +237,7 @@ public class QuickSettings extends SettingsPreferenceFragment implements OnPrefe
         // Dont show fast charge tile if not supported
         File fastcharge = new File(FAST_CHARGE_DIR, FAST_CHARGE_FILE);
         if (!fastcharge.exists()) {
-           QuickSettingsUtil.TILES.remove(QuickSettingsUtil.TILE_FCHARGE);
+           QuickSettingsUtil.TILES.remove(TILE_FCHARGE);
         }
     }
 
