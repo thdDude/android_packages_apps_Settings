@@ -24,6 +24,7 @@ import static com.android.internal.util.cm.QSConstants.TILE_PROFILE;
 import static com.android.internal.util.cm.QSConstants.TILE_WIFIAP;
 import static com.android.internal.util.cm.QSConstants.TILE_LTE;
 import static com.android.internal.util.cm.QSConstants.TILE_FCHARGE;
+import static com.android.internal.util.cm.QSConstants.TILE_TORCH;
 import static com.android.internal.util.cm.QSUtils.deviceSupportsBluetooth;
 import static com.android.internal.util.cm.QSUtils.deviceSupportsImeSwitcher;
 import static com.android.internal.util.cm.QSUtils.deviceSupportsLte;
@@ -239,6 +240,12 @@ public class QuickSettings extends SettingsPreferenceFragment implements OnPrefe
         if (!fastcharge.exists()) {
            QuickSettingsUtil.TILES.remove(TILE_FCHARGE);
         }
+
+        // Dont show the torch tile if not supported
+        if (!getResources().getBoolean(R.bool.has_led_flash)) {
+            QuickSettingsUtil.TILES.remove(TILE_TORCH);
+        }
+
     }
 
     public boolean onPreferenceTreeClick(PreferenceScreen preferenceScreen, Preference preference) {
