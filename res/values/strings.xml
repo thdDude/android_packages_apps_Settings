@@ -5510,4 +5510,6 @@ rience. Better keep it disabled on lower end devices.</string>
     <string name="dual_pane_prefs_off">Never</string>
     <string name="dual_pane_prefs_landscape">Only in landscape</string>
 
+    <string name="tile_color_title">Tile color</string>
+
 </resources>
