@@ -485,6 +485,7 @@
         <item>@string/hardware_keys_action_search</item>
         <item>@string/hardware_keys_action_voice_search</item>
         <item>@string/hardware_keys_action_in_app_search</item>
+	<item>@string/hardware_keys_action_widgets</item>
     </string-array>
 
     <string-array name="hardware_keys_action_values" translatable="false">
@@ -494,6 +495,7 @@
         <item>3</item>
         <item>4</item>
         <item>5</item>
+        <item>6</item>
     </string-array>
 
     <string-array name="lockscreen_long_key_press_entries" translatable="false">
@@ -921,6 +923,7 @@
         <item>@string/recents</item>
 	<item>@string/lastapp</item>
         <item>@string/search</item>
+        <item>@string/widgets</item>
         <item>@string/screenshot</item>
         <item>@string/menu</item>
         <item>@string/open_ime_switcher</item>
@@ -937,6 +940,7 @@
         <item>**recents**</item>
 	<item>**lastapp**</item>
         <item>**search**</item>
+        <item>**widgets**</item>
         <item>**screenshot**</item>
         <item>**menu**</item>
         <item>**ime**</item>
@@ -950,6 +954,7 @@
     <string-array name="navring_dialog_entries">
         <item>@string/none</item>
         <item>@string/take_screenshot</item>
+        <item>@string/widgets</item>
         <item>@string/open_ime_switcher</item>
         <item>@string/ring_vib</item>
         <item>@string/ring_silent</item>
@@ -964,6 +969,7 @@
     <string-array name="navring_dialog_values" translatable="false">
         <item>**null**</item>
         <item>**screenshot**</item>
+        <item>**widgets**</item>
         <item>**ime**</item>
         <item>**ring_vib**</item>
         <item>**ring_silent**</item>
