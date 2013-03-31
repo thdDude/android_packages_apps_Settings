@@ -114,14 +114,6 @@ public class SystemSettings extends SettingsPreferenceFragment {
             }
         }
 
-        // Pie controls
-        mPieControl = (PreferenceScreen) findPreference(KEY_PIE_CONTROL);
-        if (mPieControl != null && removeNavbar) {
-            // Remove on devices without a navbar to start with
-            prefScreen.removePreference(mPieControl);
-            mPieControl = null;
-        }
-
         // Don't display the lock clock preference if its not installed
         removePreferenceIfPackageNotInstalled(findPreference(KEY_LOCK_CLOCK));
     }
@@ -168,10 +160,13 @@ public class SystemSettings extends SettingsPreferenceFragment {
      }
 
     private void updatePieControlDescription() {
-        if (Settings.System.getInt(getActivity().getContentResolver(),
-                Settings.System.PIE_CONTROLS, 0) == 1) {
+        int pie = Settings.System.getInt(getActivity().getContentResolver(),
+                Settings.System.PIE_CONTROLS, 0);
+        if (pie == 2) {
             mPieControl.setSummary(getString(R.string.pie_control_enabled));
-        } else {
+        } else if (pie == 1) {
+            mPieControl.setSummary(getString(R.string.pie_control_exp_enabled));
+	} else {
             mPieControl.setSummary(getString(R.string.pie_control_disabled));
         }
     }

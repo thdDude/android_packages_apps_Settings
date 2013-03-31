@@ -1906,5 +1906,18 @@
         <item>2</item>
     </string-array>
 
+    <!-- Pie Control-->
+    <string-array name="pie_control_entries" translatable="false">
+        <item>@string/pie_control_disabled</item>
+        <item>@string/pie_control_exp_enabled</item>
+        <item>@string/pie_control_enabled</item>
+    </string-array>
+
+    <string-array name="pie_control_values" translatable="false">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+    </string-array>
+
     <!-- **** CYANOGENMOD ADDITIONS END **** -->
 </resources>

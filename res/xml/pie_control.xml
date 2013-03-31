@@ -18,10 +18,11 @@
     android:title="@string/pie_control_title"
     xmlns:settings="http://schemas.android.com/apk/res/com.android.settings">
 
-    <CheckBoxPreference
-        android:key="pie_control_checkbox"
+    <ListPreference
+        android:key="pie_control_list"
         android:title="@string/pie_control_title"
-        android:defaultValue="false" />
+	android:entries="@array/pie_control_entries"
+	android:entryValues="@array/pie_control_values" />
 
     <CheckBoxPreference
         android:key="pie_control_search"
