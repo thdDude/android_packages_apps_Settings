@@ -4487,13 +4487,6 @@
     <string name="mem_info">Memory</string>
     <!-- About phone screen, status item label -->
 
-    <!-- Anonymous Statistics - Preview -->
-    <string name="preview_id_title">Unique ID</string>
-    <string name="preview_device_title">Device</string>
-    <string name="preview_version_title">Version</string>
-    <string name="preview_country_title">Country</string>
-    <string name="preview_carrier_title">Carrier</string>
-
     <!-- INTERFACE Settings  -->
     <!-- Settings main menu category heading. Interface (Launcher, Themes, System). [CHAR LIMIT=40] -->
     <string name="header_category_interface">INTERFACE</string>
