@@ -5237,6 +5237,8 @@
     <string name="pie_color_title">PIE button color</string>
     <string name="pie_selected_color_title">PIE selected button color</string>
     <string name="pie_outline_color_title">PIE button color outline</string>
+    <string name="pie_start_title">PIE trigger start</string>
+    <string name="pie_distance_title">PIE trigger distance</string>
 
     <!-- **** CYANOGENMOD ADDITIONS END **** -->
     <string name="title_expanded_volume">Volume slider</string>
