@@ -167,7 +167,7 @@ public class PieControl extends SettingsPreferenceFragment
                 }
             }
             Settings.System.putInt(getContentResolver(),
-                    Settings.System.PIE_GRAVITY, triggerSlots);
+                    Settings.System.PIE_POSITIONS, triggerSlots);
         }
         return true;
     }
@@ -189,7 +189,7 @@ public class PieControl extends SettingsPreferenceFragment
                 Settings.System.PIE_SEARCH, 0) == 1);
 
         getContentResolver().registerContentObserver(
-                Settings.System.getUriFor(Settings.System.PIE_GRAVITY), true,
+                Settings.System.getUriFor(Settings.System.PIE_POSITIONS), true,
                 mPieTriggerObserver);
 
         updatePieTriggers();
@@ -216,7 +216,7 @@ public class PieControl extends SettingsPreferenceFragment
 
     private void updatePieTriggers() {
         int triggerSlots = Settings.System.getInt(getContentResolver(),
-                Settings.System.PIE_GRAVITY, DEFAULT_POSITION);
+                Settings.System.PIE_POSITIONS, DEFAULT_POSITION);
 
         for (int i = 0; i < mTrigger.length; i++) {
             if ((triggerSlots & (0x01 << i)) != 0) {
