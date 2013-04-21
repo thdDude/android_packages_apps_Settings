@@ -159,9 +159,8 @@ public class ColorPickerView extends View {
         initPaintTools();
 
         // Needed for receiving track ball motion events.
-        setFocusableInTouchMode(true);
         setFocusable(true);
-        setClickable(true);
+        setFocusableInTouchMode(true);
     }
 
     private void initPaintTools() {
@@ -512,7 +511,6 @@ public class ColorPickerView extends View {
         }
 
         if (update) {
-            requestFocus();
             if (mListener != null) {
                 mListener.onColorChanged(Color.HSVToColor(mAlpha, new float[] {
                         mHue, mSat, mVal
