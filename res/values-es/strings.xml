@@ -1888,6 +1888,20 @@
     <string name="build_date">Fecha de compilación</string>
     <string name="cpu_info">CPU</string>
     <string name="mem_info">Memoria</string>
+    <string name="anonymous_statistics_title">Estadísticas CyanogenMod</string>
+    <string name="anonymous_statistics_summary">Ayude a mejorar CyanogenMod mediante el envío anónimo de estadísticas</string>
+    <string name="anonymous_statistics_warning_title">Aviso</string>
+    <string name="anonymous_statistics_warning">Permitiendo la recopilación y envío de estadísticas de CyanogenMod, autoriza el envío de información de carácter no personal a los desarrolladores de CyanogenMod para realizar un seguimiento de las instalaciones que realice en los dispositivos. La información enviada incluye un identificador único que no compromete su privacidad o su información personal. Esta información es enviada durante el arranque.\n\nPara ver un ejemplo de la información enviada, pulse en \u00ABPrevisualizar datos\u00BB</string>
+    <string name="enable_reporting_title">Activar envío estadísticas</string>
+    <string name="preview_data_title">Previsualizar datos</string>
+    <string name="view_stats_title">Ver estadísticas</string>
+    <string name="anonymous_learn_more">Leer más</string>
+    <string name="anonymous_notification_desc">Activar o desactivar estadísticas de CyanogenMod</string>
+    <string name="preview_id_title">Identificador único</string>
+    <string name="preview_device_title">Dispositivo</string>
+    <string name="preview_version_title">Versión</string>
+    <string name="preview_country_title">País</string>
+    <string name="preview_carrier_title">Operadora móvil</string>
     <string name="header_category_interface">Interfaz gráfica</string>
     <string name="launcher_settings_title">Inicio</string>
     <string name="themes_settings_title">Temas</string>
@@ -1905,8 +1919,6 @@
     <string name="lockscreen_target_empty">Vacío</string>
     <string name="lockscreen_target_edit_title">Editar acceso directo</string>
     <string name="lockscreen_target_edit_msg">Seleccionar o cambiar la aplicación (o actividad) y su icono</string>
-    <string name="lockscreen_see_through_title">Ver a través</string>
-    <string name="lockscreen_see_through_summary">Permite observar la aplicación detrás de la pantalla de bloqueo. Una imagen personalizada deshabilitará esta preferencia</string>
     <string name="lockscreen_vibrate_enabled_title">Vibración</string>
     <string name="lockscreen_vibrate_enabled_head">Vibrar al desbloquear</string>
     <string name="lockscreen_battery_status_title">Estado de la batería</string>
@@ -2389,14 +2401,12 @@
     <string name="cyanogenmod_waiver_body">Cambiar este ajuste puede ir en contra de la leyes de su estado o país.\n\nPulsando \u00ABAceptar\u00BB, usted reconoce esta advertencia y exime de cualquier responsabilidad legal a CyanogenMod y sus colaboradores, renunciando así a cualquier reclamación por daños y perjuicios.</string>
     <string name="light_sensor_current_value">Valor actual del sensor: <xliff:g id="light_level">%d</xliff:g> lux</string>
     <string name="auto_brightness_dialog_title">Niveles automáticos de brillo</string>
-    <string name="auto_brightness_level_format"><xliff:g id="start_level">%1$s</xliff:g> -\n<xliff:g id="end_level">%2$s</xliff:g> lux</string>
+    <string name="auto_brightness_level_format"><xliff:g id="level">%1$d</xliff:g> lux</string>
+    <string name="auto_brightness_last_level_format"><xliff:g id="level">%1$d</xliff:g> -\n\u221e lux</string>
     <string name="auto_brightness_brightness_format"><xliff:g id="percent">%s</xliff:g>%%</string>
     <string name="auto_brightness_adjust_button">Ajustar</string>
     <string name="auto_brightness_reset_button">Restablecer</string>
-    <string name="auto_brightness_lux_dialog_title">Luminosidad ambiental</string>
     <string name="auto_brightness_split_dialog_title">Dividir nivel</string>
-    <string name="auto_brightness_start_lux">Inicio del intervalo (lux)</string>
-    <string name="auto_brightness_end_lux">Fin del intervalo (lux)</string>
     <string name="auto_brightness_reset_dialog_title">¿Restablecer los niveles?</string>
     <string name="auto_brightness_reset_confirmation">Todos los niveles de brillo serán restablecidos a los valores por defecto.</string>
     <string name="auto_brightness_split_lux_format">Valor para división (entre <xliff:g id="min">%1$d</xliff:g> y <xliff:g id="max">%2$d</xliff:g> lux)</string>
@@ -2425,7 +2435,6 @@
     <string name="pie_control_title">Controles flotantes</string>
     <string name="pie_control_enabled">Habilitados cuando el escritorio extendido esté activado</string>
     <string name="pie_control_disabled">Deshabilitados</string>
-    <string name="pie_control_search_title">Mostrar botón Búsqueda</string>
     <string name="pie_control_size">Tamaño de los controles</string>
     <string name="pie_control_trigger_positions">Zonas de activación</string>
     <string name="pie_control_trigger_left">Borde izquierdo</string>
