@@ -877,25 +877,6 @@ desired screen brightness. Selecting \'Split\' allows you to to duplicate one li
 two in order to insert additional control points. \'Remove\' deletes the selected line.
     </string>
 
-    <!-- Quick/Pie Control #CM -->
-    <string name="pie_control_title">Pie controls</string>
-    <string name="pie_control_enabled">Enabled</string>
-    <string name="pie_control_exp_enabled">Enabled when Expanded desktop is active</string>
-    <string name="pie_control_disabled">Disabled</string>
-    <string name="pie_control_search_title">Show search button</string>
-    <string name="pie_control_size">Navigation key size</string>
-    <string name="pie_control_trigger_positions">Trigger positions</string>
-    <string name="pie_control_trigger_left">Left screen border</string>
-    <string name="pie_control_trigger_bottom">Bottom screen border</string>
-    <string name="pie_control_trigger_right">Right screen border</string>
-    <string name="pie_control_trigger_top">Top screen border</string>
-    <string name="pie_control_trigger_top_summary">Only navigation will be displayed at top</string>
-    <string name="pie_color_title">PIE button color</string>
-    <string name="pie_selected_color_title">PIE selected button color</string>
-    <string name="pie_outline_color_title">PIE button color outline</string>
-    <string name="pie_start_title">PIE trigger start</string>
-    <string name="pie_distance_title">PIE trigger distance</string>
-
 <!-- Stylus Gestures -->
     <string name="gestures_settings_title">Stylus gestures</string>
     <string name="category_spen_title">Stylus gestures</string>
