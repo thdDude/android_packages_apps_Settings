@@ -64,21 +64,6 @@ public class SystemSettings extends SettingsPreferenceFragment  implements
         addPreferencesFromResource(R.xml.system_settings);
         PreferenceScreen prefScreen = getPreferenceScreen();
 
-        // Determine which user is logged in
-        mIsPrimary = UserHandle.myUserId() == UserHandle.USER_OWNER;
-        if (mIsPrimary) {
-            // Primary user only preferences
-            // Battery lights
-            mBatteryPulse = (PreferenceScreen) findPreference(KEY_BATTERY_LIGHT);
-            if (mBatteryPulse != null) {
-                if (getResources().getBoolean(
-                        com.android.internal.R.bool.config_intrusiveBatteryLed) == false) {
-                    prefScreen.removePreference(mBatteryPulse);
-                } else {
-                    mBatteryPulse = null;
-                }
-            }
-
             // Only show the hardware keys config on a device that does not have a navbar
             // and the navigation bar config on phones that has a navigation bar
             boolean removeKeys = false;
@@ -90,7 +75,22 @@ public class SystemSettings extends SettingsPreferenceFragment  implements
                 }
             } catch (RemoteException e) {
                 // Do nothing
+			}
+				
+        // Determine which user is logged in
+        mIsPrimary = UserHandle.myUserId() == UserHandle.USER_OWNER;
+        if (mIsPrimary) {
+            // Primary user only preferences
+            // Battery lights
+            mBatteryPulse = (PreferenceScreen) findPreference(KEY_BATTERY_LIGHT);
+            if (mBatteryPulse != null) {
+                if (getResources().getBoolean(
+                        com.android.internal.R.bool.config_intrusiveBatteryLed) == false) {
+                    prefScreen.removePreference(mBatteryPulse);
+                    mBatteryPulse = null;
+                }
             }
+
 
             // Act on the above
             if (removeKeys) {
@@ -112,8 +112,7 @@ public class SystemSettings extends SettingsPreferenceFragment  implements
         if (mNotificationPulse != null) {
             if (!getResources().getBoolean(com.android.internal.R.bool.config_intrusiveNotificationLed)) {
                 prefScreen.removePreference(mNotificationPulse);
-            } else {
-                updateLightPulseDescription();
+                mNotificationPulse = null;
             }
         }
 
@@ -195,19 +194,6 @@ public class SystemSettings extends SettingsPreferenceFragment  implements
             mBatteryPulse.setSummary(getString(R.string.notification_light_disabled));
         }
      }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-
-        // All users
-        updateLightPulseDescription();
-
-        // Primary user only
-        if (mIsPrimary) {
-            updateBatteryPulseDescription();
-        }
-    }
 
     private void updateExpandedDesktop(int value) {
         ContentResolver cr = getContentResolver();
