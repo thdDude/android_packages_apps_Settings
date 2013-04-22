@@ -326,9 +326,6 @@ public class NavbarButtonSettings extends SettingsPreferenceFragment implements
             String uri = Settings.System.getString(getActivity().getContentResolver(),
                     Settings.System.NAVIGATION_CUSTOM_ACTIVITIES[index]);
 
-        int resId = 0;
-        PackageManager pm = mContext.getPackageManager();
-
         if (pm != null) {
             try {
                 mSystemUiResources = pm.getResourcesForApplication("com.android.systemui");
@@ -444,6 +441,9 @@ public class NavbarButtonSettings extends SettingsPreferenceFragment implements
         String uri = Settings.System.getString(getActivity().getContentResolver(),
                 Settings.System.NAVIGATION_CUSTOM_ACTIVITIES[index]);
 
+        int resId = 0;
+        PackageManager pm = mContext.getPackageManager();
+
         if (uri == null)
             return getResources().getDrawable(R.drawable.ic_sysbar_null);
 
@@ -468,7 +468,6 @@ public class NavbarButtonSettings extends SettingsPreferenceFragment implements
                 resId = mSystemUiResources.getIdentifier("com.android.systemui:drawable/ic_sysbar_power", null, null);
             } else if (uri.equals("**notifications**")) {
                 resId = mSystemUiResources.getIdentifier("com.android.systemui:drawable/ic_sysbar_notifications", null, null);
-            }
             } else if (uri.equals("**lastapp**")) {
                 resId = mSystemUiResources.getIdentifier("com.android.systemui:drawable/ic_sysbar_lastapp", null, null);
             }
