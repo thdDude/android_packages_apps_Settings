@@ -103,6 +103,22 @@
         <item>26</item>
     </string-array>
 
+    <string-array name="entries_status_bar_transparency">
+        <item>0%</item>
+        <item>25%</item>
+        <item>50%</item>
+        <item>75%</item>
+        <item>100%</item>
+    </string-array>
+
+    <string-array name="values_status_bar_transparency" translatable="false">
+        <item>100</item>
+        <item>75</item>
+        <item>50</item>
+        <item>25</item>
+        <item>0</item>
+    </string-array>
+
     <string-array name="dithering_entries" translatable="false">
         <item>@string/dithering_no_dither</item>
         <item>@string/dithering_color_banding</item>
@@ -370,18 +386,6 @@
         <item>0</item>
     </string-array>
 
-    <string-array name="entries_status_bar_am_pm">
-        <item>Normal</item>
-        <item>Small</item>
-        <item>None</item>
-    </string-array>
-
-    <string-array name="values_status_bar_am_pm" translatable="false">
-        <item>0</item>
-        <item>1</item>
-        <item>2</item>
-    </string-array>
-
     <string-array name="entries_status_bar_battery" translatable="false">
         <item>@string/status_bar_style_icon</item>
         <item>@string/status_bar_battery_status_percentage</item>
@@ -408,6 +412,46 @@
         <item>0</item>
         <item>1</item>
         <item>2</item>
+    </string-array>
+
+    <!--- Kill app longpress back -->
+    <string-array name="kill_app_longpress_timeout_entries" translatable="false">
+        <item>@string/kill_app_longpress_timeout_3000</item>
+        <item>@string/kill_app_longpress_timeout_2500</item>
+        <item>@string/kill_app_longpress_timeout_2000</item>
+        <item>@string/kill_app_longpress_timeout_1500</item>
+        <item>@string/kill_app_longpress_timeout_1000</item>
+        <item>@string/kill_app_longpress_timeout_500</item>
+    </string-array>
+
+    <string-array name="kill_app_longpress_timeout_values" translatable="false">
+        <item>3000</item>
+        <item>2500</item>
+        <item>2000</item>
+        <item>1500</item>
+        <item>1000</item>
+        <item>500</item>
+    </string-array>
+
+    <!--- Nav buttons height -->
+    <string-array name="nav_buttons_height_entries" translatable="false">
+        <item>@string/navigation_bar_height_48</item>
+        <item>@string/navigation_bar_height_44</item>
+        <item>@string/navigation_bar_height_40</item>
+        <item>@string/navigation_bar_height_36</item>
+        <item>@string/navigation_bar_height_32</item>
+        <item>@string/navigation_bar_height_28</item>
+        <item>@string/navigation_bar_height_24</item>
+    </string-array>
+
+    <string-array name="nav_buttons_height_values" translatable="false">
+        <item>48</item>
+        <item>44</item>
+        <item>40</item>
+        <item>36</item>
+        <item>32</item>
+        <item>28</item>
+        <item>24</item>
     </string-array>
 
     <string-array name="hardware_keys_action_entries" translatable="false">
@@ -485,12 +529,14 @@
         <item>@string/quick_pulldown_off</item>
         <item>@string/quick_pulldown_right</item>
         <item>@string/quick_pulldown_left</item>
+        <item>@string/quick_pulldown_on_off</item>
     </string-array>
 
     <string-array name="quick_pulldown_values" translatable="false">
         <item>0</item>
         <item>1</item>
         <item>2</item>
+        <item>3</item>
     </string-array>
 
     <!-- Sms security limit -->
@@ -510,6 +556,500 @@
         <item>500</item>
         </string-array>
 
+    <!-- PropModder -->
+    <string-array name="entries_wifi_scan" translatable="false">
+        <item>0</item>
+        <item>15</item>
+        <item>30</item>
+        <item>45</item>
+        <item>60</item>
+        <item>75</item>
+        <item>90</item>
+        <item>105</item>
+        <item>120</item>
+        <item>135</item>
+        <item>150</item>
+        <item>165</item>
+        <item>180</item>
+        <item>195</item>
+        <item>210</item>
+        <item>225</item>
+        <item>240</item>
+        <item>255</item>
+        <item>270</item>
+        <item>285</item>
+        <item>300</item>
+        <item>315</item>
+        <item>330</item>
+        <item>345</item>
+        <item>360</item>
+        <item>375</item>
+        <item>390</item>
+        <item>405</item>
+        <item>420</item>
+    </string-array>
+
+    <string-array name="entries_lcd_density" translatable="false">
+        <item>240</item>
+        <item>242</item>
+        <item>244</item>
+        <item>246</item>
+        <item>248</item>
+        <item>250</item>
+        <item>252</item>
+        <item>254</item>
+        <item>256</item>
+        <item>258</item>
+        <item>260</item>
+        <item>262</item>
+        <item>264</item>
+        <item>266</item>
+        <item>268</item>
+        <item>270</item>
+        <item>272</item>
+        <item>274</item>
+        <item>276</item>
+        <item>278</item>
+        <item>280</item>
+        <item>282</item>
+        <item>284</item>
+        <item>285</item>
+        <item>286</item>
+        <item>288</item>
+        <item>290</item>
+        <item>292</item>
+        <item>294</item>
+        <item>296</item>
+        <item>298</item>
+        <item>300</item>
+        <item>302</item>
+        <item>304</item>
+        <item>306</item>
+        <item>308</item>
+        <item>310</item>
+        <item>312</item>
+        <item>314</item>
+        <item>316</item>
+        <item>318</item>
+        <item>320</item>
+        <item>322</item>
+        <item>324</item>
+        <item>326</item>
+        <item>328</item>
+        <item>330</item>
+        <item>332</item>
+        <item>334</item>
+        <item>336</item>
+        <item>338</item>
+        <item>340</item>
+        <item>342</item>
+        <item>344</item>
+        <item>346</item>
+        <item>348</item>
+        <item>350</item>
+        <item>352</item>
+        <item>354</item>
+        <item>356</item>
+        <item>358</item>
+        <item>360</item>
+    </string-array>
+
+    <string-array name="entries_max_events" translatable="false">
+        <item>60</item>
+        <item>65</item>
+        <item>70</item>
+        <item>75</item>
+        <item>80</item>
+        <item>85</item>
+        <item>90</item>
+        <item>95</item>
+        <item>100</item>
+        <item>105</item>
+        <item>110</item>
+        <item>115</item>
+        <item>120</item>
+        <item>160</item>
+        <item>165</item>
+        <item>170</item>
+        <item>175</item>
+        <item>180</item>
+        <item>185</item>
+        <item>190</item>
+        <item>195</item>
+        <item>200</item>
+        <item>205</item>
+        <item>210</item>
+        <item>215</item>
+        <item>220</item>
+        <item>225</item>
+        <item>230</item>
+        <item>235</item>
+        <item>240</item>
+        <item>245</item>
+        <item>250</item>
+        <item>260</item>
+        <item>265</item>
+        <item>270</item>
+        <item>275</item>
+        <item>280</item>
+        <item>290</item>
+        <item>295</item>
+        <item>300</item>
+    </string-array>
+
+    <string-array name="entries_ring_delay" translatable="false">
+        <item>0</item>
+        <item>50</item>
+        <item>100</item>
+        <item>200</item>
+        <item>300</item>
+        <item>400</item>
+        <item>500</item>
+        <item>600</item>
+        <item>700</item>
+        <item>800</item>
+        <item>900</item>
+        <item>1000</item>
+        <item>1050</item>
+        <item>1100</item>
+        <item>1200</item>
+        <item>1300</item>
+        <item>1400</item>
+        <item>1500</item>
+        <item>1600</item>
+        <item>1700</item>
+        <item>1800</item>
+        <item>1900</item>
+        <item>2000</item>
+        <item>2050</item>
+        <item>2100</item>
+        <item>2200</item>
+        <item>2300</item>
+        <item>2400</item>
+        <item>2500</item>
+        <item>3000</item>
+    </string-array>
+
+    <string-array name="entries_vm_heapsize" translatable="false">
+        <item>16m</item>
+        <item>24m</item>
+        <item>28m</item>
+        <item>32m</item>
+        <item>36m</item>
+        <item>42m</item>
+        <item>48m</item>
+        <item>52m</item>
+        <item>56m</item>
+        <item>64m</item>
+        <item>68m</item>
+        <item>72m</item>
+        <item>76m</item>
+        <item>84m</item>
+        <item>96m</item>
+        <item>128m</item>
+        <item>160m</item>
+        <item>192m</item>
+        <item>224m</item>
+        <item>256m</item>
+    </string-array>
+
+    <string-array name="entries_fast_up_explain">
+        <item>Remove</item>
+        <item>HSUPA Disabled (Capped)</item>
+        <item>HSUPA Enabled</item>
+        <item>HSUPA Enabled (Uncapped)</item>
+    </string-array>
+
+    <string-array name="entries_fast_up" translatable="false">
+        <item>disable</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+    </string-array>
+
+    <string-array name="entries_prox_delay_explain">
+        <item>Remove</item>
+        <item>0</item>
+        <item>50</item>
+        <item>75</item>
+        <item>125</item>
+        <item>150</item>
+        <item>175</item>
+        <item>200</item>
+        <item>225</item>
+        <item>250</item>
+        <item>275</item>
+        <item>300</item>
+        <item>325</item>
+        <item>350</item>
+        <item>375</item>
+        <item>400</item>
+        <item>425</item>
+        <item>450</item>
+        <item>475</item>
+        <item>500</item>
+    </string-array>
+
+    <string-array name="entries_prox_delay">
+        <item>disable</item>
+        <item>0</item>
+        <item>50</item>
+        <item>75</item>
+        <item>125</item>
+        <item>150</item>
+        <item>175</item>
+        <item>200</item>
+        <item>225</item>
+        <item>250</item>
+        <item>275</item>
+        <item>300</item>
+        <item>325</item>
+        <item>350</item>
+        <item>375</item>
+        <item>400</item>
+        <item>425</item>
+        <item>450</item>
+        <item>475</item>
+        <item>500</item>
+    </string-array>
+
+    <string-array name="entries_sleep_explain">
+        <item>Disable</item>
+        <item>Power Collapse Suspend</item>
+        <item>Power Collapse (Best)</item>
+        <item>Apps Sleep</item>
+        <item>Slow Clock</item>
+        <item>Wait For Interrupt</item>
+    </string-array>
+
+    <string-array name="entries_sleep">
+        <item>disable</item>
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+    </string-array>
+
+    <!-- NavBar -->
+    <string-array name="pref_navigation_menu_entries">
+        <item>@string/right</item>
+        <item>@string/left</item>
+        <item>@string/both</item>
+        <item>@string/dont_show</item>
+    </string-array>
+
+    <!-- right is the default, easier to keep 0 as first index -->
+    <string-array name="pref_navigation_menu_values" translatable="false">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+        <item>4</item>
+    </string-array>
+
+    <string-array name="pref_navigation_menu_display_entries">
+        <item>@string/default_jb_behavior</item>
+        <item>@string/always_show_invincible_icons</item>
+        <item>@string/always_show</item>
+        <item>@string/default_jb_with_invincible_icons_when_hidden</item>
+    </string-array>
+
+    <string-array name="pref_navigation_menu_display_values" translatable="false">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+    </string-array>
+
+    <string-array name="navigation_bar_qty_entries" translatable="false">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+    </string-array>
+
+    <string-array name="navigation_bar_qty_values" translatable="false">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+    </string-array>
+
+    <string-array name="navbar_button_entries">
+        <item>@string/home</item>
+        <item>@string/back</item>
+        <item>@string/recents</item>
+        <item>@string/search</item>
+        <item>@string/screenshot</item>
+        <item>@string/menu</item>
+        <item>@string/open_ime_switcher</item>
+        <item>@string/kill_app</item>
+        <item>@string/power</item>
+        <item>@string/notifications</item>
+        <item>@string/custom_app</item>
+        <item>@string/blank</item>
+    </string-array>
+
+    <string-array name="navbar_button_values" translatable="false">
+        <item>**home**</item>
+        <item>**back**</item>
+        <item>**recents**</item>
+        <item>**search**</item>
+        <item>**screenshot**</item>
+        <item>**menu**</item>
+        <item>**ime**</item>
+        <item>**kill**</item>
+        <item>**power**</item>
+        <item>**notifications**</item>
+        <item>**app**</item>
+        <item>**null**</item>
+    </string-array>
+
+    <string-array name="navring_dialog_entries">
+        <item>@string/none</item>
+        <item>@string/take_screenshot</item>
+        <item>@string/open_ime_switcher</item>
+        <item>@string/ring_vib</item>
+        <item>@string/ring_silent</item>
+        <item>@string/ring_vib_silent</item>
+        <item>@string/kill_app</item>
+        <item>@string/screen_off</item>
+        <item>@string/google_now</item>
+        <item>@string/select_application</item>
+    </string-array>
+
+    <string-array name="navring_dialog_values" translatable="false">
+        <item>**null**</item>
+        <item>**screenshot**</item>
+        <item>**ime**</item>
+        <item>**ring_vib**</item>
+        <item>**ring_silent**</item>
+        <item>**ring_vib_silent**</item>
+        <item>**kill**</item>
+        <item>**power**</item>
+        <item>**assist**</item>
+        <item>**app**</item>
+    </string-array>
+
+    <string-array name="pref_navring_amount_entries">
+        <item>@string/one_target</item>
+        <item>@string/two_targets</item>
+        <item>@string/three_targets</item>
+        <item>@string/four_targets</item>
+        <item>@string/five_targets</item>
+    </string-array>
+
+    <string-array name="pref_navring_amount_values" translatable="false">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+    </string-array>
+
+    <string-array name="navigation_bar_width_entries" translatable="false">
+        <item>@string/size_42_dp_default</item>
+        <item>@string/size_40_dp</item>
+        <item>@string/size_36_dp</item>
+        <item>@string/size_32_dp</item>
+        <item>@string/size_30_dp</item>
+        <item>@string/size_24_dp</item>
+    </string-array>
+
+    <string-array name="navigation_bar_width" translatable="false">
+        <item>42</item>
+        <item>40</item>
+        <item>36</item>
+        <item>32</item>
+        <item>30</item>
+        <item>24</item>
+    </string-array>
+
+    <string-array name="navigation_bar_height_entries" translatable="false">
+        <item>@string/size_48_dp_default</item>
+        <item>@string/size_44_dp</item>
+        <item>@string/size_42_dp</item>
+        <item>@string/size_40_dp</item>
+        <item>@string/size_36_dp</item>
+        <item>@string/size_32_dp</item>
+        <item>@string/size_30_dp</item>
+        <item>@string/size_24_dp</item>
+    </string-array>
+
+    <string-array name="navigation_bar_height" translatable="false">
+        <item>48</item>
+        <item>44</item>
+        <item>42</item>
+        <item>40</item>
+        <item>36</item>
+        <item>32</item>
+        <item>30</item>
+        <item>24</item>
+    </string-array>
+
+    <string-array name="navigation_bar_height_landscape_entries" translatable="false">
+        <item>@string/size_48_dp_default</item>
+        <item>@string/size_44_dp</item>
+        <item>@string/size_42_dp</item>
+        <item>@string/size_40_dp</item>
+        <item>@string/size_36_dp</item>
+        <item>@string/size_32_dp</item>
+        <item>@string/size_30_dp</item>
+        <item>@string/size_24_dp</item>
+    </string-array>
+
+    <string-array name="navigation_bar_height_landscape" translatable="false">
+        <item>48</item>
+        <item>44</item>
+        <item>42</item>
+        <item>40</item>
+        <item>36</item>
+        <item>32</item>
+        <item>30</item>
+        <item>24</item>
+    </string-array>
+
+    <string-array name="glow_times_entries">
+        <item>@string/glow_times_superquick</item>
+        <item>@string/glow_times_quick</item>
+        <item>@string/glow_times_normal</item>
+    </string-array>
+
+    <string-array name="glow_times_values" translatable="false">
+        <item>100|10</item>
+        <item>250|25</item>
+        <item>500|50</item>
+    </string-array>
+
+ <string-array name="lcd_density_entries" translatable="false">
+        <item>160</item>
+        <item>182</item>
+        <item>200</item>
+        <item>220</item>
+        <item>240</item>
+        <item>241</item>
+        <item>268</item>
+        <item>280</item>
+        <item>300</item>
+        <item>320</item>
+        <item>340</item>
+        <item>@string/custom_density</item>
+    </string-array>
+
+    <string-array name="lcd_density_stock_entries">
+        <item>213 -- nexus7</item>
+        <item>240 -- hdpi</item>
+        <item>320 -- xhdpi</item>
+    </string-array>
+
+    <string-array name="lcd_density_stock_values" translatable="false">
+        <item>213</item>
+        <item>240</item>
+        <item>320</item>
+    </string-array>
+
     <!-- Custom lock screen background-->
     <string-array name="lockscreen_background_entries" translatable="false">
         <item>@string/lockscreen_background_color_fill</item>
@@ -523,23 +1063,17 @@
         <item>2</item>
     </string-array>
 
-    <!-- Stylus Gestures -->
-    <string-array name="gestures_entries" translatable="false">
-        <item>@string/gestures_action_empty</item>
-        <item>@string/gestures_action_home</item>
-        <item>@string/gestures_action_back</item>
-        <item>@string/gestures_action_menu</item>
-        <item>@string/gestures_action_search</item>
-        <item>@string/gestures_action_recent</item>
+    <!-- Pie Control-->
+    <string-array name="pie_control_entries" translatable="false">
+        <item>@string/pie_control_disabled</item>
+        <item>@string/pie_control_exp_enabled</item>
+        <item>@string/pie_control_enabled</item>
     </string-array>
 
-    <string-array name="gestures_values" translatable="false">
-        <item>1000</item>
-        <item>1001</item>	
-        <item>1002</item>
-        <item>1003</item>
-        <item>1004</item>
-        <item>1005</item>
+    <string-array name="pie_control_values" translatable="false">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
     </string-array>
+
 </resources>
-

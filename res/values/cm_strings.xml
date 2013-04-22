@@ -70,6 +70,10 @@
 
     <string name="ok">OK</string>
 
+   <!-- **** CYANOGENMOD ADDITIONS START **** -->
+
+    <string name="ok">OK</string>
+
     <!-- Quiet hours -->
     <string name="quiet_hours_title">Quiet hours</string>
     <string name="quiet_hours_summary">Configure the hours the device should be quiet</string>
@@ -137,7 +141,7 @@
     <!-- Notification Drawer  -->
     <string name="notification_drawer_title">Notification drawer</string>
 
-<!-- Statusbar Clock Settings  -->
+    <!-- Statusbar Clock Settings  -->
     <string name="statusbar_clock_title">Statusbar clock</string>
     <string name="clock_title_enable">Right / Center / None</string>
     <string name="title_clock_ampm_entries">Am/Pm style</string>
@@ -186,6 +190,7 @@
     <string name="kill_app_longpress_timeout_500">500ms</string>
 
     <string name="notification_panel_transparency_title">Notification Panel Transparency</string>
+
     <string name="lock_screen_title">Lock screen</string>
 
     <!-- Lock Screen Shortcuts -->
@@ -200,7 +205,7 @@
     <string name="lockscreen_target_edit_title">Edit shortcut and icon</string>
     <string name="lockscreen_target_edit_msg">Select or change the desired application or activity and the associated icon</string>
 
-<!-- Lock screen see through -->
+    <!-- Lock screen see through -->
     <string name="lockscreen_see_through_title">See through</string>
     <string name="lockscreen_see_through_summary">Allows to see the activity behind the lock screen. Custom image will disable this preference.</string>
 
@@ -502,7 +507,7 @@
     <!-- Notification light dialogs -->
     <string name="edit_light_settings">Edit light settings</string>
     <string name="pulse_speed_title">Pulse length and speed</string>
-    <string name="picker_arrow">?</string>
+    <string name="picker_arrow">→</string>
     <string name="default_time">Normal</string>
     <string name="custom_time">Custom</string>
     <string name="dialog_test">Test</string>
@@ -563,7 +568,7 @@
     <string name="hardware_keys_action_search">Search assistant</string>
     <string name="hardware_keys_action_voice_search">Voice search</string>
     <string name="hardware_keys_action_in_app_search">In-app search</string>
-<string name="key_menu_enabled">Menu Key Enabled</string>
+    <string name="key_menu_enabled">Menu Key Enabled</string>
     <string name="key_back_enabled">Back Key Enabled</string>
     <string name="key_home_enabled">Home Key Enabled</string>
 
@@ -571,7 +576,7 @@
     <string name="swap_volume_buttons_title">Swap volume buttons</string>
     <string name="swap_volume_buttons_summary">Swap volume buttons when the screen is rotated</string>
 
-       <!-- Power Widget  -->
+    <!-- Power Widget  -->
     <string name="power_widget_title">Power widget</string>
     <string name="title_expanded_widget">Power widget</string>
     <string name="power_widget_behavior">Widget behavior</string>
@@ -636,7 +641,7 @@
     <string name="power_menu_airplane_title">Airplane mode</string>
     <string name="power_menu_user_title">User switcher</string>
     <string name="power_menu_sound_title">Sound panel</string>
-    
+
     <!-- Advanced, Device specific (DeviceParts) settings  -->
     <string name="advanced_settings_title">Advanced</string>
 
@@ -647,7 +652,7 @@
     <!-- Status bar  -->
     <string name="status_bar_title">Status bar</string>
     <string name="status_bar_general_title">General</string>
-     <string name="status_bar_battery_title">Battery status style</string>
+    <string name="status_bar_battery_title">Battery status style</string>
     <string name="status_bar_toggle_brightness">Brightness control</string>
     <string name="status_bar_toggle_brightness_summary">Adjust brightness by sliding across status bar</string>
     <string name="status_bar_toggle_info">Automatic brightness is enabled</string>
@@ -663,7 +668,7 @@
     <string name="status_bar_notif_count_title">Show notification count</string>
     <string name="status_bar_notif_count_summary">Display number of pending notifications</string>
 
-<!-- TRDS Settings -->
+    <!-- TRDS Settings -->
     <string name="trds_settings_title">The Real Dark Slim</string>
 
     <!-- Wakeup options -->
@@ -671,7 +676,7 @@
     <string name="pref_volume_wake_title">Volume rocker wake</string>
     <string name="pref_volume_wake_summary">Pressing the volume rocker up/down will wake the device</string>
 
- <!-- Power Widget toggle color -->
+    <!-- Power Widget toggle color -->
     <string name="toggle_color_title">Toggles color and bar</string>
     <string name="enable_toggle_colors_title">Enable toggle colors</string>
     <string name="enable_toggle_bar_title">Enable toggle bar</string>
@@ -756,7 +761,7 @@
     <string name="title_dynamic_usbtether">USB Tether</string>
     <string name="title_dynamic_wifi">Wi-Fi display</string>
 
-    <string name="title_general">General</string>
+   <string name="title_general">General</string>
     <string name="title_quick_pulldown">Quick pulldown</string>
     <string name="summary_quick_pulldown">%1$s edge of the status bar pulls down Quick Settings</string>
     <string name="quick_pulldown_summary_left">Left</string>
@@ -764,6 +769,7 @@
     <string name="quick_pulldown_off">Off</string>
     <string name="quick_pulldown_left">Left</string>
     <string name="quick_pulldown_right">Right</string>
+
     <string name="quick_pulldown_on_off">If no notifications</string>
     <string name="quick_pulldown_summary_on_off">Enabled if no notifications for the current user are pending</string>
 
@@ -788,7 +794,8 @@
     <string name="app_security_title">App security</string>
     <string name="sms_security_check_limit_title">SMS message limit</string>
     <string name="sms_security_check_limit_summary">Apps can send %d messages in 30 minutes before requiring confirmation</string>
-    <string name="sms_security_check_limit_default">30 (Default)</string>    <string name="keyguard_picker_all_widgets_title">Show all widgets</string>
+    <string name="sms_security_check_limit_default">30 (Default)</string>
+
     <string name="keyguard_picker_all_widgets_title">Show all widgets</string>
 
     <!--- Lock clock -->
@@ -826,16 +833,14 @@
     <!-- Automatic brightness customization -->
     <string name="light_sensor_current_value">Current light sensor value: <xliff:g id="light_level">%d</xliff:g> lux</string>
     <string name="auto_brightness_dialog_title">Automatic brightness levels</string>
-    <string name="auto_brightness_level_format"><xliff:g id="level">%1$d</xliff:g> lux</string>
-    <string name="auto_brightness_last_level_format"><xliff:g id="level">%1$d</xliff:g> -\n\u221e lux</string>
+    <string name="auto_brightness_level_format"><xliff:g id="start_level">%1$s</xliff:g> -\n<xliff:g id="end_level">%2$s</xliff:g> lux</string>
     <string name="auto_brightness_brightness_format"><xliff:g id="percent">%s</xliff:g>%%</string>
     <string name="auto_brightness_adjust_button">Adjust</string>
-    <string name="auto_brightness_close_button">Close</string>
     <string name="auto_brightness_reset_button">Reset</string>
+    <string name="auto_brightness_lux_dialog_title">Ambient brightness range</string>
     <string name="auto_brightness_split_dialog_title">Split brightness level</string>
-    <string name="auto_brightness_level_dialog_title">Light level setup</string>
-    <string name="auto_brightness_lux">Ambient brightness (lux)</string>
-    <string name="auto_brightness_backlight">Screen brightness (%)</string>
+    <string name="auto_brightness_start_lux">Range start (lux)</string>
+    <string name="auto_brightness_end_lux">Range end (lux)</string>
     <string name="auto_brightness_reset_dialog_title">Reset levels?</string>
     <string name="auto_brightness_reset_confirmation">All brightness levels will be reset to their default settings.</string>
     <string name="auto_brightness_split_lux_format">Split position (between <xliff:g id="min">%1$d</xliff:g> and <xliff:g id="max">%2$d</xliff:g> lux)</string>
@@ -843,36 +848,9 @@
     <string name="auto_brightness_menu_edit_lux">Ambient brightness range</string>
     <string name="auto_brightness_menu_split">Split</string>
     <string name="auto_brightness_menu_remove">Remove</string>
-    <string name="auto_brightness_preview">Preview</string>
-    <string name="auto_brightness_preview_dialog_title">Brightness curve preview</string>
-    <string name="auto_brightness_help_dialog_title">Help</string>
-    <string name="auto_brightness_help_text"><b>How is brightness calculated?</b>
-\n\n
-The brightness curve is calculated by performing a <i>cubic spline interpolation</i>
-on a given number of <i>control points</i>. It\'s not a \'bucket-type\' calculation where
-screen brightness will stay constant for a specific range of ambient brightness. That way,
-small changes in ambient brightness do not cause a large jump in screen brightness; however,
-it can be a little hard to predict the exact consequences of changing control points.\n
-To help with that, a preview of the calculated curve can be examined. Please note that the
-preview shows the curve in <i>logarithmic</i> scale, so that all control points can be shown
-distinctively. When using a linear scale, it wouldn\'t be possible to distinguish the tendentially
-more important control points in the lower range of ambient brightness.
-\n\n
-<b>How to edit the brightness curve?</b>
-\n\n
-Each line in the brightness list corresponds to one <i>control point</i> of the
-brightness curve. To edit the brightness level of the point, you can use the slider
-present in each line. The screen brightness will be changed accordingly while touching
-the slider to give a preview of the light level.\n
-Additional options are available by long-pressing a line. By selecting \'Adjust\', you can
-both edit the ambient brightness level of the control point as well as manually input the
-desired screen brightness. Selecting \'Split\' allows you to to duplicate one line into
-two in order to insert additional control points. \'Remove\' deletes the selected line.
-    </string>
 
-
-    <!-- Pie controls -->
- <string name="pie_control_title">Pie controls</string>
+    <!-- Quick/Pie Control #CM -->
+    <string name="pie_control_title">Pie controls</string>
     <string name="pie_control_enabled">Enabled</string>
     <string name="pie_control_exp_enabled">Enabled when Expanded desktop is active</string>
     <string name="pie_control_disabled">Disabled</string>
@@ -883,67 +861,19 @@ two in order to insert additional control points. \'Remove\' deletes the selecte
     <string name="pie_control_trigger_bottom">Bottom screen border</string>
     <string name="pie_control_trigger_right">Right screen border</string>
     <string name="pie_control_trigger_top">Top screen border</string>
-    <string name="pie_control_trigger_top_summary">Only navigation will be displayed at top</string><string name="pie_color_title">PIE button color</string>
+    <string name="pie_control_trigger_top_summary">Only navigation will be displayed at top</string>
     <string name="pie_color_title">PIE button color</string>
     <string name="pie_selected_color_title">PIE selected button color</string>
     <string name="pie_outline_color_title">PIE button color outline</string>
     <string name="pie_start_title">PIE trigger start</string>
     <string name="pie_distance_title">PIE trigger distance</string>
 
-    <!-- Stylus Gestures -->
-    <string name="gestures_settings_title">Stylus gestures</string>
-    <string name="category_spen_title">Stylus gestures</string>
-    <string name="enable_subcat_title">Stylus</string>
-    <string name="enable_spen_title_head">Enable stylus gestures</string>
-    <string name="enable_spen_summary_head">Launch custom actions with stylus button swipe gestures. Warning: apps will not be able to receive input fired by holding the stylus button</string>
-    <string name="gestures_subcat_title">Gestures</string>
-    <string name="gestures_left_spen_title_head">Left swipe</string>
-    <string name="gestures_left_spen_summary_head">Launch custom action on left swipe</string>
-    <string name="gestures_right_spen_title_head">Right swipe</string>
-    <string name="gestures_right_spen_summary_head">Launch custom action on right swipe</string>
-    <string name="gestures_up_spen_title_head">Up swipe</string>
-    <string name="gestures_up_spen_summary_head">Launch custom action on up swipe</string>
-    <string name="gestures_down_spen_title_head">Down swipe</string>
-    <string name="gestures_down_spen_summary_head">Launch custom action on down swipe</string>
-    <string name="gestures_long_spen_title_head">Long press</string>
-    <string name="gestures_long_spen_summary_head">Launch custom action on long press</string>
-    <string name="gestures_double_spen_title_head">Double tap</string>
-    <string name="gestures_double_spen_summary_head">Launch custom action on double tap</string>
+    <!-- **** CYANOGENMOD ADDITIONS END **** -->
+    <string name="title_expanded_volume">Volume slider</string>
 
-    <!-- Gestures Options -->
-    <string name="gestures_action_empty">No action</string>
-    <string name="gestures_action_home">Emulate home key</string>
-    <string name="gestures_action_back">Emulate back key</string>
-    <string name="gestures_action_menu">Emulate menu key</string>
-    <string name="gestures_action_search">Invoke search</string>
-    <string name="gestures_action_recent">Recent apps</string>
-
-    <!-- Stylus gestures -->
-    <string name="stylus_app_not_installed">%s is not installed</string>
-
-    <!-- Wi-Fi frequency selection for new IBSS -->
-    <string name="wifi_ibss_freq_title">Channel / Frequency</string>
-    <string name="wifi_channel">Channel</string>
-    <string name="wifi_mhz">MHz</string>
-
-    <!-- Category title for power sound notification specific Settings.
-         [CHAR LIMIT=40] -->
-    <string name="power_notifications_category_title">Power sounds</string>
-
-    <!-- Sound settings, power notifications enable/disable, setting check box label -->
-    <string name="power_notifications_enable_title">Enable</string>
-    <!-- Sound settings, power notifications vibrate enable/disable, setting check box label -->
-    <string name="power_notifications_vibrate_title">Vibrate</string>
-    <!-- Sound settings, power notifications ringtone selection, preference label -->
-    <string name="power_notifications_ringtone_title">Notification sound</string>
-    <!-- Sound settings, power notifications label for ringtone == none -->
-    <string name="power_notifications_ringtone_silent">Silent</string>
- 
-     <string name="title_expanded_volume">Volume slider</string>
-
- <!-- Misc Settings -->
+    <!-- Misc Settings -->
     <string name="misc_settings_title">Misc settings</string>
-	
+
      <!-- High End Gfx Effects -->
      <string name="display_category_advanced_title">Advanced</string>
      <string name="high_end_gfx_title">High end graphic effects</string>
@@ -1200,8 +1130,8 @@ rience. Better keep it disabled on lower end devices.</string>
     <!-- Color Picker -->
     <string name="dialog_color_picker">Color Picker</string>
     <string name="press_color_to_apply">Press on Color to apply</string>
-    <string name="arrow_right">?</string>
-    <string name="arrow_down">?</string>
+    <string name="arrow_right">→</string>
+    <string name="arrow_down">↓</string>
     <string name="hex">Hex:</string>
     <string name="hex_hint">#FF000000</string>
     <string name="set">Set</string>
