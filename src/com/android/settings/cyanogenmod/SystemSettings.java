@@ -75,9 +75,7 @@ public class SystemSettings extends SettingsPreferenceFragment  implements
             try {
                 if (windowManager.hasNavigationBar()) {
                     removeKeys = true;
-                } else {
-		    removeNavbar = true;
-		} 
+                } 
             } catch (RemoteException e) {
                 // Do nothing
             }
@@ -146,7 +144,7 @@ public class SystemSettings extends SettingsPreferenceFragment  implements
 
         // Pie controls
         mPieControl = (PreferenceScreen) findPreference(KEY_PIE_CONTROL);
-        if (mPieControl != null && removeNavbar) {
+        if (mPieControl != null) {
             // Remove on devices without a navbar to start with
             prefScreen.removePreference(mPieControl);
             mPieControl = null;
