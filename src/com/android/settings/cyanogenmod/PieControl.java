@@ -5,7 +5,6 @@ import android.database.ContentObserver;
 import android.os.Bundle;
 import android.os.Handler;
 import android.preference.CheckBoxPreference;
-import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceScreen;
 import android.preference.SeekBarDialogPreference;
@@ -19,7 +18,7 @@ public class PieControl extends SettingsPreferenceFragment
 
     private static final int DEFAULT_POSITION = 1 << 1; // this equals Position.BOTTOM.FLAG
 
-    private static final String PIE_CONTROL = "pie_control_list";
+    private static final String PIE_CONTROL = "pie_control_checkbox";
     private static final String SEARCH_BUTTON = "pie_control_search";
     private static final String PIE_SIZE = "pie_control_size";
     private static final String[] TRIGGER = {
@@ -29,7 +28,7 @@ public class PieControl extends SettingsPreferenceFragment
         "pie_control_trigger_top"
     };
 
-    private ListPreference mPieControl;
+    private CheckBoxPreference mPieControl;
     private CheckBoxPreference mSearchButton;
     private SeekBarDialogPreference mPieSize;
     private CheckBoxPreference[] mTrigger = new CheckBoxPreference[4];
@@ -51,11 +50,8 @@ public class PieControl extends SettingsPreferenceFragment
         addPreferencesFromResource(R.xml.pie_control);
 
         PreferenceScreen prefSet = getPreferenceScreen();
-        mPieControl = (ListPreference) prefSet.findPreference(PIE_CONTROL);
+        mPieControl = (CheckBoxPreference) prefSet.findPreference(PIE_CONTROL);
         mPieControl.setOnPreferenceChangeListener(this);
-        int PieStatus = Settings.System.getInt(getContentResolver(),
-                Settings.System.PIE_CONTROLS, 0);
-        mPieControl.setValue(String.valueOf(PieStatus));
         mSearchButton = (CheckBoxPreference) prefSet.findPreference(SEARCH_BUTTON);
         mSearchButton.setOnPreferenceChangeListener(this);
         mPieSize = (SeekBarDialogPreference) prefSet.findPreference(PIE_SIZE);
@@ -130,14 +126,12 @@ public class PieControl extends SettingsPreferenceFragment
     @Override
     public boolean onPreferenceChange(Preference preference, Object newValue) {
         if (preference == mPieControl) {
-            int newState = Integer.valueOf((String) newValue);
+            boolean newState = (Boolean) newValue;
+
             Settings.System.putInt(getContentResolver(),
-                    Settings.System.PIE_CONTROLS, newState);
-	    if (newState > 0) {
-            propagatePieControl(true);
-	    } else {
-            propagatePieControl(false);
-	    }		
+                    Settings.System.PIE_CONTROLS, newState ? 1 : 0);
+            propagatePieControl(newState);
+
         } else if (preference == mSearchButton) {
             Settings.System.putInt(getContentResolver(),
                     Settings.System.PIE_SEARCH, (Boolean) newValue ? 1 : 0);
@@ -161,14 +155,9 @@ public class PieControl extends SettingsPreferenceFragment
     public void onResume() {
         super.onResume();
 
-        int PieStatus = Settings.System.getInt(getContentResolver(),
-                Settings.System.PIE_CONTROLS, 0);
-        mPieControl.setValue(String.valueOf(PieStatus));
-	    if (PieStatus > 0) {
-            propagatePieControl(true);
-	    } else {
-            propagatePieControl(false);
-	    }	
+        mPieControl.setChecked(Settings.System.getInt(getContentResolver(),
+                Settings.System.PIE_CONTROLS, 0) == 1);
+        propagatePieControl(mPieControl.isChecked());
 
         mSearchButton.setChecked(Settings.System.getInt(getContentResolver(),
                 Settings.System.PIE_SEARCH, 0) == 1);
