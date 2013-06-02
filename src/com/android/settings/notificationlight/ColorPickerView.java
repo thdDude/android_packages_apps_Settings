@@ -570,7 +570,7 @@ public class ColorPickerView extends View {
 
             // If calculated height (based on the width) is more than the
             // allowed height.
-            if (height > heightAllowed) {
+            if (height > heightAllowed && heightMode != MeasureSpec.UNSPECIFIED) {
                 height = heightAllowed;
                 width = (int) (height + PANEL_SPACING + HUE_PANEL_WIDTH);
             } else {
@@ -580,7 +580,7 @@ public class ColorPickerView extends View {
 
             width = (int) (heightAllowed - ALPHA_PANEL_HEIGHT + HUE_PANEL_WIDTH);
 
-            if (width > widthAllowed) {
+            if (width > widthAllowed && widthMode != MeasureSpec.UNSPECIFIED) {
                 width = widthAllowed;
                 height = (int) (widthAllowed - HUE_PANEL_WIDTH + ALPHA_PANEL_HEIGHT);
             } else {
@@ -790,6 +790,10 @@ public class ColorPickerView extends View {
             requestLayout();
         }
 
+    }
+
+    public boolean isAlphaSliderVisible() {
+        return mShowAlphaPanel;
     }
 
     public void setSliderTrackerColor(int color) {

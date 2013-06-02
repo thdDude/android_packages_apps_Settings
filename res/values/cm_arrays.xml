@@ -163,6 +163,7 @@
         <item>@string/icon_picker_calendar</item>
         <item>@string/icon_picker_camera</item>
         <item>@string/icon_picker_chrome</item>
+        <item>@string/icon_picker_contacts</item>
         <item>@string/icon_picker_email</item>
         <item>@string/icon_picker_email2</item>
         <item>@string/icon_picker_facebook</item>
@@ -188,6 +189,7 @@
         <item>@*android:drawable/ic_lockscreen_calendar_normal</item>
         <item>@*android:drawable/ic_lockscreen_camera_normal</item>
         <item>@*android:drawable/ic_lockscreen_chrome_normal</item>
+        <item>@*android:drawable/ic_lockscreen_contacts_normal</item>
         <item>@*android:drawable/ic_lockscreen_email_normal</item>
         <item>@*android:drawable/ic_lockscreen_email2_normal</item>
         <item>@*android:drawable/ic_lockscreen_facebook_normal</item>
@@ -555,6 +557,20 @@
         <item>200</item>
         <item>500</item>
         </string-array>
+
+    <!-- Custom lock screen background-->
+    <string-array name="lockscreen_background_entries" translatable="false">
+        <item>@string/lockscreen_background_color_fill</item>
+        <item>@string/lockscreen_background_custom_image</item>
+        <item>@string/lockscreen_background_default_wallpaper</item>
+    </string-array>
+
+    <string-array name="lockscreen_background_values" translatable="false">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+    </string-array>
+
 
     <!-- PropModder -->
     <string-array name="entries_wifi_scan" translatable="false">
@@ -1079,12 +1095,29 @@
 
     <string-array name="gestures_values" translatable="false">
         <item>1000</item>
-        <item>1001</item>  
+        <item>1001</item>	
         <item>1002</item>
         <item>1003</item>
         <item>1004</item>
         <item>1005</item>
     </string-array>
+
+    <!-- Auto-brightness sensitivity -->
+    <string-array name="auto_brightness_sensitivity_entries" translatable="false">
+        <item>@string/auto_brightness_sensitivity_verylow</item>
+        <item>@string/auto_brightness_sensitivity_low</item>
+        <item>@string/auto_brightness_sensitivity_medium</item>
+        <item>@string/auto_brightness_sensitivity_high</item>
+        <item>@string/auto_brightness_sensitivity_veryhigh</item>
+    </string-array>
+
+    <integer-array name="auto_brightness_sensitivity_values">
+        <item>150</item>
+        <item>125</item>
+        <item>100</item>
+        <item>50</item>
+        <item>25</item>
+    </integer-array>
 
     <string-array name="pie_icon_color_mode_entries">
         <item>@string/pie_icon_color_mode_all_icons</item>

@@ -22,10 +22,10 @@
     <string name="bluetooth_mas_remember_choice">Don\'t ask again</string>
 
     <!-- Sizes for pattern lockscreen -->
-    <string name="lock_pattern_size_3">3x3</string>
-    <string name="lock_pattern_size_4">4x4</string>
-    <string name="lock_pattern_size_5">5x5</string>
-    <string name="lock_pattern_size_6">6x6</string>
+    <string name="lock_pattern_size_3" translatable="false">3x3</string>
+    <string name="lock_pattern_size_4" translatable="false">4x4</string>
+    <string name="lock_pattern_size_5" translatable="false">5x5</string>
+    <string name="lock_pattern_size_6" translatable="false">6x6</string>
 
     <string name="wifi_mode">Mode</string>
     <string name="wifi_mode_ibss">Ad-Hoc (IBSS) Network</string>
@@ -117,7 +117,7 @@
     <string name="mod_version_default">Unknown</string>
     <!-- About phone screen, build date of ROM -->
     <string name="build_date">Build date</string>
-    <string name="build_date_default">2012-01-01-0000</string>
+    <string name="build_date_default" translatable="false">2012-01-01-0000</string>
     <!-- About device screen, Cpu info. -->
     <string name="cpu_info">CPU</string>
     <!-- About phone screen, Free memory info -->
@@ -285,7 +285,7 @@
 
     <!-- Sound settings screen, setting option name to pick ringtone (a list dialog comes up)-->
     <string name="soundtone_title">Notification tone</string>
-    <string name="soundtone_summary">""</string>
+    <string name="soundtone_summary" translatable="false">""</string>
 
     <!-- Title for application group setting screen -->
     <string name="profile_appgroups_title">Application groups</string>
@@ -333,6 +333,7 @@
     <string name="toggleFlashlight">Flashlight</string>
     <string name="toggleLockScreen">Lock Screen</string>
     <string name="toggleWimax">WiMAX</string>
+    <string name="toggleNfc">NFC</string>
 
     <!-- Screen security - Screen security   -->
     <string name="screen_security_category">Screen security</string>
@@ -378,11 +379,11 @@
     <!-- Performance Settings : Processor settings sub items -->
     <string name="cpu_cur_freq_title">Current CPU frequency</string>
     <string name="cpu_governors_title">CPU governor</string>
-    <string name="cpu_governors_summary">%S</string>
+    <string name="cpu_governors_summary" translatable="false">%S</string>
     <string name="cpu_min_freq_title">Minimum CPU frequency</string>
-    <string name="cpu_min_freq_summary">%s</string>
+    <string name="cpu_min_freq_summary" translatable="false">%s</string>
     <string name="cpu_max_freq_title">Maximum CPU frequency</string>
-    <string name="cpu_max_freq_summary">%s</string>
+    <string name="cpu_max_freq_summary" translatable="false">%s</string>
     <string name="cpu_set_on_boot">Set on boot</string>
     <string name="cpu_set_on_boot_summary">Restore the processor settings on boot</string>
 
@@ -393,7 +394,7 @@
 
     <!-- Performance Settings : I/O scheduler settings sub items -->
     <string name="io_sched_title">I/O scheduler</string>
-    <string name="io_sched_summary">%S</string>
+    <string name="io_sched_summary" translatable="false">%S</string>
     <string name="io_sched_set_on_boot">Set on boot</string>
     <string name="io_sched_set_on_boot_summary">Restore the I/O scheduler settings on boot</string>
 
@@ -432,7 +433,7 @@
 
     <!-- Lock screen shortcuts -->
     <string name="picker_activities">Activities</string>
-    <string name="select_custom_app_title">Select custom application</string>
+    <string name="select_custom_app_title">Select custom app</string>
     <string name="select_custom_activity_title">Select custom activity</string>
     <string name="icon_picker_choose_icon_title">Choose icon</string>
     <string name="icon_picker_alarm">Alarm</string>
@@ -440,13 +441,14 @@
     <string name="icon_picker_calendar">Calendar</string>
     <string name="icon_picker_camera">Camera</string>
     <string name="icon_picker_chrome">Chrome</string>
+    <string name="icon_picker_contacts">Contacts</string>
     <string name="icon_picker_email">Email</string>
     <string name="icon_picker_email2">Email Holo</string>
     <string name="icon_picker_facebook">Facebook</string>
     <string name="icon_picker_gallery">Gallery</string>
     <string name="icon_picker_google_small">Google (small)</string>
     <string name="icon_picker_googleplus">Google Plus</string>
-    <string name="icon_picker_googletalk">Google Talk</string>
+    <string name="icon_picker_googletalk">Hangouts</string>
     <string name="icon_picker_maps">Maps</string>
     <string name="icon_picker_movie">Movie</string>
     <string name="icon_picker_music">Music</string>
@@ -491,6 +493,7 @@
 
     <string name="link_volume_ringtones">Link ringtone &amp; notifications volumes</string>
     <string name="link_volume_mutes">Silent mode affects notifications</string>
+    <string name="volume_keys_control_ring_stream">Volume keys control ringtone volume</string>
 
     <!-- Display settings screen, notification light settings -->
     <string name="notification_pulse_title">Notification light</string>
@@ -507,7 +510,7 @@
     <!-- Notification light dialogs -->
     <string name="edit_light_settings">Edit light settings</string>
     <string name="pulse_speed_title">Pulse length and speed</string>
-    <string name="picker_arrow">→</string>
+    <string name="picker_arrow">\u2192</string>
     <string name="default_time">Normal</string>
     <string name="custom_time">Custom</string>
     <string name="dialog_test">Test</string>
@@ -847,7 +850,7 @@
     <string name="auto_brightness_reset_confirmation">All brightness levels will be reset to their default settings.</string>
     <string name="auto_brightness_split_lux_format">Split position (between <xliff:g id="min">%1$d</xliff:g> and <xliff:g id="max">%2$d</xliff:g> lux)</string>
     <string name="auto_brightness_level_options">Light level options</string>
-    <string name="auto_brightness_menu_edit_lux">Ambient brightness range</string>
+    <string name="auto_brightness_menu_edit">Edit</string>
     <string name="auto_brightness_menu_split">Split</string>
     <string name="auto_brightness_menu_remove">Remove</string>
     <string name="auto_brightness_preview">Preview</string>
@@ -871,11 +874,21 @@ Each line in the brightness list corresponds to one <i>control point</i> of the
 brightness curve. To edit the brightness level of the point, you can use the slider
 present in each line. The screen brightness will be changed accordingly while touching
 the slider to give a preview of the light level.\n
-Additional options are available by long-pressing a line. By selecting \'Adjust\', you can
+Additional options are available by long-pressing a line. By selecting \'Edit\', you can
 both edit the ambient brightness level of the control point as well as manually input the
 desired screen brightness. Selecting \'Split\' allows you to to duplicate one line into
 two in order to insert additional control points. \'Remove\' deletes the selected line.
     </string>
+    <string name="auto_brightness_sensitivity_title">Adjustment sensitivity</string>
+    <string name="auto_brightness_sensitivity_verylow">Very low</string>
+    <string name="auto_brightness_sensitivity_low">Low</string>
+    <string name="auto_brightness_sensitivity_medium">Medium</string>
+    <string name="auto_brightness_sensitivity_high">High</string>
+    <string name="auto_brightness_sensitivity_veryhigh">Very high</string>
+
+    <!-- Advanced reboot options -->
+    <string name="advanced_reboot_title">Advanced reboot</string>
+    <string name="advanced_reboot_summary">When unlocked, include options in the power menu for rebooting into recovery or bootloader</string>
 
 <!-- Stylus Gestures -->
     <string name="gestures_settings_title">Stylus gestures</string>
