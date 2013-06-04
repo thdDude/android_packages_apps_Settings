@@ -34,6 +34,13 @@
         android:fragment="com.android.settings.cyanogenmod.NavbarSettings"
         android:title="@string/navigation_bar" />
 
+    <!-- App Sidebar Settings -->
+    <PreferenceScreen
+        android:key="pref_interface_app_sidebar"
+        android:fragment="com.android.settings.cyanogenmod.InterfaceAppSidebar"
+        android:title="@string/pref_interface_app_sidebar_title"
+        android:summary="@string/pref_interface_app_sidebar_summary" />
+
     <PreferenceScreen
         android:key="pie_settings"
         android:fragment="com.android.settings.slim.PieControl"
