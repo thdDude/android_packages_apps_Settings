@@ -54,23 +54,4 @@
             android:dependency="halo_enabled"
             android:defaultValue="true" />
 
-    <PreferenceCategory
-       android:title="@string/halo_color_title">
-
-        <PreferenceScreen
-            android:key="halo_normal_color"
-            android:title="@string/halo_normal_color_title">
-        </PreferenceScreen>
-
-        <PreferenceScreen
-            android:key="halo_delete_color"
-            android:title="@string/halo_delete_color_title">
-        </PreferenceScreen>
-
-        <PreferenceScreen
-            android:key="halo_minimize_color"
-            android:title="@string/halo_minimize_color_title">
-        </PreferenceScreen>
-    </PreferenceCategory>
-
 </PreferenceScreen>
