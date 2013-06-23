@@ -1321,7 +1321,11 @@ rience. Better keep it disabled on lower end devices.</string>
     <string name="halo_state_title">HALO policy</string>
     <string name="halo_state_summary">For black/white-listing notifications pinging through HALO</string>
     <string name="halo_state_black">Black list</string>
-    <string name="halo_state_white">White list</string> 
+    <string name="halo_state_white">White list</string>
+    <string name="halo_color_title">Choose Custom Halo color</string>
+    <string name="halo_normal_color_title">Normal Background color</string>
+    <string name="halo_delete_color_title">Delete Background color</string>
+    <string name="halo_minimize_color_title">Minimize Background color</string>
 
     <!-- We want popups -->
     <string name="popups_title">Allow floating windows</string>

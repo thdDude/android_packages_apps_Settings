@@ -43,12 +43,20 @@ import com.android.settings.Utils;
     private static final String KEY_HALO_HIDE = "halo_hide";
     private static final String KEY_HALO_REVERSED = "halo_reversed"; 
     private static final String KEY_WE_WANT_POPUPS = "show_popup";
+
+    private static final String KEY_HALO_NORMAL_COLOR = "halo_normal_color";
+    private static final String KEY_HALO_DELETE_COLOR = "halo_delete_color";
+    private static final String KEY_HALO_MINIMIZE_COLOR = "halo_minimize_color";
 	
     private CheckBoxPreference mHaloEnabled;
     private ListPreference mHaloState;
     private CheckBoxPreference mHaloHide;
     private CheckBoxPreference mHaloReversed; 
     private CheckBoxPreference mWeWantPopups;
+
+    private Preference mHaloNormalColor;
+    private Preference mHaloDeleteColor;
+    private Preference mHaloMinimizeColor;
 
     private INotificationManager mNotificationManager; 
     private ContentResolver mContentResolver;
@@ -86,6 +94,9 @@ import com.android.settings.Utils;
         mWeWantPopups.setOnPreferenceChangeListener(this);
         mWeWantPopups.setChecked(showPopups > 0);
 
+	mHaloNormalColor = (Preference) findPreference(KEY_HALO_NORMAL_COLOR);
+	mHaloDeleteColor = (Preference) findPreference(KEY_HALO_DELETE_COLOR);
+	mHaloMinimizeColor = (Preference) findPreference(KEY_HALO_MINIMIZE_COLOR);
     }
 
     private boolean isHaloPolicyBlack() {
@@ -132,7 +143,61 @@ import com.android.settings.Utils;
             Settings.System.putInt(getActivity().getContentResolver(),
                     Settings.System.HALO_REVERSED, mHaloReversed.isChecked()
                     ? 1 : 0);  
+        } else if (preference == mHaloNormalColor) {
+            ColorPickerDialog cp = new ColorPickerDialog(getActivity(),
+                    mHaloNormalColorListener, Settings.System.getInt(getActivity()
+                    .getApplicationContext()
+                    .getContentResolver(), Settings.System.HALO_NORMAL_COLOR, 0xff33b5e5));
+            cp.setDefaultColor(0xff33b5e5);
+            cp.show();
+            return true;
+        } else if (preference == mHaloDeleteColor) {
+            ColorPickerDialog cp = new ColorPickerDialog(getActivity(),
+                    mHaloDeleteColorListener, Settings.System.getInt(getActivity()
+                    .getApplicationContext()
+                    .getContentResolver(), Settings.System.HALO_DELETE_COLOR, 0xffcc0000));
+            cp.setDefaultColor(0xffcc0000);
+            cp.show();
+            return true;
+        } else if (preference == mHaloMinimizeColor) {
+            ColorPickerDialog cp = new ColorPickerDialog(getActivity(),
+                    mHaloMinimizeColorListener, Settings.System.getInt(getActivity()
+                    .getApplicationContext()
+                    .getContentResolver(), Settings.System.HALO_MINIMIZE_COLOR, 0xfff0f0f0));
+            cp.setDefaultColor(0xfff0f0f0);
+            cp.show();
+            return true;
         }
         return super.onPreferenceTreeClick(preferenceScreen, preference);
     }
+
+    ColorPickerDialog.OnColorChangedListener mHaloNormalColorListener =
+        new ColorPickerDialog.OnColorChangedListener() {
+            public void colorChanged(int color) {
+                Settings.System.putInt(getContentResolver(),
+                        Settings.System.HALO_NORMAL_COLOR, color);
+            }
+            public void colorUpdate(int color) {
+            }
+    };
+
+    ColorPickerDialog.OnColorChangedListener mHaloDeleteColorListener =
+        new ColorPickerDialog.OnColorChangedListener() {
+            public void colorChanged(int color) {
+                Settings.System.putInt(getContentResolver(),
+                        Settings.System.HALO_DELETE_COLOR, color);
+            }
+            public void colorUpdate(int color) {
+            }
+    };
+
+    ColorPickerDialog.OnColorChangedListener mHaloMinimizeColorListener =
+        new ColorPickerDialog.OnColorChangedListener() {
+            public void colorChanged(int color) {
+                Settings.System.putInt(getContentResolver(),
+                        Settings.System.HALO_MINIMIZE_COLOR, color);
+            }
+            public void colorUpdate(int color) {
+            }
+    };
 }
