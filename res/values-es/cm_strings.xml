@@ -132,6 +132,9 @@
     <string name="profile_delete_confirm">¿Borrar este perfil?</string>
     <string name="profile_app_delete_confirm">¿Borrar esta aplicación?</string>
     <string name="profile_cannot_delete">No se puede borrar el perfil activo</string>
+    <string name="profile_networkmode_2g">2G</string>
+    <string name="profile_networkmode_3g">3G</string>
+    <string name="profile_networkmode_2g3g">2G/3G</string>
     <string name="profile_connectionoverrides_title">Conectividad</string>
     <string name="profile_volumeoverrides_title">Volumen</string>
     <string name="profile_vibratoroverrides_title">Vibración</string>
@@ -516,6 +519,7 @@
     <string name="title_tile_battery">Batería</string>
     <string name="title_tile_bluetooth">Bluetooth</string>
     <string name="title_tile_brightness">Brillo</string>
+    <string name="title_tile_camera">Cámara</string>
     <string name="title_tile_sleep">Bloquear</string>
     <string name="title_tile_gps">GPS</string>
     <string name="title_tile_torch">Linterna</string>
@@ -710,4 +714,9 @@ podrás crear una nueva línea con el fin de insertar puntos de control adiciona
     <string name="screen_off_animation_title">Efecto al apagar</string>
     <string name="screen_off_animation_summary">Mostrar un efecto animado al apagar la pantalla</string>
     <string name="confirm_delete_apn">El APN será borrado.</string>
+    <string name="privacy_guard_switch_label">Habilitar privacidad</string>
+    <string name="privacy_guard_dlg_title">¿Habilitar privacidad?</string>
+    <string name="privacy_guard_dlg_text">Cuando la privacidad está habilitada, la aplicación no podrá acceder a los datos personales, tales como contactos, mensajes o registros de llamadas.</string>
+    <string name="privacy_guard_default_title">Privacidad</string>
+    <string name="privacy_guard_default_summary">Habilitar la privacidad por defecto para nuevas aplicaciones</string>
 </resources>
