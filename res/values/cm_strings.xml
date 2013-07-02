@@ -1365,6 +1365,10 @@ rience. Better keep it disabled on lower end devices.</string>
     <string name="confirm_delete_apn">The APN will be deleted.</string>
 
     <!-- HALO -->
+    <!-- Label for are-notifications-enabled checkbox in app details [CHAR LIMIT=20] -->
+    <string name="app_halo_label_black">Blacklist HALO notifications</string>
+    <string name="app_halo_label_white">Whitelist HALO notifications</string> 
+
     <string name="halo_enabled_title">Enable HALO</string>
     <string name="halo_enabled_summary">Completely enable or disable HALO</string>
     <string name="halo_hide_title">Hide HALO after activity</string>
@@ -1374,7 +1378,11 @@ rience. Better keep it disabled on lower end devices.</string>
     <string name="halo_state_title">HALO policy</string>
     <string name="halo_state_summary">For black/white-listing notifications pinging through HALO</string>
     <string name="halo_state_black">Black list</string>
-    <string name="halo_state_white">White list</string> 
+    <string name="halo_state_white">White list</string>
+    <string name="halo_color_title">HALO color</string>
+    <string name="halo_button_color_title">HALO button color</string>
+    <string name="halo_text_bubble_color_title">HALO text bubble color</string>
+    <string name="halo_ping_color_title">HALO ping color</string>
 
     <!-- We want popups -->
     <string name="popups_title">Allow floating windows</string>

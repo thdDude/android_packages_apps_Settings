@@ -43,12 +43,18 @@ import com.android.settings.Utils;
     private static final String KEY_HALO_HIDE = "halo_hide";
     private static final String KEY_HALO_REVERSED = "halo_reversed"; 
     private static final String KEY_WE_WANT_POPUPS = "show_popup";
+    private static final String KEY_HALO_BUTTON_COLOR = "halo_button_color";
+    private static final String KEY_HALO_TEXT_BUBBLE_COLOR = "halo_text_bubble_color";
+    private static final String KEY_HALO_PING_COLOR = "halo_ping_color";
 	
     private CheckBoxPreference mHaloEnabled;
     private ListPreference mHaloState;
     private CheckBoxPreference mHaloHide;
     private CheckBoxPreference mHaloReversed; 
     private CheckBoxPreference mWeWantPopups;
+    private Preference mHaloButtonColor;
+    private Preference mHaloTextBubbleColor;
+    private Preference mHaloPingColor;
 
     private INotificationManager mNotificationManager; 
     private ContentResolver mContentResolver;
@@ -86,6 +92,12 @@ import com.android.settings.Utils;
         mWeWantPopups.setOnPreferenceChangeListener(this);
         mWeWantPopups.setChecked(showPopups > 0);
 
+        mHaloButtonColor =
+                (Preference) prefSet.findPreference(KEY_HALO_BUTTON_COLOR);
+        mHaloTextBubbleColor =
+                (Preference) prefSet.findPreference(KEY_HALO_TEXT_BUBBLE_COLOR);
+        mHaloPingColor =
+                (Preference) prefSet.findPreference(KEY_HALO_PING_COLOR);
     }
 
     private boolean isHaloPolicyBlack() {
@@ -132,7 +144,58 @@ import com.android.settings.Utils;
             Settings.System.putInt(getActivity().getContentResolver(),
                     Settings.System.HALO_REVERSED, mHaloReversed.isChecked()
                     ? 1 : 0);  
+        } else if (preference == mHaloButtonColor) {
+            ColorPickerDialog cp = new ColorPickerDialog(getActivity(),
+                    mButtonColorListener, Settings.System.getInt(mContext.getContentResolver(),
+                    Settings.System.HALO_BUTTON_COLOR, 0x00000000));
+            cp.setDefaultColor(0x00000000);
+            cp.show();
+            return true;
+        } else if (preference == mHaloTextBubbleColor) {
+            ColorPickerDialog cp = new ColorPickerDialog(getActivity(),
+                    mTextBubbleColorListener, Settings.System.getInt(mContext.getContentResolver(),
+                    Settings.System.HALO_TEXT_BUBBLE_COLOR, 0x00000000));
+            cp.setDefaultColor(0x00000000);
+            cp.show();
+            return true;
+        } else if (preference == mHaloPingColor) {
+            ColorPickerDialog cp = new ColorPickerDialog(getActivity(),
+                    mPingColorListener, Settings.System.getInt(mContext.getContentResolver(),
+                    Settings.System.HALO_PING_COLOR, 0xff33b5e5));
+            cp.setDefaultColor(0xff33b5e5);
+            cp.show();
+            return true;
         }
         return super.onPreferenceTreeClick(preferenceScreen, preference);
     }
+
+    ColorPickerDialog.OnColorChangedListener mButtonColorListener =
+        new ColorPickerDialog.OnColorChangedListener() {
+            public void colorChanged(int color) {
+                Settings.System.putInt(getContentResolver(),
+                        Settings.System.HALO_BUTTON_COLOR, color);
+            }
+            public void colorUpdate(int color) {
+            }
+    };
+
+    ColorPickerDialog.OnColorChangedListener mTextBubbleColorListener =
+        new ColorPickerDialog.OnColorChangedListener() {
+            public void colorChanged(int color) {
+                Settings.System.putInt(getContentResolver(),
+                        Settings.System.HALO_TEXT_BUBBLE_COLOR, color);
+            }
+            public void colorUpdate(int color) {
+            }
+    };
+
+    ColorPickerDialog.OnColorChangedListener mPingColorListener =
+        new ColorPickerDialog.OnColorChangedListener() {
+            public void colorChanged(int color) {
+                Settings.System.putInt(getContentResolver(),
+                        Settings.System.HALO_PING_COLOR, color);
+            }
+            public void colorUpdate(int color) {
+            }
+    };
 }
