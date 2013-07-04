@@ -90,7 +90,6 @@ public class LockscreenInterface extends SettingsPreferenceFragment implements
     private File mWallpaperImage;
     private File mWallpaperTemporary;
     private DevicePolicyManager mDPM;
-    private ComponentName mDpmAdminName;
 
     private boolean mIsPrimary;
 
@@ -159,11 +158,10 @@ public class LockscreenInterface extends SettingsPreferenceFragment implements
         mEnableCamera.setOnPreferenceChangeListener(this);
 
         mDPM = (DevicePolicyManager)getSystemService(Context.DEVICE_POLICY_SERVICE);
-        mDpmAdminName = new ComponentName(getActivity(), DeviceAdminLockscreenReceiver.class);
 
-        boolean widgetsEnabled = mDPM.getKeyguardDisabledFeatures(null) == 0;
-        mEnableWidgets.setChecked(widgetsEnabled);
-        mEnableCamera.setChecked(!mDPM.getCameraDisabled(null));
+        int disabledFeatures = mDPM.getKeyguardDisabledFeatures(null);
+        mEnableWidgets.setChecked((disabledFeatures & DevicePolicyManager.KEYGUARD_DISABLE_WIDGETS_ALL) == 0);
+        mEnableCamera.setChecked((disabledFeatures & DevicePolicyManager.KEYGUARD_DISABLE_SECURE_CAMERA) == 0);
 
         mWallpaperImage = new File(getActivity().getFilesDir() + "/lockwallpaper");
         mWallpaperTemporary = new File(getActivity().getCacheDir() + "/lockwallpaper.tmp");
@@ -283,16 +281,10 @@ public class LockscreenInterface extends SettingsPreferenceFragment implements
             int selection = mCustomBackground.findIndexOfValue(objValue.toString());
             return handleBackgroundSelection(selection);
         } else if (preference == mEnableCamera) {
-            boolean value = (Boolean) objValue;
-            mDPM.setActiveAdmin(mDpmAdminName, true);
-            mDPM.setCameraDisabled(mDpmAdminName, !value);
+            updateKeyguardState((Boolean) objValue, mEnableWidgets.isChecked());
             return true;
         } else if (preference == mEnableWidgets) {
-            boolean value = (Boolean) objValue;
-            mDPM.setActiveAdmin(mDpmAdminName, true);
-            mDPM.setKeyguardDisabledFeatures(mDpmAdminName, value
-                    ? DevicePolicyManager.KEYGUARD_DISABLE_FEATURES_NONE
-                    : DevicePolicyManager.KEYGUARD_DISABLE_WIDGETS_ALL);
+            updateKeyguardState(mEnableCamera.isChecked(), (Boolean) objValue);
             return true;
         }
 
@@ -308,6 +300,19 @@ public class LockscreenInterface extends SettingsPreferenceFragment implements
             public void colorUpdate(int color) {
             }
     };
+
+    private void updateKeyguardState(boolean enableCamera, boolean enableWidgets) {
+        ComponentName dpmAdminName = new ComponentName(getActivity(),
+                DeviceAdminLockscreenReceiver.class);
+        mDPM.setActiveAdmin(dpmAdminName, true);
+        int disabledFeatures = enableWidgets
+                ? DevicePolicyManager.KEYGUARD_DISABLE_FEATURES_NONE
+                : DevicePolicyManager.KEYGUARD_DISABLE_WIDGETS_ALL;
+        if (!enableCamera) {
+            disabledFeatures |= DevicePolicyManager.KEYGUARD_DISABLE_SECURE_CAMERA;
+        }
+        mDPM.setKeyguardDisabledFeatures(dpmAdminName, disabledFeatures);
+    }
 
     private boolean handleBackgroundSelection(int selection) {
         if (selection == LOCKSCREEN_BACKGROUND_COLOR_FILL) {
