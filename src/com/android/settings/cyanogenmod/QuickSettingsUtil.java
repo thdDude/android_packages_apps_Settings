@@ -56,6 +56,7 @@ import com.android.internal.telephony.Phone;
 import com.android.internal.util.cm.QSUtils;
 import com.android.settings.R;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -150,13 +151,13 @@ public class QuickSettingsUtil {
         registerTile(new QuickSettingsUtil.TileInfo(
                 TILE_WIFIAP, R.string.title_tile_wifiap,
                 "com.android.systemui:drawable/ic_qs_wifi_ap_neutral"));
-        TILES.put(TILE_USER, new QuickSettingsUtil.TileInfo(
+        registerTile(new QuickSettingsUtil.TileInfo(
                 TILE_USER, R.string.title_tile_user,
                 "com.android.systemui:drawable/ic_qs_default_user"));
-        TILES.put(TILE_DAYDREAM, new QuickSettingsUtil.TileInfo(
+        registerTile(new QuickSettingsUtil.TileInfo(
                 TILE_DAYDREAM, R.string.screensaver_settings_title,
                 "com.android.systemui:drawable/ic_qs_clock_circle"));
-        TILES.put(TILE_FCHARGE, new QuickSettingsUtil.TileInfo(
+        registerTile(new QuickSettingsUtil.TileInfo(
                 TILE_FCHARGE, R.string.title_tile_fcharge,
                 "com.android.systemui:drawable/ic_qs_fcharge_off"));
     }
