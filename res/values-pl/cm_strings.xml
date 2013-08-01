@@ -362,7 +362,6 @@
     <string name="navigation_bar_menu_locked">Zablokowano</string>
     <string name="power_widget_title">Widżet zasilania</string>
     <string name="title_expanded_widget">Widżet zasilania</string>
-    <string name="power_widget_behavior">Zachowanie widżetu</string>
     <string name="title_expanded_hide_onchange">Zamknij szufladę aplikacji po zmianie</string>
     <string name="title_expanded_hide_indicator">Ukryj wskaźniki</string>
     <string name="title_expanded_hide_scrollbar">Ukryj paski przewijania</string>
@@ -726,7 +725,6 @@ dwa nowe, odpowiadające kolejnym punktom kontrolnym. \'Usuń\' kasuje wybrany p
     <string name="notification_vibrate_during_calls_title">Wibruj w trakcie rozmowy</string>
     <string name="notification_vibrate_during_calls_summary">Wibruj po otrzymaniu powiadomienia w trakcie rozmowy telefonicznej</string>
     <string name="lockscreen_widgets_category_title">Widżety</string>
-    <string name="lockscreen_other_category_title">Inne</string>
     <string name="lockscreen_enable_widgets_title">Strony ekranu blokady</string>
     <string name="lockscreen_enable_widgets_summary">Pozwól na wyświetlanie wielu stron na ekranie blokady</string>
     <string name="lockscreen_enable_camera_title">Widżet kamery</string>

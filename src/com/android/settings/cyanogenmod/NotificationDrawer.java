@@ -57,10 +57,11 @@ import com.android.settings.SettingsPreferenceFragment;
 
 import static com.android.internal.util.cm.QSUtils.deviceSupportsMobileData;
 
-public class PowerWidget extends SettingsPreferenceFragment implements
+public class NotificationDrawer extends SettingsPreferenceFragment implements
         Preference.OnPreferenceChangeListener {
     private static final String TAG = "PowerWidget";
     private static final String SEPARATOR = "OV=I=XseparatorX=I=VO";
+    private static final String UI_COLLAPSE_BEHAVIOUR = "notification_drawer_collapse_on_dismiss";
     private static final String UI_EXP_WIDGET = "expanded_widget";
     private static final String UI_EXP_WIDGET_HIDE_ONCHANGE = "expanded_hide_onchange";
     private static final String UI_EXP_WIDGET_HIDE_SCROLLBAR = "expanded_hide_scrollbar";
@@ -73,6 +74,7 @@ public class PowerWidget extends SettingsPreferenceFragment implements
     public static final String FAST_CHARGE_DIR = "/sys/kernel/fast_charge";
     public static final String FAST_CHARGE_FILE = "force_fast_charge";
 
+    private ListPreference mCollapseOnDismiss;
     private CheckBoxPreference mPowerWidget;
     private CheckBoxPreference mPowerWidgetHideOnChange;
     private CheckBoxPreference mPowerWidgetHideScrollBar;
@@ -88,15 +90,27 @@ public class PowerWidget extends SettingsPreferenceFragment implements
         super.onCreate(savedInstanceState);
 
         if (getPreferenceManager() != null) {
-            addPreferencesFromResource(R.xml.power_widget_settings);
+            addPreferencesFromResource(R.xml.notification_drawer);
 
+            ContentResolver resolver = getActivity().getContentResolver();
             PreferenceScreen prefSet = getPreferenceScreen();
 
+            int collapseBehaviour = Settings.System.getInt(resolver,
+                    Settings.System.STATUS_BAR_COLLAPSE_ON_DISMISS,
+                    Settings.System.STATUS_BAR_COLLAPSE_IF_NO_CLEARABLE);
+            mCollapseOnDismiss = (ListPreference) prefSet.findPreference(UI_COLLAPSE_BEHAVIOUR);
+            mCollapseOnDismiss.setValue(String.valueOf(collapseBehaviour));
+            mCollapseOnDismiss.setOnPreferenceChangeListener(this);
+            updateCollapseBehaviourSummary(collapseBehaviour);
+
             mPowerWidget = (CheckBoxPreference) prefSet.findPreference(UI_EXP_WIDGET);
+            mPowerWidget.setOnPreferenceChangeListener(this);
             mPowerWidgetHideOnChange = (CheckBoxPreference) prefSet
                     .findPreference(UI_EXP_WIDGET_HIDE_ONCHANGE);
+            mPowerWidgetHideOnChange.setOnPreferenceChangeListener(this);
             mPowerWidgetHideScrollBar = (CheckBoxPreference) prefSet
                     .findPreference(UI_EXP_WIDGET_HIDE_SCROLLBAR);
+            mPowerWidgetHideScrollBar.setOnPreferenceChangeListener(this);
 
             mPowerWidgetHapticFeedback = (ListPreference) prefSet
                     .findPreference(UI_EXP_WIDGET_HAPTIC_FEEDBACK);
@@ -106,18 +120,6 @@ public class PowerWidget extends SettingsPreferenceFragment implements
             mEnableToggleColors = (CheckBoxPreference) prefSet.findPreference(ENABLE_TOGGLE_COLORS);
             mEnableToggleBar = (CheckBoxPreference) prefSet.findPreference(ENABLE_TOGGLE_BAR);
 
-            mPowerWidget.setChecked((Settings.System.getInt(getActivity().getApplicationContext()
-                    .getContentResolver(),
-                    Settings.System.EXPANDED_VIEW_WIDGET, 0) == 1));
-            mPowerWidgetHideOnChange.setChecked((Settings.System.getInt(getActivity()
-                    .getApplicationContext().getContentResolver(),
-                    Settings.System.EXPANDED_HIDE_ONCHANGE, 0) == 1));
-            mPowerWidgetHideScrollBar.setChecked((Settings.System.getInt(getActivity()
-                    .getApplicationContext().getContentResolver(),
-                    Settings.System.EXPANDED_HIDE_SCROLLBAR, 0) == 1));
-            mPowerWidgetHapticFeedback.setValue(Integer.toString(Settings.System.getInt(
-                    getActivity().getApplicationContext().getContentResolver(),
-                    Settings.System.EXPANDED_HAPTIC_FEEDBACK, 2)));
             mEnableToggleColors.setChecked((Settings.System.getInt(getActivity().getApplicationContext()
                     .getContentResolver(),
                     Settings.System.ENABLE_TOGGLE_COLORS, 0) == 1));
@@ -129,14 +131,52 @@ public class PowerWidget extends SettingsPreferenceFragment implements
            mToggleIconOnColor = (Preference) prefSet.findPreference(TOGGLE_ICON_ON_COLOR);
            mToggleIconOffColor = (Preference) prefSet.findPreference(TOGGLE_ICON_OFF_COLOR);
 
+            mPowerWidget.setChecked(Settings.System.getInt(resolver,
+                    Settings.System.EXPANDED_VIEW_WIDGET, 0) == 1);
+            mPowerWidgetHideOnChange.setChecked(Settings.System.getInt(resolver,
+                    Settings.System.EXPANDED_HIDE_ONCHANGE, 0) == 1);
+            mPowerWidgetHideScrollBar.setChecked(Settings.System.getInt(resolver,
+                    Settings.System.EXPANDED_HIDE_SCROLLBAR, 0) == 1);
+            mPowerWidgetHapticFeedback.setValue(Integer.toString(Settings.System.getInt(
+                    resolver, Settings.System.EXPANDED_HAPTIC_FEEDBACK, 2)));
         }
     }
 
+    private void updateCollapseBehaviourSummary(int setting) {
+        String[] summaries = getResources().getStringArray(
+                R.array.notification_drawer_collapse_on_dismiss_summaries);
+        mCollapseOnDismiss.setSummary(summaries[setting]);
+    }
+
+    @Override
     public boolean onPreferenceChange(Preference preference, Object newValue) {
-        if (preference == mPowerWidgetHapticFeedback) {
+        ContentResolver resolver = getActivity().getContentResolver();
+
+        if (preference == mCollapseOnDismiss) {
+            int value = Integer.valueOf((String) newValue);
+            Settings.System.putInt(resolver,
+                    Settings.System.STATUS_BAR_COLLAPSE_ON_DISMISS, value);
+            updateCollapseBehaviourSummary(value);
+            return true;
+        } else if (preference == mPowerWidget) {
+            boolean value = (Boolean) newValue;
+            Settings.System.putInt(resolver,
+                    Settings.System.EXPANDED_VIEW_WIDGET, value ? 1 : 0);
+            return true;
+        } else if (preference == mPowerWidgetHideOnChange) {
+            boolean value = (Boolean) newValue;
+            Settings.System.putInt(resolver,
+                    Settings.System.EXPANDED_HIDE_ONCHANGE, value ? 1 : 0);
+            return true;
+        } else if (preference == mPowerWidgetHideScrollBar) {
+            boolean value = (Boolean) newValue;
+            Settings.System.putInt(resolver,
+                    Settings.System.EXPANDED_HIDE_SCROLLBAR, value ? 1 : 0);
+            return true;
+        } else if (preference == mPowerWidgetHapticFeedback) {
             int intValue = Integer.parseInt((String) newValue);
             int index = mPowerWidgetHapticFeedback.findIndexOfValue((String) newValue);
-            Settings.System.putInt(getActivity().getApplicationContext().getContentResolver(),
+            Settings.System.putInt(resolver,
                     Settings.System.EXPANDED_HAPTIC_FEEDBACK, intValue);
             mPowerWidgetHapticFeedback.setSummary(mPowerWidgetHapticFeedback.getEntries()[index]);
             return true;
@@ -194,7 +234,7 @@ public class PowerWidget extends SettingsPreferenceFragment implements
             return super.onPreferenceTreeClick(preferenceScreen, preference);
         }
 
-        return true;
+        return false;
     }
 
     ColorPickerDialog.OnColorChangedListener mStatusBarColorListener =
