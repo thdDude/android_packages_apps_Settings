@@ -54,6 +54,9 @@ import com.android.settings.notificationlight.ColorPickerView;
 public class LockscreenInterface extends SettingsPreferenceFragment implements
         Preference.OnPreferenceChangeListener {
     private static final String TAG = "LockscreenInterface";
+    public static final String KEY_SEE_TRHOUGH_PREF = "lockscreen_see_through";
+    public static final String KEY_AUTO_ROTATE_PREF = "lockscreen_auto_rotate";
+    public static final String KEY_TEXT_COLOR = "lockscreen_custom_text_color";
 
     private static final int REQUEST_CODE_BG_WALLPAPER = 1024;
 
@@ -68,12 +71,15 @@ public class LockscreenInterface extends SettingsPreferenceFragment implements
     private static final String KEY_LOCKSCREEN_MUSIC_CONTROLS = "lockscreen_music_controls";
     private static final String KEY_BACKGROUND = "lockscreen_background";
     private static final String KEY_SCREEN_SECURITY = "screen_security";
-
     private static final String LOCKSCREEN_GENERAL_CATEGORY = "lockscreen_general_category";
     private static final String LOCKSCREEN_WIDGETS_CATEGORY = "lockscreen_widgets_category";
     private static final String KEY_LOCKSCREEN_ENABLE_WIDGETS = "lockscreen_enable_widgets";
     private static final String KEY_LOCKSCREEN_ENABLE_CAMERA = "lockscreen_enable_camera";
 
+    private PreferenceScreen mLockscreenButtons;
+    private CheckBoxPreference mSeeThrough;
+    private CheckBoxPreference mAutoRotate;
+    private Preference mTextColor;
     private ListPreference mCustomBackground;
     private ListPreference mBatteryStatus;
     private CheckBoxPreference mMaximizeWidgets;
@@ -97,6 +103,16 @@ public class LockscreenInterface extends SettingsPreferenceFragment implements
         addPreferencesFromResource(R.xml.lockscreen_interface_settings);
         PreferenceCategory generalCategory = (PreferenceCategory) findPreference(LOCKSCREEN_GENERAL_CATEGORY);
         PreferenceCategory widgetsCategory = (PreferenceCategory) findPreference(LOCKSCREEN_WIDGETS_CATEGORY);
+
+        mSeeThrough = (CheckBoxPreference) findPreference(KEY_SEE_TRHOUGH_PREF);
+        mSeeThrough.setChecked((Settings.System.getInt(getActivity().getApplicationContext().getContentResolver(),
+                Settings.System.LOCKSCREEN_SEE_THROUGH, 0) == 1));
+
+        mAutoRotate = (CheckBoxPreference) findPreference(KEY_AUTO_ROTATE_PREF);
+        mAutoRotate.setChecked((Settings.System.getInt(getActivity().getApplicationContext().getContentResolver(),
+                Settings.System.LOCKSCREEN_AUTO_ROTATE, 0) == 1));
+
+        mTextColor = (Preference) findPreference(KEY_TEXT_COLOR);
 
         // Determine which user is logged in
         mIsPrimary = UserHandle.myUserId() == UserHandle.USER_OWNER;
@@ -168,6 +184,29 @@ public class LockscreenInterface extends SettingsPreferenceFragment implements
     }
 
     @Override
+    public boolean onPreferenceTreeClick(PreferenceScreen preferenceScreen, Preference preference) {
+        if (preference == mSeeThrough) {
+            int value = mSeeThrough.isChecked() ? 1 : 0;
+            Settings.System.putInt(getActivity().getApplicationContext().getContentResolver(),
+                    Settings.System.LOCKSCREEN_SEE_THROUGH, value);
+            return true;
+       } else if (preference == mAutoRotate) {
+            int value = mAutoRotate.isChecked() ? 1 : 0;
+            Settings.System.putInt(getActivity().getApplicationContext().getContentResolver(),
+                    Settings.System.LOCKSCREEN_AUTO_ROTATE, value);
+            return true;
+        } else if (preference == mTextColor) {
+            ColorPickerDialog cp = new ColorPickerDialog(getActivity(),
+                    mTextColorListener, Settings.System.getInt(getActivity()
+                    .getApplicationContext()
+                    .getContentResolver(), Settings.System.LOCKSCREEN_CUSTOM_TEXT_COLOR, 0xFFFFFFFF));
+            cp.setDefaultColor(0xFFFFFFFF);
+            cp.show();
+            return true;
+        }
+        return super.onPreferenceTreeClick(preferenceScreen, preference);
+    }
+
     public void onResume() {
         super.onResume();
 
@@ -239,6 +278,16 @@ public class LockscreenInterface extends SettingsPreferenceFragment implements
 
         return false;
     }
+
+    ColorPickerDialog.OnColorChangedListener mTextColorListener =
+        new ColorPickerDialog.OnColorChangedListener() {
+            public void colorChanged(int color) {
+                Settings.System.putInt(getContentResolver(),
+                        Settings.System.LOCKSCREEN_CUSTOM_TEXT_COLOR, color);
+            }
+            public void colorUpdate(int color) {
+            }
+    };
 
     private void updateKeyguardState(boolean enableCamera, boolean enableWidgets) {
         ComponentName dpmAdminName = new ComponentName(getActivity(),

@@ -142,8 +142,6 @@ public class DevelopmentSettings extends PreferenceFragment
             = "immediately_destroy_activities";
     private static final String APP_PROCESS_LIMIT_KEY = "app_process_limit";
 
-    private static final String KILL_APP_LONGPRESS_BACK = "kill_app_longpress_back";
-
     private static final String SHOW_ALL_ANRS_KEY = "show_all_anrs";
 
     private static final String WEBVIEW_EXPERIMENTAL_KEY = "experimental_webview";
@@ -153,8 +151,6 @@ public class DevelopmentSettings extends PreferenceFragment
     private static final String PACKAGE_MIME_TYPE = "application/vnd.android.package-archive";
 
     private static final String DEVELOPMENT_TOOLS = "development_tools";
-
-    private static final String ADVANCED_REBOOT_KEY = "advanced_reboot";
 
     private static final int RESULT_DEBUG_APP = 1000;
 
@@ -207,13 +203,10 @@ public class DevelopmentSettings extends PreferenceFragment
     private ListPreference mAppProcessLimit;
 
     private CheckBoxPreference mShowAllANRs;
-    private CheckBoxPreference mKillAppLongpressBack;
 
     private ListPreference mRootAccess;
     private Object mSelectedRootValue;
     private PreferenceScreen mDevelopmentTools;
-
-    private CheckBoxPreference mAdvancedReboot;
     private CheckBoxPreference mExperimentalWebView;
 
     private final ArrayList<Preference> mAllPrefs = new ArrayList<Preference>();
@@ -270,13 +263,11 @@ public class DevelopmentSettings extends PreferenceFragment
         mAllowMockLocation = findAndInitCheckboxPref(ALLOW_MOCK_LOCATION);
         mPassword = (PreferenceScreen) findPreference(LOCAL_BACKUP_PASSWORD);
         mAllPrefs.add(mPassword);
-        mAdvancedReboot = findAndInitCheckboxPref(ADVANCED_REBOOT_KEY);
 
         if (!android.os.Process.myUserHandle().equals(UserHandle.OWNER)) {
             disableForUser(mEnableAdb);
             disableForUser(mClearAdbKeys);
             disableForUser(mPassword);
-            disableForUser(mAdvancedReboot);
         }
 
         mDebugAppPref = findPreference(DEBUG_APP_KEY);
@@ -324,7 +315,6 @@ public class DevelopmentSettings extends PreferenceFragment
         mAllPrefs.add(mShowAllANRs);
         mResetCbPrefs.add(mShowAllANRs);
 
-        mKillAppLongpressBack = findAndInitCheckboxPref(KILL_APP_LONGPRESS_BACK);
 
         if (WebViewFactory.isExperimentalWebViewAvailable()) {
             mExperimentalWebView = findAndInitCheckboxPref(WEBVIEW_EXPERIMENTAL_KEY);
@@ -487,7 +477,6 @@ public class DevelopmentSettings extends PreferenceFragment
             setPrefsEnabledState(mLastEnabledState);
         }
 
-        updateKillAppLongpressBackOptions();
     }
 
     void updateCheckBox(CheckBoxPreference checkBox, boolean value) {
@@ -537,18 +526,6 @@ public class DevelopmentSettings extends PreferenceFragment
         updateVerifyAppsOverUsbOptions();
         updateBugreportOptions();
         updateRootAccessOptions();
-        updateAdvancedRebootOptions();
-    }
-
-    private void writeAdvancedRebootOptions() {
-        Settings.Secure.putInt(getActivity().getContentResolver(),
-                Settings.Secure.ADVANCED_REBOOT,
-                mAdvancedReboot.isChecked() ? 1 : 0);
-    }
-
-    private void updateAdvancedRebootOptions() {
-        mAdvancedReboot.setChecked(Settings.Secure.getInt(getActivity().getContentResolver(),
-                Settings.Secure.ADVANCED_REBOOT, 0) != 0);
     }
 
     private void updateAdbOverNetwork() {
@@ -664,17 +641,6 @@ public class DevelopmentSettings extends PreferenceFragment
             hdcpChecking.setSummary(summaries[index]);
             hdcpChecking.setOnPreferenceChangeListener(this);
         }
-    }
-
-    private void writeKillAppLongpressBackOptions() {
-        Settings.Secure.putInt(getActivity().getContentResolver(),
-                Settings.Secure.KILL_APP_LONGPRESS_BACK,
-                mKillAppLongpressBack.isChecked() ? 1 : 0);
-    }
-
-    private void updateKillAppLongpressBackOptions() {
-        mKillAppLongpressBack.setChecked(Settings.Secure.getInt(
-            getActivity().getContentResolver(), Settings.Secure.KILL_APP_LONGPRESS_BACK, 0) != 0);
     }
 
     private void updatePasswordSummary() {
@@ -1338,10 +1304,6 @@ public class DevelopmentSettings extends PreferenceFragment
             writeShowHwOverdrawOptions();
         } else if (preference == mDebugLayout) {
             writeDebugLayoutOptions();
-        } else if (preference == mKillAppLongpressBack) {
-            writeKillAppLongpressBackOptions();
-        } else if (preference == mAdvancedReboot) {
-            writeAdvancedRebootOptions();
         }
 
         return false;

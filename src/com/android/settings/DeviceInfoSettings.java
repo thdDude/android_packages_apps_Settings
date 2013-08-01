@@ -32,8 +32,10 @@ import android.util.Log;
 import android.widget.Toast;
 
 import java.io.BufferedReader;
+import java.io.FileInputStream;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -69,9 +71,9 @@ public class DeviceInfoSettings extends SettingsPreferenceFragment {
     private static final String KEY_MOD_BUILD_DATE = "build_date";
     private static final String KEY_DEVICE_CPU = "device_cpu";
     private static final String KEY_DEVICE_MEMORY = "device_memory";
-    private static final String KEY_CM_UPDATES = "cm_updates";
 
     static final int TAPS_TO_BE_A_DEVELOPER = 7;
+
     long[] mHits = new long[3];
     int mDevHitCountdown;
     Toast mDevHitToast;
@@ -110,13 +112,6 @@ public class DeviceInfoSettings extends SettingsPreferenceFragment {
 
         String cpuInfo = getCPUInfo();
         String memInfo = getMemInfo();
-
-        // Only the owner should see the Updater settings, if it exists
-        if (UserHandle.myUserId() == UserHandle.USER_OWNER) {
-            removePreferenceIfPackageNotInstalled(findPreference(KEY_CM_UPDATES));
-        } else {
-            getPreferenceScreen().removePreference(findPreference(KEY_CM_UPDATES));
-        }
 
         if (cpuInfo != null) {
             setStringSummary(KEY_DEVICE_CPU, cpuInfo);

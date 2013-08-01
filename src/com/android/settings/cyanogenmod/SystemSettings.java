@@ -26,7 +26,6 @@ import android.os.UserHandle;
 import android.preference.CheckBoxPreference;
 import android.preference.ListPreference;
 import android.preference.Preference;
-import android.preference.PreferenceCategory;
 import android.preference.PreferenceScreen;
 import android.provider.Settings;
 import android.util.Log;
@@ -43,21 +42,16 @@ public class SystemSettings extends SettingsPreferenceFragment  implements
     private static final String KEY_NOTIFICATION_PULSE = "notification_pulse";
     private static final String KEY_BATTERY_LIGHT = "battery_light";
     private static final String KEY_HARDWARE_KEYS = "hardware_keys";
-    private static final String KEY_NAVIGATION_BAR = "navigation_bar";
-    private static final String KEY_NAVIGATION_RING = "navigation_ring";
-    private static final String KEY_NAVIGATION_BAR_CATEGORY = "navigation_bar_category";
     private static final String KEY_LOCK_CLOCK = "lock_clock";
     private static final String KEY_STATUS_BAR = "status_bar";
     private static final String KEY_QUICK_SETTINGS = "quick_settings_panel";
     private static final String KEY_NOTIFICATION_DRAWER = "notification_drawer";
     private static final String KEY_POWER_MENU = "power_menu";
-    private static final String KEY_PIE_CONTROL = "pie_control";
     private static final String KEY_EXPANDED_DESKTOP = "expanded_desktop";
     private static final String KEY_EXPANDED_DESKTOP_NO_NAVBAR = "expanded_desktop_no_navbar";
 
     private PreferenceScreen mNotificationPulse;
     private PreferenceScreen mBatteryPulse;
-    private PreferenceScreen mPieControl;
     private ListPreference mExpandedDesktopPref;
     private CheckBoxPreference mExpandedDesktopNoNavbarPref;
 
@@ -70,32 +64,23 @@ public class SystemSettings extends SettingsPreferenceFragment  implements
         addPreferencesFromResource(R.xml.system_settings);
         PreferenceScreen prefScreen = getPreferenceScreen();
 
-        // Only show the hardware keys config on a device that does not have a navbar
-        // and the navigation bar config on phones that has a navigation bar
-        boolean removeKeys = false;
-        boolean removeNavbar = false;
 
-        PreferenceCategory navbarCategory =
-                (PreferenceCategory) findPreference(KEY_NAVIGATION_BAR_CATEGORY);
+            // Only show the hardware keys config on a device that does not have a navbar
+            // and the navigation bar config on phones that has a navigation bar
+            boolean removeKeys = false;
+            IWindowManager windowManager = IWindowManager.Stub.asInterface(
+                    ServiceManager.getService(Context.WINDOW_SERVICE));
+            try {
+                if (windowManager.hasNavigationBar()) {
+                    removeKeys = true;
+                }
+            } catch (RemoteException e) {
+                // Do nothing
+			}
 
-        IWindowManager windowManager = IWindowManager.Stub.asInterface(
-                ServiceManager.getService(Context.WINDOW_SERVICE));
-        try {
-            if (windowManager.hasNavigationBar()) {
-                removeKeys = true;
-            } else {
-                removeNavbar = true;
+            if (removeKeys) {
+                prefScreen.removePreference(findPreference(KEY_HARDWARE_KEYS));
             }
-        } catch (RemoteException e) {
-            // Do nothing
-        }
-
-        if (removeKeys) {
-            prefScreen.removePreference(findPreference(KEY_HARDWARE_KEYS));
-        }
-        if (removeNavbar) {
-            prefScreen.removePreference(navbarCategory);
-        }
 
         // Determine which user is logged in
         mIsPrimary = UserHandle.myUserId() == UserHandle.USER_OWNER;
@@ -110,6 +95,7 @@ public class SystemSettings extends SettingsPreferenceFragment  implements
                     mBatteryPulse = null;
                 }
             }
+
         } else {
             // Secondary user is logged in, remove all primary user specific preferences
             prefScreen.removePreference(findPreference(KEY_BATTERY_LIGHT));
@@ -123,14 +109,6 @@ public class SystemSettings extends SettingsPreferenceFragment  implements
                 prefScreen.removePreference(mNotificationPulse);
                 mNotificationPulse = null;
             }
-        }
-
-        // Pie controls
-        mPieControl = (PreferenceScreen) findPreference(KEY_PIE_CONTROL);
-        if (mPieControl != null && removeNavbar) {
-            // Remove on devices without a navbar to start with
-            prefScreen.removePreference(mPieControl);
-            mPieControl = null;
         }
 
         // Expanded desktop
@@ -154,10 +132,11 @@ public class SystemSettings extends SettingsPreferenceFragment  implements
             }
         } catch (RemoteException e) {
             Log.e(TAG, "Error getting navigation bar status");
-        }
+	}
 
         // Don't display the lock clock preference if its not installed
         removePreferenceIfPackageNotInstalled(findPreference(KEY_LOCK_CLOCK));
+
     }
 
     @Override
@@ -167,9 +146,6 @@ public class SystemSettings extends SettingsPreferenceFragment  implements
         // All users
         if (mNotificationPulse != null) {
             updateLightPulseDescription();
-        }
-        if (mPieControl != null) {
-            updatePieControlDescription();
         }
 
         // Primary user only
@@ -214,15 +190,6 @@ public class SystemSettings extends SettingsPreferenceFragment  implements
             mBatteryPulse.setSummary(getString(R.string.notification_light_disabled));
         }
      }
-
-    private void updatePieControlDescription() {
-        if (Settings.System.getInt(getActivity().getContentResolver(),
-                Settings.System.PIE_CONTROLS, 0) == 1) {
-            mPieControl.setSummary(getString(R.string.pie_control_enabled));
-        } else {
-            mPieControl.setSummary(getString(R.string.pie_control_disabled));
-        }
-    }
 
     private void updateExpandedDesktop(int value) {
         ContentResolver cr = getContentResolver();

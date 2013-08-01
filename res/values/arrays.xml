@@ -194,6 +194,7 @@
         <item>High</item>
         <item>Very high</item>
     </string-array>
+
     <!-- Do not translate. -->
     <string-array name="tts_pitch_values">
         <item>50</item>
@@ -218,7 +219,6 @@
         <item>ita</item>
         <item>spa</item>
     </string-array>
-
 
     <!-- Wi-Fi settings -->
 
@@ -418,7 +418,6 @@
         <!-- Do not translate. -->
         <item>2</item>
     </string-array>
-
 
     <!-- Display options for UsageStats class -->
     <string-array name="usage_stats_display_order_types">
@@ -916,4 +915,5 @@
         <!-- Always allow app to send to premium SMS short code. -->
         <item>Always allow</item>
     </string-array>
+
 </resources>

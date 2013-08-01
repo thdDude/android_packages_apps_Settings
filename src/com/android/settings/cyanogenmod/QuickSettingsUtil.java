@@ -23,7 +23,9 @@ import static com.android.internal.util.cm.QSConstants.TILE_BATTERY;
 import static com.android.internal.util.cm.QSConstants.TILE_BLUETOOTH;
 import static com.android.internal.util.cm.QSConstants.TILE_BRIGHTNESS;
 import static com.android.internal.util.cm.QSConstants.TILE_CAMERA;
+import static com.android.internal.util.cm.QSConstants.TILE_DAYDREAM;
 import static com.android.internal.util.cm.QSConstants.TILE_DELIMITER;
+import static com.android.internal.util.cm.QSConstants.TILE_FCHARGE;
 import static com.android.internal.util.cm.QSConstants.TILE_EXPANDEDDESKTOP;
 import static com.android.internal.util.cm.QSConstants.TILE_GPS;
 import static com.android.internal.util.cm.QSConstants.TILE_LOCKSCREEN;
@@ -54,6 +56,7 @@ import com.android.internal.telephony.Phone;
 import com.android.internal.util.cm.QSUtils;
 import com.android.settings.R;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -67,6 +70,9 @@ public class QuickSettingsUtil {
 
     private static final Map<String, TileInfo> ENABLED_TILES = new HashMap<String, TileInfo>();
     private static final Map<String, TileInfo> DISABLED_TILES = new HashMap<String, TileInfo>();
+    public static final String FAST_CHARGE_DIR = "/sys/kernel/fast_charge";
+    public static final String FAST_CHARGE_FILE = "force_fast_charge";
+
 
     static {
         TILES = Collections.unmodifiableMap(ENABLED_TILES);
@@ -145,6 +151,15 @@ public class QuickSettingsUtil {
         registerTile(new QuickSettingsUtil.TileInfo(
                 TILE_WIFIAP, R.string.title_tile_wifiap,
                 "com.android.systemui:drawable/ic_qs_wifi_ap_neutral"));
+        registerTile(new QuickSettingsUtil.TileInfo(
+                TILE_USER, R.string.title_tile_user,
+                "com.android.systemui:drawable/ic_qs_default_user"));
+        registerTile(new QuickSettingsUtil.TileInfo(
+                TILE_DAYDREAM, R.string.screensaver_settings_title,
+                "com.android.systemui:drawable/ic_qs_clock_circle"));
+        registerTile(new QuickSettingsUtil.TileInfo(
+                TILE_FCHARGE, R.string.title_tile_fcharge,
+                "com.android.systemui:drawable/ic_qs_fcharge_off"));
     }
 
     private static void registerTile(QuickSettingsUtil.TileInfo info) {
@@ -201,6 +216,12 @@ public class QuickSettingsUtil {
         // Don't show the Torch tile if not supported
         if (!context.getResources().getBoolean(R.bool.has_led_flash)) {
             removeTile(TILE_TORCH);
+        }
+
+        // Dont show fast charge tile if not supported
+        File fastcharge = new File(FAST_CHARGE_DIR, FAST_CHARGE_FILE);
+        if (!fastcharge.exists()) {
+           removeTile(TILE_FCHARGE);
         }
 
         sUnsupportedRemoved = true;
