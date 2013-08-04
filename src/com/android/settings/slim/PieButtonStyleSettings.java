@@ -43,6 +43,8 @@ import net.margaritov.preference.colorpicker.ColorPickerPreference;
 public class PieButtonStyleSettings extends SettingsPreferenceFragment implements
         OnPreferenceChangeListener {
 
+    private Context mContext;
+
     private static final String TAG = "PieButtonStyleSettings";
     private static final String PREF_PIE_BUTTON_COLOR = "pie_button_color";
     private static final String PREF_PIE_BUTTON_PRESSED_COLOR = "pie_button_pressed_color";
@@ -69,6 +71,8 @@ public class PieButtonStyleSettings extends SettingsPreferenceFragment implement
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+	mContext = getActivity().getApplicationContext();
         refreshSettings();
     }
 

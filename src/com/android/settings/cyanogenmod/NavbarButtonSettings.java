@@ -65,6 +65,8 @@ import com.android.settings.widget.NavBarItemPreference;
 public class NavbarButtonSettings extends SettingsPreferenceFragment implements
         OnPreferenceChangeListener, ShortcutPickerHelper.OnPickListener {
 
+    private Context mContext;
+
     private static final String TAG = "NavBarButton";
     private static final String PREF_NAVBAR_QTY = "navbar_qty";
 
@@ -95,6 +97,8 @@ public class NavbarButtonSettings extends SettingsPreferenceFragment implements
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+	mContext = getActivity().getApplicationContext();
 
          refreshSettings();
         setHasOptionsMenu(true);

@@ -65,7 +65,6 @@ public class StatusBar extends SettingsPreferenceFragment implements OnPreferenc
         mStatusBarBattery = (ListPreference) prefSet.findPreference(STATUS_BAR_BATTERY);
         mStatusBarCmSignal = (ListPreference) prefSet.findPreference(STATUS_BAR_SIGNAL);
 
-<<<<<<< HEAD
         float statusbarAlpha;
         try{
             statusbarAlpha = Settings.System.getFloat(getActivity()
@@ -73,23 +72,8 @@ public class StatusBar extends SettingsPreferenceFragment implements OnPreferenc
         } catch (Exception e) {
             statusbarAlpha = 0.0f;
                      Settings.System.putFloat(getActivity().getContentResolver(), Settings.System.STATUS_BAR_TRANSPARENCY, 0.0f);
-=======
-        mStatusBarClock.setChecked(Settings.System.getInt(resolver, Settings.System.STATUS_BAR_CLOCK, 1) == 1);
-        mStatusBarClock.setOnPreferenceChangeListener(this);
-
-        if (DateFormat.is24HourFormat(getActivity())) {
-            ((PreferenceCategory) prefSet.findPreference(STATUS_BAR_CLOCK_CATEGORY))
-                    .removePreference(prefSet.findPreference(STATUS_BAR_AM_PM));
-        } else {
-            mStatusBarAmPm = (ListPreference) prefSet.findPreference(STATUS_BAR_AM_PM);
-            int statusBarAmPm = Settings.System.getInt(resolver,
-                    Settings.System.STATUS_BAR_AM_PM, 2);
-
-            mStatusBarAmPm.setValue(String.valueOf(statusBarAmPm));
-            mStatusBarAmPm.setSummary(mStatusBarAmPm.getEntry());
-            mStatusBarAmPm.setOnPreferenceChangeListener(this);
->>>>>>> 04813751975f8b3fbab7a79a99091eea7e626b08
         }
+
         mStatusbarTransparency = (SeekBarPreference) prefSet.findPreference(STATUS_BAR_TRANSPARENCY);
         mStatusbarTransparency.setProperty(Settings.System.STATUS_BAR_TRANSPARENCY);
         mStatusbarTransparency.setInitValue((int) (statusbarAlpha * 100));
@@ -151,6 +135,7 @@ public class StatusBar extends SettingsPreferenceFragment implements OnPreferenc
 
     @Override
     public boolean onPreferenceChange(Preference preference, Object newValue) {
+        ContentResolver resolver = getActivity().getContentResolver();
 	if (preference == mStatusBarBattery) {
             int statusBarBattery = Integer.valueOf((String) newValue);
             int index = mStatusBarBattery.findIndexOfValue((String) newValue);
@@ -159,15 +144,15 @@ public class StatusBar extends SettingsPreferenceFragment implements OnPreferenc
             return true;
        } else if (preference == mStatusbarTransparency) {
             float val = Float.parseFloat((String) newValue);
-             Settings.System.putFloat(getActivity().getApplicationContext().getContentResolver(),
-                    Settings.System.STATUS_BAR_TRANSPARENCY,
-                    val / 100);
+             Settings.System.putFloat(resolver,
+             	Settings.System.STATUS_BAR_TRANSPARENCY,
+                val / 100);
             return true;
         } else if (preference == mNotificationpanelTransparency) {
             float val = Float.parseFloat((String) newValue);
-            Settings.System.putFloat(getActivity().getApplicationContext().getContentResolver(),
-                    Settings.System.NOTIFICATION_PANEL_TRANSPARENCY,
-                    val / 100);
+            Settings.System.putFloat(resolver,
+		Settings.System.NOTIFICATION_PANEL_TRANSPARENCY,
+                val / 100);
             return true;
     	} else if (preference == mStatusBarCmSignal) {
             int signalStyle = Integer.valueOf((String) newValue);
@@ -183,12 +168,12 @@ public class StatusBar extends SettingsPreferenceFragment implements OnPreferenc
         ContentResolver resolver = getActivity().getContentResolver();
         boolean value;
 	if (preference == mStatusBarBrightnessControl) {
-            value = (Boolean) newValue;
+            value = mStatusBarBrightnessControl.isChecked();
             Settings.System.putInt(resolver,
                     Settings.System.STATUS_BAR_BRIGHTNESS_CONTROL, value ? 1 : 0);
             return true;
         } else if (preference == mStatusBarNotifCount) {
-            value = (Boolean) newValue;
+            value = mStatusBarNotifCount.isChecked();
             Settings.System.putInt(resolver, Settings.System.STATUS_BAR_NOTIF_COUNT, value ? 1 : 0);
             return true;
         }

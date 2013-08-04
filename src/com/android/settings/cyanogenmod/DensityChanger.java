@@ -33,6 +33,7 @@ public class DensityChanger extends SettingsPreferenceFragment implements
         OnPreferenceChangeListener {
 
     private static final String TAG = "DensityChanger";
+    private Context mContext;
 
     ListPreference mStockDensity;
     Preference mReboot;
@@ -61,6 +62,9 @@ public class DensityChanger extends SettingsPreferenceFragment implements
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+	mContext = getActivity().getApplicationContext();
+
         addPreferencesFromResource(R.xml.lcd_density_setup);
 
         String currentDensity = SystemProperties.get("ro.sf.lcd_density");

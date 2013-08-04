@@ -42,6 +42,8 @@ import net.margaritov.preference.colorpicker.ColorPickerPreference;
 public class PieStyleSettings extends SettingsPreferenceFragment implements
         OnPreferenceChangeListener {
 
+    private Context mContext;
+
     private static final String TAG = "PieStyleSettings";
     private static final String PREF_PIE_BACKGROUND_COLOR = "pie_background_color";
     private static final String PREF_PIE_SNAP_COLOR = "pie_snap_color";
@@ -65,6 +67,8 @@ public class PieStyleSettings extends SettingsPreferenceFragment implements
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+	mContext = getActivity().getApplicationContext();
         refreshSettings();
     }
 

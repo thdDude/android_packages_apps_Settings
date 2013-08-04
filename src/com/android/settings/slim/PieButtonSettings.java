@@ -65,6 +65,8 @@ import com.android.settings.widget.NavBarItemPreference;
 public class PieButtonSettings extends SettingsPreferenceFragment implements
         OnPreferenceChangeListener, ShortcutPickerHelper.OnPickListener {
 
+    private Context mContext;
+
     private static final String TAG = "PieButton";
     private static final String PREF_PIE_QTY = "pie_qty";
     private static final String PREF_PIE_BUTTONS = "pie_buttons_cat";
@@ -98,6 +100,8 @@ public class PieButtonSettings extends SettingsPreferenceFragment implements
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+	mContext = getActivity().getApplicationContext();
 
         refreshSettings();
         setHasOptionsMenu(true);

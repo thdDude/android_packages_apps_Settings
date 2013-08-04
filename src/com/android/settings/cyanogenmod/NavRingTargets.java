@@ -65,6 +65,8 @@ import com.android.settings.widget.NavBarItemPreference;
 public class NavRingTargets extends SettingsPreferenceFragment implements
         ShortcutPickerHelper.OnPickListener, OnPreferenceChangeListener {
 
+    private Context mContext;
+
     private static final String TAG = "NavRingTargets";
 
     private static final String PREF_NAVRING_AMOUNT = "pref_navring_amount";
@@ -99,6 +101,8 @@ public class NavRingTargets extends SettingsPreferenceFragment implements
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+	mContext = getActivity().getApplicationContext();
 
         createCustomLockscreenView();
     }

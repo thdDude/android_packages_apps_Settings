@@ -16,6 +16,7 @@
 
 package com.android.settings.slim;
 
+import android.content.Context;
 import android.content.ContentResolver;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
@@ -40,6 +41,8 @@ import com.android.settings.widget.SeekBarPreference;
 
 public class PieTriggerSettings extends SettingsPreferenceFragment
                         implements Preference.OnPreferenceChangeListener {
+
+    private Context mContext;
 
     private static final int DEFAULT_POSITION = 1 << 0; // this equals Position.LEFT.FLAG
 
@@ -77,6 +80,8 @@ public class PieTriggerSettings extends SettingsPreferenceFragment
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+	mContext = getActivity().getApplicationContext();
 
         addPreferencesFromResource(R.xml.pie_trigger);
 
