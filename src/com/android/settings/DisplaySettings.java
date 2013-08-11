@@ -115,6 +115,7 @@ public class DisplaySettings extends SettingsPreferenceFragment implements
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ContentResolver resolver = getActivity().getContentResolver();
+	Resources res = getResources();
 
         addPreferencesFromResource(R.xml.display_settings);
 
