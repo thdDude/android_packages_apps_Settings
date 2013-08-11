@@ -70,6 +70,8 @@
             android:entryValues="@array/haptic_feedback_values"
             android:dependency="expanded_widget" />
 
+    </PreferenceCategory>
+
       <PreferenceCategory
        android:title="@string/toggle_color_title">
 
@@ -93,7 +95,5 @@
             android:title="@string/toggle_icon_color_off_title">
         </PreferenceScreen>
       </PreferenceCategory>
-
-    </PreferenceCategory>
 
 </PreferenceScreen>
