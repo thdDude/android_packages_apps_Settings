@@ -499,7 +499,7 @@ public class InputMethodAndLanguageSettings extends SettingsPreferenceFragment
             mVolumeKeyCursorControl.setSummary(mVolumeKeyCursorControl.getEntries()[index]);
             return true;
         } else if (preference == mKeyboardRotationTimeout) {
-            int timeout = Integer.parseInt((String) objValue);
+            int timeout = Integer.parseInt((String) value);
             Settings.System.putInt(getActivity().getContentResolver(),
                     Settings.System.KEYBOARD_ROTATION_TIMEOUT, timeout);
             updateRotationTimeout(timeout);
