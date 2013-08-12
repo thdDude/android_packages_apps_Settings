@@ -54,11 +54,11 @@ import com.android.settings.util.Helpers;
 public class UserInterface extends SettingsPreferenceFragment implements OnPreferenceChangeListener {
 
     public static final String TAG = "UserInterface";
-    private static final String KEY_TABLET_UI = "tablet_ui";
+    //private static final String KEY_TABLET_UI = "tablet_ui";
     private static final String DUAL_PANE_PREFS = "dual_pane_prefs";
 
     Preference mLcdDensity;
-    private CheckBoxPreference mTabletUI;
+    //private CheckBoxPreference mTabletUI;
     private ListPreference mDualPanePrefs;
 
     int newDensityValue;
@@ -86,10 +86,10 @@ public class UserInterface extends SettingsPreferenceFragment implements OnPrefe
 
         mLcdDensity.setSummary(getResources().getString(R.string.current_lcd_density) + currentProperty);
 
-        mTabletUI = (CheckBoxPreference) findPreference(KEY_TABLET_UI);
-	if (mTabletUI != null)
-        mTabletUI.setChecked(Settings.System.getInt(mContentResolver,
-                        Settings.System.TABLET_MODE, 0) == 1);
+        //mTabletUI = (CheckBoxPreference) findPreference(KEY_TABLET_UI);
+	//if (mTabletUI != null)
+       // mTabletUI.setChecked(Settings.System.getInt(mContentResolver,
+        //                Settings.System.TABLET_MODE, 0) == 1);
 
         mDualPanePrefs = (ListPreference) prefs.findPreference(DUAL_PANE_PREFS);
         mDualPanePrefs.setOnPreferenceChangeListener(this);
@@ -115,7 +115,7 @@ public class UserInterface extends SettingsPreferenceFragment implements OnPrefe
             ((PreferenceActivity) getActivity())
             .startPreferenceFragment(new DensityChanger(), true);
             return true;
-        } else if (preference == mTabletUI && (mTabletUI != null)) {
+        } /*else if (preference == mTabletUI && (mTabletUI != null)) {
             value = mTabletUI.isChecked();
             Settings.System.putInt(getContentResolver(), Settings.System.TABLET_MODE,
                     value ? 1 : 0);
@@ -126,7 +126,7 @@ public class UserInterface extends SettingsPreferenceFragment implements OnPrefe
             } catch (Exception e) {
             }
             return true;
-	}
+	}*/
         return super.onPreferenceTreeClick(preferenceScreen, preference);
     }
 }

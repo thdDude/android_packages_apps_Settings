@@ -18,10 +18,11 @@
         android:summary="@string/dual_pane_prefs_summary"
         android:entries="@array/entries_dual_pane_prefs"
         android:entryValues="@array/values_dual_pane_prefs" />
-
+    <!-- Notification drawer Power Widget
         <CheckBoxPreference
             android:key="tablet_ui"
             android:title="@string/tablet_ui_title" />
+	-->
 
     </PreferenceCategory>
 </PreferenceScreen>
