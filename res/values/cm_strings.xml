@@ -1457,4 +1457,8 @@ rience. Better keep it disabled on lower end devices.</string>
     <string name="halo_ping_color_title">HALO ping color</string>
     <string name="halo_gone_title">Remove HALO button from the notification drawer</string>
 
+    <!-- Toggle for Fastboot -->
+    <string name="fastboot_enable_title">Enable fast booting</string>
+    <string name="fastboot_enable_summary">Speed up shutdown/startup by avoiding full hardware restart</string>
+
 </resources>
