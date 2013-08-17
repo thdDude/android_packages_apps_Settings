@@ -16,13 +16,8 @@
 
 <PreferenceScreen
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:title="@string/misc_settings_title">
-
-    <CheckBoxPreference
-        android:key="high_end_gfx"
-        android:title="@string/high_end_gfx_title"
-        android:summary="@string/high_end_gfx_summary"
-        android:defaultValue="false" />
+    android:title="@string/misc_settings_title"
+    xmlns:settings="http://schemas.android.com/apk/res/com.android.settings">
 
         <CheckBoxPreference
             android:key="kill_app_longpress_back"
@@ -39,5 +34,10 @@
         <CheckBoxPreference
             android:key="recent_task_manager_button"
             android:title="@string/recent_task_manager_button_title" />
+
+    	<PreferenceScreen
+           android:key="buildprop_modder"
+           android:title="@string/propmodder_title" 
+           android:fragment="com.android.settings.cyanogenmod.PropModder"/>
 
 </PreferenceScreen>
