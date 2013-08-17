@@ -1731,7 +1731,6 @@
         <activity android:name=".cyanogenmod.NavbarButtonSettings" />
         <activity android:name=".cyanogenmod.NavbarStyleDimenSettings" />
 
-        <activity android:name=".cyanogenmod.UserInterface" />
         <activity android:name=".cyanogenmod.WidgetsConfiguration" />
         <activity android:name=".cyanogenmod.WidgetsSettings" />
         <activity android:name=".cyanogenmod.WidgetsStyle" />

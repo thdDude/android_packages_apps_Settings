@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2013 The CyanogenMod project
+ * Copyright (C) 2012 The CyanogenMod Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,45 +16,48 @@
 
 package com.android.settings.cyanogenmod;
 
-import android.content.ContentResolver;
-import android.content.res.Resources;
+import android.app.Activity;
+import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.preference.CheckBoxPreference;
 import android.preference.ListPreference;
 import android.preference.Preference;
+import android.preference.Preference.OnPreferenceChangeListener;
 import android.preference.PreferenceCategory;
 import android.preference.PreferenceScreen;
 import android.provider.Settings;
+import android.util.Slog;
 import android.widget.Toast;
 
 import com.android.settings.R;
-import com.android.settings.SettingsPreferenceFragment;
 import com.android.settings.Utils;
+import com.android.settings.util.ShortcutPickerHelper;
+import com.android.settings.SettingsPreferenceFragment;
 
 public class ButtonSettings extends SettingsPreferenceFragment implements
-        Preference.OnPreferenceChangeListener {
+        ShortcutPickerHelper.OnPickListener, OnPreferenceChangeListener {
+
     private static final String KEY_MENU_ENABLED = "key_menu_enabled";
     private static final String KEY_BACK_ENABLED = "key_back_enabled";
     private static final String KEY_HOME_ENABLED = "key_home_enabled";
 
-    private static final String KEY_ENABLE_CUSTOM_BINDING = "hardware_keys_enable_custom";
-    private static final String KEY_HOME_LONG_PRESS = "hardware_keys_home_long_press";
-    private static final String KEY_MENU_PRESS = "hardware_keys_menu_press";
-    private static final String KEY_MENU_LONG_PRESS = "hardware_keys_menu_long_press";
-    private static final String KEY_ASSIST_PRESS = "hardware_keys_assist_press";
-    private static final String KEY_ASSIST_LONG_PRESS = "hardware_keys_assist_long_press";
-    private static final String KEY_APP_SWITCH_PRESS = "hardware_keys_app_switch_press";
-    private static final String KEY_APP_SWITCH_LONG_PRESS = "hardware_keys_app_switch_long_press";
+    private static final String HARDWARE_KEYS_CATEGORY_BINDINGS = "hardware_keys_bindings";
+    private static final String HARDWARE_KEYS_ENABLE_CUSTOM = "hardware_keys_enable_custom";
+    private static final String HARDWARE_KEYS_HOME_LONG_PRESS = "hardware_keys_home_long_press";
+    private static final String HARDWARE_KEYS_MENU_PRESS = "hardware_keys_menu_press";
+    private static final String HARDWARE_KEYS_MENU_LONG_PRESS = "hardware_keys_menu_long_press";
+    private static final String HARDWARE_KEYS_ASSIST_PRESS = "hardware_keys_assist_press";
+    private static final String HARDWARE_KEYS_ASSIST_LONG_PRESS = "hardware_keys_assist_long_press";
+    private static final String HARDWARE_KEYS_APP_SWITCH_PRESS = "hardware_keys_app_switch_press";
+    private static final String HARDWARE_KEYS_APP_SWITCH_LONG_PRESS = "hardware_keys_app_switch_long_press";
+    private static final String HARDWARE_KEYS_SHOW_OVERFLOW = "hardware_keys_show_overflow";
+
+    private static final String CATEGORY_VOLUME = "volume_keys";
+    private static final String CATEGORY_HOME = "home_key";
     private static final String KEY_HOME_WAKE = "pref_home_wake";
     private static final String KEY_VOLUME_WAKE = "pref_volume_wake";
-    private static final String KEY_SHOW_OVERFLOW = "hardware_keys_show_overflow";
     private static final String KEY_VOLBTN_MUSIC_CTRL = "volbtn_music_controls";
-
-    private static final String CATEGORY_HOME = "home_key";
-    private static final String CATEGORY_MENU = "menu_key";
-    private static final String CATEGORY_ASSIST = "assist_key";
-    private static final String CATEGORY_APPSWITCH = "app_switch_key";
-    private static final String CATEGORY_VOLUME = "volume_keys";
 
     // Available custom actions to perform on a key press.
     // Must match values for KEY_HOME_LONG_PRESS_ACTION in:
@@ -65,6 +68,9 @@ public class ButtonSettings extends SettingsPreferenceFragment implements
     private static final int ACTION_SEARCH = 3;
     private static final int ACTION_VOICE_SEARCH = 4;
     private static final int ACTION_IN_APP_SEARCH = 5;
+    private static final int ACTION_LAST_APP = 6;
+    private static final int ACTION_POWER = 7;
+    private static final int ACTION_CUSTOM_APP = 8;
 
     // Masks for checking presence of hardware keys.
     // Must match values in frameworks/base/core/res/res/values/config.xml
@@ -80,7 +86,6 @@ public class ButtonSettings extends SettingsPreferenceFragment implements
 
     private CheckBoxPreference mEnableCustomBindings;
     private ListPreference mHomeLongPressAction;
-    private CheckBoxPreference mHomeWake;
     private ListPreference mMenuPressAction;
     private ListPreference mMenuLongPressAction;
     private ListPreference mAssistPressAction;
@@ -88,18 +93,17 @@ public class ButtonSettings extends SettingsPreferenceFragment implements
     private ListPreference mAppSwitchPressAction;
     private ListPreference mAppSwitchLongPressAction;
     private CheckBoxPreference mShowActionOverflow;
+
+    private CheckBoxPreference mHomeWake;
     private CheckBoxPreference mVolumeWake;
     private CheckBoxPreference mVolBtnMusicCtrl;
+
+    private ShortcutPickerHelper mPicker;
+    private Preference mCustomAppPreference;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        addPreferencesFromResource(R.xml.button_settings);
-
-        final Resources res = getResources();
-        final ContentResolver resolver = getActivity().getContentResolver();
-        final PreferenceScreen prefScreen = getPreferenceScreen();
 
         final int deviceKeys = getResources().getInteger(
                 com.android.internal.R.integer.config_deviceHardwareKeys);
@@ -108,99 +112,189 @@ public class ButtonSettings extends SettingsPreferenceFragment implements
         final boolean hasAssistKey = (deviceKeys & KEY_MASK_ASSIST) != 0;
         final boolean hasAppSwitchKey = (deviceKeys & KEY_MASK_APP_SWITCH) != 0;
 
+        addPreferencesFromResource(R.xml.button_settings);
+        PreferenceScreen prefSet = getPreferenceScreen();
+
+        final PreferenceCategory volumeCategory =
+                (PreferenceCategory) prefSet.findPreference(CATEGORY_VOLUME);
+        final PreferenceCategory homeCategory =
+                (PreferenceCategory) prefSet.findPreference(CATEGORY_HOME);
+
         mMenuKeyEnabled = (CheckBoxPreference) prefSet.findPreference(KEY_MENU_ENABLED);
         mBackKeyEnabled = (CheckBoxPreference) prefSet.findPreference(KEY_BACK_ENABLED);
         mHomeKeyEnabled = (CheckBoxPreference) prefSet.findPreference(KEY_HOME_ENABLED);
 
-        boolean hasAnyBindableKey = false;
-        final PreferenceCategory homeCategory =
-                (PreferenceCategory) prefScreen.findPreference(CATEGORY_HOME);
-        final PreferenceCategory menuCategory =
-                (PreferenceCategory) prefScreen.findPreference(CATEGORY_MENU);
-        final PreferenceCategory assistCategory =
-                (PreferenceCategory) prefScreen.findPreference(CATEGORY_ASSIST);
-        final PreferenceCategory appSwitchCategory =
-                (PreferenceCategory) prefScreen.findPreference(CATEGORY_APPSWITCH);
-        final PreferenceCategory volumeCategory =
-                (PreferenceCategory) prefScreen.findPreference(CATEGORY_VOLUME);
+        mPicker = new ShortcutPickerHelper(this, this);
+
+        mEnableCustomBindings = (CheckBoxPreference) prefSet.findPreference(
+                HARDWARE_KEYS_ENABLE_CUSTOM);
+        mHomeLongPressAction = (ListPreference) prefSet.findPreference(
+                HARDWARE_KEYS_HOME_LONG_PRESS);
+        mMenuPressAction = (ListPreference) prefSet.findPreference(
+                HARDWARE_KEYS_MENU_PRESS);
+        mMenuLongPressAction = (ListPreference) prefSet.findPreference(
+                HARDWARE_KEYS_MENU_LONG_PRESS);
+        mAssistPressAction = (ListPreference) prefSet.findPreference(
+                HARDWARE_KEYS_ASSIST_PRESS);
+        mAssistLongPressAction = (ListPreference) prefSet.findPreference(
+                HARDWARE_KEYS_ASSIST_LONG_PRESS);
+        mAppSwitchPressAction = (ListPreference) prefSet.findPreference(
+                HARDWARE_KEYS_APP_SWITCH_PRESS);
+        mAppSwitchLongPressAction = (ListPreference) prefSet.findPreference(
+                HARDWARE_KEYS_APP_SWITCH_LONG_PRESS);
+        mShowActionOverflow = (CheckBoxPreference) prefSet.findPreference(
+                HARDWARE_KEYS_SHOW_OVERFLOW);
+        PreferenceCategory bindingsCategory = (PreferenceCategory) prefSet.findPreference(
+                HARDWARE_KEYS_CATEGORY_BINDINGS);
 
         if (hasHomeKey) {
+
             mHomeWake = (CheckBoxPreference) findPreference(KEY_HOME_WAKE);
 
-            if (!res.getBoolean(R.bool.config_show_homeWake)) {
+            if (!getResources().getBoolean(R.bool.config_show_homeWake)) {
                 homeCategory.removePreference(mHomeWake);
             } else {
-                mHomeWake.setChecked(Settings.System.getInt(resolver,
+                mHomeWake.setChecked(Settings.System.getInt(getActivity().getContentResolver(),
                         Settings.System.HOME_WAKE_SCREEN, 1) == 1);
             }
 
-            int longPressAction = Settings.System.getInt(resolver,
-                    Settings.System.KEY_HOME_LONG_PRESS_ACTION,
-                    hasAppSwitchKey ? ACTION_NOTHING : ACTION_APP_SWITCH);
-            mHomeLongPressAction = initActionList(KEY_HOME_LONG_PRESS, longPressAction);
+            String homeLongPressAction = Settings.System.getString(getContentResolver(),
+                    Settings.System.KEY_HOME_LONG_PRESS_ACTION);
+            if (hasAppSwitchKey) {
+                if (homeLongPressAction == null)
+                    homeLongPressAction = Integer.toString(ACTION_NOTHING);
+            } else {
+                if (homeLongPressAction == null)
+                    homeLongPressAction = Integer.toString(ACTION_APP_SWITCH);
+            }
+            try {
+                Integer.parseInt(homeLongPressAction);
+                mHomeLongPressAction.setValue(homeLongPressAction);
+                mHomeLongPressAction.setSummary(mHomeLongPressAction.getEntry());
+            } catch (NumberFormatException e) {
+                mHomeLongPressAction.setValue(Integer.toString(ACTION_CUSTOM_APP));
+                mHomeLongPressAction.setSummary(mPicker.getFriendlyNameForUri(homeLongPressAction));
+            }
 
-            hasAnyBindableKey = true;
+            mHomeLongPressAction.setOnPreferenceChangeListener(this);
         } else {
-            prefScreen.removePreference(homeCategory);
+            bindingsCategory.removePreference(mHomeLongPressAction);
         }
 
         if (hasMenuKey) {
-            int pressAction = Settings.System.getInt(resolver,
-                    Settings.System.KEY_MENU_ACTION, ACTION_MENU);
-            mMenuPressAction = initActionList(KEY_MENU_PRESS, pressAction);
+            String menuPressAction = Settings.System.getString(getContentResolver(),
+                    Settings.System.KEY_MENU_ACTION);
+            if (menuPressAction == null)
+                menuPressAction = Integer.toString(ACTION_MENU);
 
-            int longPressAction = Settings.System.getInt(resolver,
-                        Settings.System.KEY_MENU_LONG_PRESS_ACTION,
-                        hasAssistKey ? ACTION_NOTHING : ACTION_SEARCH);
-            mMenuLongPressAction = initActionList(KEY_MENU_LONG_PRESS, longPressAction);
+            try {
+                Integer.parseInt(menuPressAction);
+                mMenuPressAction.setValue(menuPressAction);
+                mMenuPressAction.setSummary(mMenuPressAction.getEntry());
+            } catch (NumberFormatException e) {
+                mMenuPressAction.setValue(Integer.toString(ACTION_CUSTOM_APP));
+                mMenuPressAction.setSummary(mPicker.getFriendlyNameForUri(menuPressAction));
+            }
 
-            mShowActionOverflow =
-                    (CheckBoxPreference) prefScreen.findPreference(KEY_SHOW_OVERFLOW);
+            mMenuPressAction.setOnPreferenceChangeListener(this);
 
-            mShowActionOverflow.setChecked(Settings.System.getInt(resolver,
-                    Settings.System.UI_FORCE_OVERFLOW_BUTTON, 0) == 1);
+            String menuLongPressAction;
+            menuLongPressAction = Settings.System.getString(getContentResolver(),
+                    Settings.System.KEY_MENU_LONG_PRESS_ACTION);
+            if (hasAssistKey) {
+                if (menuLongPressAction == null)
+                    menuLongPressAction = Integer.toString(ACTION_NOTHING);
+            } else {
+                if (menuLongPressAction == null)
+                    menuLongPressAction = Integer.toString(ACTION_SEARCH);
+            }
+            try {
+                Integer.parseInt(menuLongPressAction);
+                mMenuLongPressAction.setValue(menuLongPressAction);
+                mMenuLongPressAction.setSummary(mMenuLongPressAction.getEntry());
+            } catch (NumberFormatException e) {
+                mMenuLongPressAction.setValue(Integer.toString(ACTION_CUSTOM_APP));
+                mMenuLongPressAction.setSummary(mPicker.getFriendlyNameForUri(menuLongPressAction));
+            }
 
-            hasAnyBindableKey = true;
+            mMenuLongPressAction.setOnPreferenceChangeListener(this);
         } else {
-            prefScreen.removePreference(menuCategory);
+            bindingsCategory.removePreference(mMenuPressAction);
+            bindingsCategory.removePreference(mMenuLongPressAction);
         }
 
         if (hasAssistKey) {
-            int pressAction = Settings.System.getInt(resolver,
-                    Settings.System.KEY_ASSIST_ACTION, ACTION_SEARCH);
-            mAssistPressAction = initActionList(KEY_ASSIST_PRESS, pressAction);
+            String assistPressAction = Settings.System.getString(getContentResolver(),
+                    Settings.System.KEY_ASSIST_ACTION);
+            if (assistPressAction == null)
+                assistPressAction = Integer.toString(ACTION_SEARCH);
 
-            int longPressAction = Settings.System.getInt(resolver,
-                    Settings.System.KEY_ASSIST_LONG_PRESS_ACTION, ACTION_VOICE_SEARCH);
-            mAssistLongPressAction = initActionList(KEY_ASSIST_LONG_PRESS, longPressAction);
+            try {
+                Integer.parseInt(assistPressAction);
+                mAssistPressAction.setValue(assistPressAction);
+                mAssistPressAction.setSummary(mAssistPressAction.getEntry());
+            } catch (NumberFormatException e) {
+                mAssistPressAction.setValue(Integer.toString(ACTION_CUSTOM_APP));
+                mAssistPressAction.setSummary(mPicker.getFriendlyNameForUri(assistPressAction));
+            }
 
-            hasAnyBindableKey = true;
+            mAssistPressAction.setOnPreferenceChangeListener(this);
+
+            String assistLongPressAction = Settings.System.getString(getContentResolver(),
+                    Settings.System.KEY_ASSIST_LONG_PRESS_ACTION);
+            if (assistLongPressAction == null)
+                assistLongPressAction = Integer.toString(ACTION_VOICE_SEARCH);
+
+            try {
+                Integer.parseInt(assistLongPressAction);
+                mAssistLongPressAction.setValue(assistLongPressAction);
+                mAssistLongPressAction.setSummary(mAssistLongPressAction.getEntry());
+            } catch (NumberFormatException e) {
+                mAssistLongPressAction.setValue(Integer.toString(ACTION_CUSTOM_APP));
+                mAssistLongPressAction.setSummary(mPicker.getFriendlyNameForUri(assistLongPressAction));
+            }
+
+            mAssistLongPressAction.setOnPreferenceChangeListener(this);
         } else {
-            prefScreen.removePreference(assistCategory);
+            bindingsCategory.removePreference(mAssistPressAction);
+            bindingsCategory.removePreference(mAssistLongPressAction);
         }
 
         if (hasAppSwitchKey) {
-            int pressAction = Settings.System.getInt(resolver,
-                    Settings.System.KEY_APP_SWITCH_ACTION, ACTION_APP_SWITCH);
-            mAppSwitchPressAction = initActionList(KEY_APP_SWITCH_PRESS, pressAction);
+            String appSwitchPressAction = Settings.System.getString(getContentResolver(),
+                    Settings.System.KEY_APP_SWITCH_ACTION);
+            if (appSwitchPressAction == null)
+                appSwitchPressAction = Integer.toString(ACTION_APP_SWITCH);
 
-            int longPressAction = Settings.System.getInt(resolver,
-                    Settings.System.KEY_APP_SWITCH_LONG_PRESS_ACTION, ACTION_NOTHING);
-            mAppSwitchLongPressAction = initActionList(KEY_APP_SWITCH_LONG_PRESS, longPressAction);
+            try {
+                Integer.parseInt(appSwitchPressAction);
+                mAppSwitchPressAction.setValue(appSwitchPressAction);
+                mAppSwitchPressAction.setSummary(mAppSwitchPressAction.getEntry());
+            } catch (NumberFormatException e) {
+                mAppSwitchPressAction.setValue(Integer.toString(ACTION_CUSTOM_APP));
+                mAppSwitchPressAction.setSummary(mPicker.getFriendlyNameForUri(appSwitchPressAction));
+            }
 
-            hasAnyBindableKey = true;
+            mAppSwitchPressAction.setOnPreferenceChangeListener(this);
+
+            String appSwitchLongPressAction = Settings.System.getString(getContentResolver(),
+                    Settings.System.KEY_APP_SWITCH_LONG_PRESS_ACTION);
+            if (appSwitchLongPressAction == null)
+                appSwitchLongPressAction = Integer.toString(ACTION_NOTHING);
+
+            try {
+                Integer.parseInt(appSwitchLongPressAction);
+                mAppSwitchLongPressAction.setValue(appSwitchLongPressAction);
+                mAppSwitchLongPressAction.setSummary(mAppSwitchLongPressAction.getEntry());
+            } catch (NumberFormatException e) {
+                mAppSwitchLongPressAction.setValue(Integer.toString(ACTION_CUSTOM_APP));
+                mAppSwitchLongPressAction.setSummary(mPicker.getFriendlyNameForUri(appSwitchLongPressAction));
+            }
+
+            mAppSwitchLongPressAction.setOnPreferenceChangeListener(this);
         } else {
-            prefScreen.removePreference(appSwitchCategory);
-        }
-
-        mEnableCustomBindings =
-                (CheckBoxPreference) prefScreen.findPreference(KEY_ENABLE_CUSTOM_BINDING);
-
-        if (hasAnyBindableKey) {
-            mEnableCustomBindings.setChecked(Settings.System.getInt(resolver,
-                    Settings.System.HARDWARE_KEY_REBINDING, 0) == 1);
-        } else {
-            prefScreen.removePreference(mEnableCustomBindings);
+            bindingsCategory.removePreference(mAppSwitchPressAction);
+            bindingsCategory.removePreference(mAppSwitchLongPressAction);
         }
 
         mMenuKeyEnabled.setChecked((Settings.System.getInt(getActivity().
@@ -213,101 +307,119 @@ public class ButtonSettings extends SettingsPreferenceFragment implements
 		getApplicationContext().getContentResolver(),
                 Settings.System.KEY_HOME_ENABLED, 1) == 1));
 
+        mEnableCustomBindings.setChecked((Settings.System.getInt(getActivity().
+                getApplicationContext().getContentResolver(),
+                Settings.System.HARDWARE_KEY_REBINDING, 0) == 1));
+        mShowActionOverflow.setChecked((Settings.System.getInt(getActivity().
+                getApplicationContext().getContentResolver(),
+                Settings.System.UI_FORCE_OVERFLOW_BUTTON, 0) == 1));
+
         if (Utils.hasVolumeRocker(getActivity())) {
             mVolumeWake = (CheckBoxPreference) findPreference(KEY_VOLUME_WAKE);
             mVolBtnMusicCtrl = (CheckBoxPreference) findPreference(KEY_VOLBTN_MUSIC_CTRL);
 
-            mVolBtnMusicCtrl.setChecked(Settings.System.getInt(resolver,
+            mVolBtnMusicCtrl.setChecked(Settings.System.getInt(getActivity().getContentResolver(),
                     Settings.System.VOLBTN_MUSIC_CONTROLS, 1) != 0);
 
-            if (!res.getBoolean(R.bool.config_show_volumeRockerWake)) {
+            if (!getResources().getBoolean(R.bool.config_show_volumeRockerWake)) {
                 volumeCategory.removePreference(mVolumeWake);
             } else {
-                mVolumeWake.setChecked(Settings.System.getInt(resolver,
+                mVolumeWake.setChecked(Settings.System.getInt(getActivity().getContentResolver(),
                         Settings.System.VOLUME_WAKE_SCREEN, 0) == 1);
             }
         } else {
-            prefScreen.removePreference(volumeCategory);
+            prefSet.removePreference(volumeCategory);
         }
-    }
-
-    private ListPreference initActionList(String key, int value) {
-        ListPreference list = (ListPreference) getPreferenceScreen().findPreference(key);
-        list.setValue(Integer.toString(value));
-        list.setSummary(list.getEntry());
-        list.setOnPreferenceChangeListener(this);
-        return list;
-    }
-
-    private void handleActionListChange(ListPreference pref, Object newValue, String setting) {
-        String value = (String) newValue;
-        int index = pref.findIndexOfValue(value);
-
-        pref.setSummary(pref.getEntries()[index]);
-        Settings.System.putInt(getContentResolver(), setting, Integer.valueOf(value));
     }
 
     private void handleCheckboxClick(CheckBoxPreference pref, String setting) {
         Settings.System.putInt(getContentResolver(), setting, pref.isChecked() ? 1 : 0);
     }
 
-    @Override
     public boolean onPreferenceChange(Preference preference, Object newValue) {
-        if (preference == mHomeLongPressAction) {
-            handleActionListChange(mHomeLongPressAction, newValue,
-                    Settings.System.KEY_HOME_LONG_PRESS_ACTION);
+        int value = Integer.valueOf((String) newValue);
+        if (value == ACTION_CUSTOM_APP) {
+            mCustomAppPreference = preference;
+            mPicker.pickShortcut();
             return true;
-        } else if (preference == mMenuPressAction) {
-            handleActionListChange(mMenuPressAction, newValue,
-                    Settings.System.KEY_MENU_ACTION);
-            return true;
-        } else if (preference == mMenuLongPressAction) {
-            handleActionListChange(mMenuLongPressAction, newValue,
-                    Settings.System.KEY_MENU_LONG_PRESS_ACTION);
-            return true;
-        } else if (preference == mAssistPressAction) {
-            handleActionListChange(mAssistPressAction, newValue,
-                    Settings.System.KEY_ASSIST_ACTION);
-            return true;
-        } else if (preference == mAssistLongPressAction) {
-            handleActionListChange(mAssistLongPressAction, newValue,
-                    Settings.System.KEY_ASSIST_LONG_PRESS_ACTION);
-            return true;
-        } else if (preference == mAppSwitchPressAction) {
-            handleActionListChange(mAppSwitchPressAction, newValue,
-                    Settings.System.KEY_APP_SWITCH_ACTION);
-            return true;
-        } else if (preference == mAppSwitchLongPressAction) {
-            handleActionListChange(mAppSwitchLongPressAction, newValue,
-                    Settings.System.KEY_APP_SWITCH_LONG_PRESS_ACTION);
-            return true;
+        } else {
+            if (preference == mHomeLongPressAction) {
+                int index = mHomeLongPressAction.findIndexOfValue((String) newValue);
+                mHomeLongPressAction.setSummary(
+                        mHomeLongPressAction.getEntries()[index]);
+                Settings.System.putInt(getContentResolver(),
+                        Settings.System.KEY_HOME_LONG_PRESS_ACTION, value);
+                return true;
+            } else if (preference == mMenuPressAction) {
+                int index = mMenuPressAction.findIndexOfValue((String) newValue);
+                mMenuPressAction.setSummary(
+                        mMenuPressAction.getEntries()[index]);
+                Settings.System.putInt(getContentResolver(),
+                        Settings.System.KEY_MENU_ACTION, value);
+                return true;
+            } else if (preference == mMenuLongPressAction) {
+                int index = mMenuLongPressAction.findIndexOfValue((String) newValue);
+                mMenuLongPressAction.setSummary(
+                        mMenuLongPressAction.getEntries()[index]);
+                Settings.System.putInt(getContentResolver(),
+                        Settings.System.KEY_MENU_LONG_PRESS_ACTION, value);
+                return true;
+            } else if (preference == mAssistPressAction) {
+                int index = mAssistPressAction.findIndexOfValue((String) newValue);
+                mAssistPressAction.setSummary(
+                        mAssistPressAction.getEntries()[index]);
+                Settings.System.putInt(getContentResolver(),
+                        Settings.System.KEY_ASSIST_ACTION, value);
+                return true;
+            } else if (preference == mAssistLongPressAction) {
+                int index = mAssistLongPressAction.findIndexOfValue((String) newValue);
+                mAssistLongPressAction.setSummary(
+                        mAssistLongPressAction.getEntries()[index]);
+                Settings.System.putInt(getContentResolver(),
+                        Settings.System.KEY_ASSIST_LONG_PRESS_ACTION, value);
+                return true;
+            } else if (preference == mAppSwitchPressAction) {
+                int index = mAppSwitchPressAction.findIndexOfValue((String) newValue);
+                mAppSwitchPressAction.setSummary(
+                        mAppSwitchPressAction.getEntries()[index]);
+                Settings.System.putInt(getContentResolver(),
+                        Settings.System.KEY_APP_SWITCH_ACTION, value);
+                return true;
+            } else if (preference == mAppSwitchLongPressAction) {
+                int index = mAppSwitchLongPressAction.findIndexOfValue((String) newValue);
+                mAppSwitchLongPressAction.setSummary(
+                        mAppSwitchLongPressAction.getEntries()[index]);
+                Settings.System.putInt(getContentResolver(),
+                        Settings.System.KEY_APP_SWITCH_LONG_PRESS_ACTION, value);
+                return true;
+            }
         }
-
         return false;
     }
 
-    @Override
     public boolean onPreferenceTreeClick(PreferenceScreen preferenceScreen, Preference preference) {
+	boolean enabled;
         if (preference == mHomeWake) {
             handleCheckboxClick(mHomeWake, Settings.System.HOME_WAKE_SCREEN);
             return true;
         } else if (preference == mVolumeWake) {
             handleCheckboxClick(mVolumeWake, Settings.System.VOLUME_WAKE_SCREEN);
             return true;
-        } else if (preference == mVolBtnMusicCtrl) {
-            handleCheckboxClick(mVolBtnMusicCtrl, Settings.System.VOLBTN_MUSIC_CONTROLS);
-            return true;
         } else if (preference == mEnableCustomBindings) {
             handleCheckboxClick(mEnableCustomBindings, Settings.System.HARDWARE_KEY_REBINDING);
             return true;
         } else if (preference == mShowActionOverflow) {
-            handleCheckboxClick(mShowActionOverflow, Settings.System.UI_FORCE_OVERFLOW_BUTTON);
-
-            int toastResId = mShowActionOverflow.isChecked()
-                    ? R.string.hardware_keys_show_overflow_toast_enable
-                    : R.string.hardware_keys_show_overflow_toast_disable;
-
-            Toast.makeText(getActivity(), toastResId, Toast.LENGTH_LONG).show();
+            enabled = mShowActionOverflow.isChecked();
+            Settings.System.putInt(getContentResolver(), Settings.System.UI_FORCE_OVERFLOW_BUTTON,
+                    enabled ? 1 : 0);
+            // Show appropriate
+            if (enabled) {
+                Toast.makeText(getActivity(), R.string.hardware_keys_show_overflow_toast_enable,
+                        Toast.LENGTH_LONG).show();
+            } else {
+                Toast.makeText(getActivity(), R.string.hardware_keys_show_overflow_toast_disable,
+                        Toast.LENGTH_LONG).show();
+            }
             return true;
         } else if (preference == mMenuKeyEnabled) {
             handleCheckboxClick(mMenuKeyEnabled, Settings.System.KEY_MENU_ENABLED);
@@ -319,7 +431,43 @@ public class ButtonSettings extends SettingsPreferenceFragment implements
             handleCheckboxClick(mHomeKeyEnabled, Settings.System.KEY_HOME_ENABLED);
             return true;
         }
+        return false;
+    }
 
-        return super.onPreferenceTreeClick(preferenceScreen, preference);
+    public void shortcutPicked(String uri, String friendlyName, Bitmap bmp, boolean isApplication) {
+        Preference preference = mCustomAppPreference;
+        if (preference == mHomeLongPressAction) {
+            Settings.System.putString(getContentResolver(),
+                    Settings.System.KEY_HOME_LONG_PRESS_ACTION, uri);
+        } else if (preference == mMenuPressAction) {
+            Settings.System.putString(getContentResolver(),
+                    Settings.System.KEY_MENU_ACTION, uri);
+        } else if (preference == mMenuLongPressAction) {
+            Settings.System.putString(getContentResolver(),
+                    Settings.System.KEY_MENU_LONG_PRESS_ACTION, uri);
+        } else if (preference == mAssistPressAction) {
+            Settings.System.putString(getContentResolver(),
+                    Settings.System.KEY_ASSIST_ACTION, uri);
+        } else if (preference == mAssistLongPressAction) {
+            Settings.System.putString(getContentResolver(),
+                    Settings.System.KEY_ASSIST_LONG_PRESS_ACTION, uri);
+        } else if (preference == mAppSwitchPressAction) {
+            Settings.System.putString(getContentResolver(),
+                    Settings.System.KEY_APP_SWITCH_ACTION, uri);
+        } else if (preference == mAppSwitchLongPressAction) {
+            Settings.System.putString(getContentResolver(),
+                    Settings.System.KEY_APP_SWITCH_LONG_PRESS_ACTION, uri);
+        }
+        preference.setSummary(friendlyName);
+    }
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (resultCode == Activity.RESULT_OK) {
+            if (requestCode == ShortcutPickerHelper.REQUEST_PICK_SHORTCUT
+                    || requestCode == ShortcutPickerHelper.REQUEST_PICK_APPLICATION
+                    || requestCode == ShortcutPickerHelper.REQUEST_CREATE_SHORTCUT) {
+                mPicker.onActivityResult(requestCode, resultCode, data);
+            }
+        }
+        super.onActivityResult(requestCode, resultCode, data);
     }
 }

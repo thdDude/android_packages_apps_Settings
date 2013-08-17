@@ -134,8 +134,8 @@ public class Settings extends PreferenceActivity
             R.id.interface_section,
             R.id.homescreen_settings,
             R.id.lock_screen_settings,
-            R.id.system_settings
-            R.id.misc_settings
+            R.id.system_settings,
+            R.id.misc_settings,
     };
 
     private SharedPreferences mDevelopmentPreferences;
