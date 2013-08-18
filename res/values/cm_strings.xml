@@ -1274,6 +1274,7 @@ rience. Better keep it disabled on lower end devices.</string>
     <string name="pie_control_always">Show always</string>
     <string name="pie_control_expanded">Only on expanded desktop mode</string>
     <string name="pie_control_disabled">Disabled</string>
+    <string name="pie_control_enabled">Enabled</string>
     <string name="pie_control_size">Navigation size</string>
     <string name="pie_control_trigger_positions">Trigger options</string>
     <string name="pie_control_trigger_left">Trigger left screen border</string>
