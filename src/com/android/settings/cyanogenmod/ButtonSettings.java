@@ -153,6 +153,7 @@ public class ButtonSettings extends SettingsPreferenceFragment implements
 
             if (!getResources().getBoolean(R.bool.config_show_homeWake)) {
                 homeCategory.removePreference(mHomeWake);
+		prefSet.removePreference(homeCategory);
             } else {
                 mHomeWake.setChecked(Settings.System.getInt(getActivity().getContentResolver(),
                         Settings.System.HOME_WAKE_SCREEN, 1) == 1);
