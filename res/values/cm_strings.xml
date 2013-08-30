@@ -1453,5 +1453,6 @@ rience. Better keep it disabled on lower end devices.</string>
     <string name="halo_button_color_title">HALO button color</string>
     <string name="halo_text_bubble_color_title">HALO text bubble color</string>
     <string name="halo_ping_color_title">HALO ping color</string>
+    <string name="halo_gone_title">Remove HALO button from the notification drawer</string>
 
 </resources>
