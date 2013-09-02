@@ -223,7 +223,6 @@ public class QuickSettingsUtil {
             removeTile(TILE_CAMERA);
         }
 
-        sUnsupportedRemoved = true;
     }
 
     private static synchronized void refreshAvailableTiles(Context context) {
