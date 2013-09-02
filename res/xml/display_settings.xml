@@ -45,12 +45,10 @@
                 android:title="@string/screensaver_settings_title"
                 android:fragment="com.android.settings.DreamSettings" />
 
-        <com.android.settings.WarnedListPreference
+        <com.android.settings.FontDialogPreference
                 android:key="font_size"
                 android:title="@string/title_font_size"
                 android:summary="@string/summary_font_size"
-                android:entries="@array/entries_font_size"
-                android:entryValues="@array/entryvalues_font_size"
                 android:dialogTitle="@string/dialog_title_font_size" />
 
         <PreferenceScreen
@@ -59,6 +57,12 @@
                 android:fragment="com.android.settings.wfd.WifiDisplaySettings" />
 
         <CheckBoxPreference
+                android:key="adaptive_backlight"
+                android:title="@string/adaptive_backlight_title"
+                android:summary="@string/adaptive_backlight_summary"
+                android:defaultValue="true" />
+
+        <com.android.settings.cyanogenmod.SystemSettingCheckBoxPreference
             android:key="screen_off_animation"
             android:title="@string/screen_off_animation_title"
             android:summary="@string/screen_off_animation_summary"

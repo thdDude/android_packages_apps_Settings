@@ -17,6 +17,12 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:settings="http://schemas.android.com/apk/res/com.android.settings">
 
+    <com.android.settings.cyanogenmod.ButtonBacklightBrightness
+        android:key="button_backlight"
+        android:title="@string/button_backlight_title"
+        android:dialogTitle="@string/button_backlight_title"
+        android:persistent="false" />
+
        <CheckBoxPreference
             android:key="key_back_enabled"
             android:title="@string/key_back_enabled"
@@ -49,7 +55,7 @@
             android:entries="@array/hardware_keys_action_entries"
             android:entryValues="@array/hardware_keys_action_values"
             android:persistent="false"
-            android:dependency="hardware_keys_enable_custom" />
+            android:dependency="hardware_key_rebinding" />
 
         <ListPreference
             android:key="hardware_keys_menu_press"
@@ -58,7 +64,7 @@
             android:entries="@array/hardware_keys_action_entries"
             android:entryValues="@array/hardware_keys_action_values"
             android:persistent="false"
-            android:dependency="hardware_keys_enable_custom" />
+            android:dependency="hardware_key_rebinding" />
 
         <ListPreference
             android:key="hardware_keys_menu_long_press"
@@ -67,7 +73,7 @@
             android:entries="@array/hardware_keys_action_entries"
             android:entryValues="@array/hardware_keys_action_values"
             android:persistent="false"
-            android:dependency="hardware_keys_enable_custom" />
+            android:dependency="hardware_key_rebinding" />
 
         <ListPreference
             android:key="hardware_keys_assist_press"
@@ -76,7 +82,7 @@
             android:entries="@array/hardware_keys_action_entries"
             android:entryValues="@array/hardware_keys_action_values"
             android:persistent="false"
-            android:dependency="hardware_keys_enable_custom" />
+            android:dependency="hardware_key_rebinding" />
 
         <ListPreference
             android:key="hardware_keys_assist_long_press"
@@ -85,7 +91,7 @@
             android:entries="@array/hardware_keys_action_entries"
             android:entryValues="@array/hardware_keys_action_values"
             android:persistent="false"
-            android:dependency="hardware_keys_enable_custom" />
+            android:dependency="hardware_key_rebinding" />
 
         <ListPreference
             android:key="hardware_keys_app_switch_press"
@@ -94,7 +100,7 @@
             android:entries="@array/hardware_keys_action_entries"
             android:entryValues="@array/hardware_keys_action_values"
             android:persistent="false"
-            android:dependency="hardware_keys_enable_custom" />
+            android:dependency="hardware_key_rebinding" />
 
         <ListPreference
             android:key="hardware_keys_app_switch_long_press"
@@ -103,19 +109,7 @@
             android:entries="@array/hardware_keys_action_entries"
             android:entryValues="@array/hardware_keys_action_values"
             android:persistent="false"
-            android:dependency="hardware_keys_enable_custom" />
-
-    </PreferenceCategory>
-
-    <PreferenceCategory
-        android:title="@string/additional_options_title">
-
-       <CheckBoxPreference
-            android:key="hardware_keys_show_overflow"
-            android:title="@string/hardware_keys_show_overflow_title"
-            android:summary="@string/hardware_keys_show_overflow_summary"
-            android:persistent="false"
-            android:defaultValue="false" />
+            android:dependency="hardware_key_rebinding" />
 
     </PreferenceCategory>
 
@@ -123,8 +117,8 @@
         android:key="home_key"
         android:title="@string/hardware_keys_home_key_title" >
 
-        <CheckBoxPreference
-            android:key="pref_home_wake"
+        <com.android.settings.cyanogenmod.SystemSettingCheckBoxPreference
+            android:key="home_wake_screen"
             android:title="@string/home_wake_title"
             android:summary="@string/home_wake_summary"
             android:defaultValue="true" />
@@ -135,17 +129,28 @@
         android:key="volume_keys"
         android:title="@string/hardware_keys_volume_keys_title" >
 
-        <CheckBoxPreference
-            android:key="pref_volume_wake"
+        <com.android.settings.cyanogenmod.SystemSettingCheckBoxPreference
+            android:key="volume_wake_screen"
             android:title="@string/volume_wake_title"
             android:summary="@string/volume_wake_summary"
             android:defaultValue="false" />
 
-        <CheckBoxPreference
+        <com.android.settings.cyanogenmod.SystemSettingCheckBoxPreference
             android:key="volbtn_music_controls"
             android:title="@string/volbtn_music_controls_title"
             android:summary="@string/volbtn_music_controls_summary"
-            android:persistent="false" />
+            android:defaultValue="true" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:title="@string/additional_options_title">
+
+        <com.android.settings.cyanogenmod.SystemSettingCheckBoxPreference
+            android:key="ui_force_overflow_button"
+            android:title="@string/hardware_keys_show_overflow_title"
+            android:summary="@string/hardware_keys_show_overflow_summary"
+            android:defaultValue="false" />
 
     </PreferenceCategory>
 
