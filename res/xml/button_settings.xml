@@ -42,11 +42,10 @@
         android:key="hardware_keys_bindings"
         android:title="@string/hardware_keys_bindings_title">
 
-        <CheckBoxPreference
-            android:key="hardware_keys_enable_custom"
-            android:title="@string/hardware_keys_enable_custom_title"
-            android:defaultValue="false"
-            android:persistent="false" />
+    <com.android.settings.cyanogenmod.SystemSettingCheckBoxPreference
+        android:key="hardware_key_rebinding"
+        android:title="@string/hardware_keys_enable_custom_title"
+        android:defaultValue="false" />
 
         <ListPreference
             android:key="hardware_keys_home_long_press"
