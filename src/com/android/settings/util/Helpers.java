@@ -1,7 +1,9 @@
 package com.android.settings.util;
 
+import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.DataOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -75,6 +77,39 @@ public class Helpers {
             return false;
         }
         return true;
+    }
+
+    public static boolean runRootCommand(String command) {
+        Log.d(TAG, "runRootCommand started");
+        Log.d(TAG, "Attempting to run: " + command);
+        Process process = null;
+        DataOutputStream os = null;
+        try {
+            Log.d(TAG, "attempt to get root");
+            process = Runtime.getRuntime().exec("su");
+            os = new DataOutputStream(new BufferedOutputStream(process.getOutputStream()));
+            os.writeBytes(command + "\n");
+            os.writeBytes("exit\n");
+            os.flush();
+            return process.waitFor() == 0;
+        } catch (IOException e) {
+            Log.e(TAG, "IOException while flushing stream:", e);
+            return false;
+        } catch (InterruptedException e) {
+            Log.e(TAG, "InterruptedException while executing process:", e);
+            return false;
+        } finally {
+            if (os != null) {
+                try {
+                    os.close();
+                } catch (IOException e) {
+                    Log.e(TAG, "IOException while closing stream:", e);
+                }
+            }
+            if (process != null) {
+                process.destroy();
+            }
+        }
     }
 
     public static String[] getMounts(final String path)
