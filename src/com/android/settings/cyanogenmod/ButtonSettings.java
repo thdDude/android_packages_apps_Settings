@@ -141,6 +141,7 @@ public class ButtonSettings extends SettingsPreferenceFragment implements
             hasAnyBindableKey = true;
             if (!getResources().getBoolean(R.bool.config_show_homeWake)) {
 		homeCategory.removePreference(findPreference(Settings.System.HOME_WAKE_SCREEN));
+		prefSet.removePreference(homeCategory);
             }
 
             String homeLongPressAction = Settings.System.getString(getContentResolver(),
