@@ -412,7 +412,7 @@ public class ButtonSettings extends SettingsPreferenceFragment implements
             handleCheckboxClick(mHomeKeyEnabled, Settings.System.KEY_HOME_ENABLED);
             return true;
         }
-        return false;
+        return super.onPreferenceTreeClick(preferenceScreen, preference);
     }
 
     public void shortcutPicked(String uri, String friendlyName, Bitmap bmp, boolean isApplication) {
