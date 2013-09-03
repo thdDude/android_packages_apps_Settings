@@ -617,16 +617,7 @@
     <string name="status_bar_notif_count_summary">Display number of pending notifications</string>
 
     <!-- TRDS Settings -->
-    <string name="trds_settings_title">The Real Dark Slim</string>
-
-    <!-- Power Widget toggle color -->
-    <string name="toggle_color_title">Toggles color and bar</string>
-    <string name="enable_toggle_colors_title">Enable toggle colors</string>
-    <string name="enable_toggle_bar_title">Enable toggle bar</string>
-    <string name="toggle_icon_color_on_title">Color icons (on)</string>
-    <string name="toggle_icon_color_on_summary">Sets color for activated toggle icons</string>
-    <string name="toggle_icon_color_off_title">Color icons (off)</string>
-    <string name="toggle_icon_color_off_summary">Sets color for not activated toggle icons</string>
+    <string name="trds_settings_title">Dark Hellybean</string>
 
     <!-- Setting checkbox summary for displaying USB debugging notification -->
     <string name="adb_notify">USB debugging notify</string>
