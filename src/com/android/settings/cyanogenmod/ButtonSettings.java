@@ -141,6 +141,7 @@ public class ButtonSettings extends SettingsPreferenceFragment implements
             hasAnyBindableKey = true;
             if (!getResources().getBoolean(R.bool.config_show_homeWake)) {
 		homeCategory.removePreference(findPreference(Settings.System.HOME_WAKE_SCREEN));
+		prefSet.removePreference(homeCategory);
             }
 
             String homeLongPressAction = Settings.System.getString(getContentResolver(),
@@ -411,7 +412,7 @@ public class ButtonSettings extends SettingsPreferenceFragment implements
             handleCheckboxClick(mHomeKeyEnabled, Settings.System.KEY_HOME_ENABLED);
             return true;
         }
-        return false;
+        return super.onPreferenceTreeClick(preferenceScreen, preference);
     }
 
     public void shortcutPicked(String uri, String friendlyName, Bitmap bmp, boolean isApplication) {
