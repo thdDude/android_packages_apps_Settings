@@ -1342,8 +1342,6 @@ rience. Better keep it disabled on lower end devices.</string>
     <string name="halo_button_color_title">HALO button color</string>
     <string name="halo_text_bubble_color_title">HALO text bubble color</string>
     <string name="halo_ping_color_title">HALO ping color</string>
-    <string name="halo_gone_title">HALO notification visibility</string>
-    <string name="halo_gone_summary">Completely hide HALO when there are no notifications</string>
 
     <!-- We want popups -->
     <string name="popups_title">Allow floating windows</string>
@@ -1452,5 +1450,4 @@ rience. Better keep it disabled on lower end devices.</string>
     <!-- Font size sample text. This needs to be a very short string, as it is shown in
     multiple font sizes in a limited amount of space. -->
     <string name="font_size_sample">Sample</string>
-
 </resources>
