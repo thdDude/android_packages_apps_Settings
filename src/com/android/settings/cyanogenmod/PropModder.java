@@ -247,7 +247,7 @@ public class PropModder extends PreferenceFragment implements
         } else if (preference == mJitPref) {
             Log.d(TAG, "mJitPref.onPreferenceTreeClick()");
             value = mJitPref.isChecked();
-            return doMod(JIT_PERSIST_PROP, JIT_PROP, String.valueOf(value ? "int:jit" : "int:fast"));
+            return doMod(JIT_PERSIST_PROP, JIT_PROP, String.valueOf(value ? "int:fast" : "int:jit"));
         } else if (preference == m3gSpeedPref) {
             value = m3gSpeedPref.isChecked();
             return doMod(THREE_G_PERSIST_PROP, THREE_G_PROP_0, String.valueOf(value ? 1 : DISABLE))
@@ -427,8 +427,8 @@ public class PropModder extends PreferenceFragment implements
         } else {
             mTcpStackPref.setChecked(false);
         }
-        boolean jitVM = Helpers.runRootCommand(String.format(FIND_CMD, "int:jit"));
-        if (jitVM) {
+        String jit = Helpers.findBuildPropValueOf(JIT_PROP);
+        if (jit.equals("int:jit")) {
             mJitPref.setChecked(true);
         } else {
             mJitPref.setChecked(false);
