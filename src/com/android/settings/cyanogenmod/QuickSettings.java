@@ -135,6 +135,7 @@ public class QuickSettings extends SettingsPreferenceFragment implements
         int quickSettingsColumnsValue = Settings.System.getInt(resolver,
         	Settings.System.QUICK_SETTINGS_COLUMNS, 3);
         mQuickSettingsColumns.setValue(String.valueOf(quickSettingsColumnsValue));
+        mQuickSettingsColumns.setSummary(mQuickSettingsColumns.getEntry());
     }
 
     @Override
