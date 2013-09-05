@@ -41,7 +41,6 @@ public class Halo extends SettingsPreferenceFragment
     private static final String KEY_HALO_SIZE = "halo_size";
     private static final String KEY_HALO_PAUSE = "halo_pause";
     private static final String KEY_HALO_BUTTON_COLOR = "halo_button_color";
-    private static final String KEY_HALO_TEXT_BUBBLE_COLOR = "halo_text_bubble_color";
     private static final String KEY_HALO_PING_COLOR = "halo_ping_color";
     private static final String KEY_HALO_GONE = "halo_gone";
 
@@ -52,7 +51,6 @@ public class Halo extends SettingsPreferenceFragment
     private CheckBoxPreference mHaloReversed;
     private CheckBoxPreference mHaloPause;
     private Preference mHaloButtonColor;
-    private Preference mHaloTextBubbleColor;
     private Preference mHaloPingColor;
     private CheckBoxPreference mHaloGone;
 
@@ -103,8 +101,6 @@ public class Halo extends SettingsPreferenceFragment
 
         mHaloButtonColor =
                 (Preference) prefSet.findPreference(KEY_HALO_BUTTON_COLOR);
-        mHaloTextBubbleColor =
-                (Preference) prefSet.findPreference(KEY_HALO_TEXT_BUBBLE_COLOR);
         mHaloPingColor =
                 (Preference) prefSet.findPreference(KEY_HALO_PING_COLOR);
 
@@ -147,13 +143,6 @@ public class Halo extends SettingsPreferenceFragment
             cp.setDefaultColor(0x00000000);
             cp.show();
             return true;
-        } else if (preference == mHaloTextBubbleColor) {
-            ColorPickerDialog cp = new ColorPickerDialog(getActivity(),
-                    mTextBubbleColorListener, Settings.System.getInt(mContext.getContentResolver(),
-                    Settings.System.HALO_TEXT_BUBBLE_COLOR, 0x00000000));
-            cp.setDefaultColor(0x00000000);
-            cp.show();
-            return true;
         } else if (preference == mHaloPingColor) {
             ColorPickerDialog cp = new ColorPickerDialog(getActivity(),
                     mPingColorListener, Settings.System.getInt(mContext.getContentResolver(),
@@ -192,16 +181,6 @@ public class Halo extends SettingsPreferenceFragment
             public void colorChanged(int color) {
                 Settings.System.putInt(getContentResolver(),
                         Settings.System.HALO_BUTTON_COLOR, color);
-            }
-            public void colorUpdate(int color) {
-            }
-    };
-
-    ColorPickerDialog.OnColorChangedListener mTextBubbleColorListener =
-        new ColorPickerDialog.OnColorChangedListener() {
-            public void colorChanged(int color) {
-                Settings.System.putInt(getContentResolver(),
-                        Settings.System.HALO_TEXT_BUBBLE_COLOR, color);
             }
             public void colorUpdate(int color) {
             }

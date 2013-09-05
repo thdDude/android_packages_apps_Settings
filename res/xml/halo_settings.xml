@@ -78,12 +78,6 @@
         </PreferenceScreen>
 
         <PreferenceScreen
-            android:key="halo_text_bubble_color"
-            android:dependency="halo_enabled"
-            android:title="@string/halo_text_bubble_color_title">
-        </PreferenceScreen>
-
-        <PreferenceScreen
             android:key="halo_ping_color"
             android:dependency="halo_enabled"
             android:title="@string/halo_ping_color_title">
