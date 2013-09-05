@@ -141,8 +141,7 @@ public class InstalledAppDetails extends Fragment
     private Button mForceStopButton;
     private Button mClearDataButton;
     private Button mMoveAppButton;
-    private CompoundButton mNotificationSwitch;
-    private CompoundButton mHaloState;
+    private CompoundButton mNotificationSwitch, mHaloState;
     private CompoundButton mPrivacyGuardSwitch;
 
     private PackageMoveObserver mPackageMoveObserver;
@@ -514,7 +513,6 @@ public class InstalledAppDetails extends Fragment
         mNotificationSwitch = (CompoundButton) view.findViewById(R.id.notification_switch);
         mHaloState = (CompoundButton) view.findViewById(R.id.halo_state);
         mHaloState.setText((mHaloPolicyIsBlack ? R.string.app_halo_label_black : R.string.app_halo_label_white));
-
         mPrivacyGuardSwitch = (CompoundButton) view.findViewById(R.id.privacy_guard_switch);
 
         return view;
@@ -1353,8 +1351,7 @@ public class InstalledAppDetails extends Fragment
     private void setNotificationsEnabled(boolean enabled) {
         try {
             final boolean enable = mNotificationSwitch.isChecked();
-            mNotificationManager.setNotificationsEnabledForPackage(mAppEntry.info.packageName,
-		mAppEntry.info.uid, enabled);
+            mNotificationManager.setNotificationsEnabledForPackage(mAppEntry.info.packageName, mAppEntry.info.uid, enabled);
         } catch (android.os.RemoteException ex) {
             mNotificationSwitch.setChecked(!enabled); // revert
         }
