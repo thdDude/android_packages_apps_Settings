@@ -167,11 +167,13 @@ public class SystemUiSettings extends SettingsPreferenceFragment  implements
 
     private void updatePieControlSummary() {
         if (mPieControl != null) {
-            boolean enabled = Settings.System.getInt(getContentResolver(),
-                Settings.System.PIE_CONTROLS, 0) != 0;
+        int pieControl = Settings.System.getInt(getContentResolver(),
+                Settings.System.PIE_CONTROLS, 0);
 
-            if (enabled) {
+            if (pieControl == 2) {
                 mPieControl.setSummary(R.string.pie_control_enabled);
+	    } else if (pieControl == 1) {
+                mPieControl.setSummary(R.string.pie_control_expanded);
             } else {
                 mPieControl.setSummary(R.string.pie_control_disabled);
             }

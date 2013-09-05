@@ -664,7 +664,7 @@ jednotlivě měnit a tím zvětšit počet řídících bodů. \'Odstranit\' sma
     <string name="navring_choose_action_title">Zvolit akci</string>
 
     <string name="pie_control_title">Plovoucí nabídka</string>
-    <string name="pie_control_enabled">Plovoucí ovládání při povolené rozšířené ploše</string>
+    <string name="pie_control_expanded">Plovoucí ovládání při povolené rozšířené ploše</string>
     <string name="pie_control_disabled">Plovoucí ovládání zakázáno</string>
     <string name="pie_control_sensitivity_title">Citlivost</string>
     <string name="pie_control_sensitivity_low">Nízká</string>

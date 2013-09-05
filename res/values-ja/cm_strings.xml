@@ -563,7 +563,7 @@
     <string name="navring_action_google_now">Google Now</string>
     <string name="navring_choose_action_title">アクションを選択</string>
     <string name="pie_control_title">パイコントロール</string>
-    <string name="pie_control_enabled">拡張デスクトップが機能しているときに有効</string>
+    <string name="pie_control_expanded">拡張デスクトップが機能しているときに有効</string>
     <string name="pie_control_disabled">無効</string>
     <string name="pie_control_sensitivity_title">応答性</string>
     <string name="pie_control_sensitivity_low">低い</string>

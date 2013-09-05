@@ -576,7 +576,7 @@ Mittels \"Entfernen\" kann die ausgewählte Stützstelle aus dem Helligkeitsverl
     <string name="navring_action_google_now">Google Now</string>
     <string name="navring_choose_action_title">Aktion auswählen</string>
     <string name="pie_control_title">Pie-Navigation</string>
-    <string name="pie_control_enabled">Ist bei erweitertem Desktop aktiviert</string>
+    <string name="pie_control_expanded">Ist bei erweitertem Desktop aktiviert</string>
     <string name="pie_control_disabled">Deaktiviert</string>
     <string name="pie_control_size">Größe der Navigationstasten</string>
     <string name="pie_control_sensitivity_title">Empfindlichkeit</string>

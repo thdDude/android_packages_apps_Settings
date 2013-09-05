@@ -535,7 +535,7 @@ oluşturmak için ikiye böler. \'Sil\' satırı siler.
     <string name="navring_action_google_now">Google Now</string>
     <string name="navring_choose_action_title">İşlev seçin</string>
     <string name="pie_control_title">Pasta dilimi kontrolleri</string>
-    <string name="pie_control_enabled">Yandan sürüklemeli kontrol Genişletilmiş Masasüstü modunda etkin</string>
+    <string name="pie_control_expanded">Yandan sürüklemeli kontrol Genişletilmiş Masasüstü modunda etkin</string>
     <string name="pie_control_disabled">Yandan sürüklemeli kontroller devre dışı</string>
     <string name="pie_control_size">Navigasyon tuş boyutu</string>
     <string name="pie_control_trigger_positions">Tetikleyici konumları</string>
