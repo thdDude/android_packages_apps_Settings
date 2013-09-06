@@ -489,7 +489,7 @@
     <string name="navring_action_google_now">Google Now</string>
     <string name="navring_choose_action_title">Kies aksie</string>
     <string name="pie_control_title">\'Pie\' kontroles</string>
-    <string name="pie_control_enabled">Geaktiveer wanneer Uitgebreide lessenaar aktief is</string>
+    <string name="pie_control_expanded">Geaktiveer wanneer Uitgebreide lessenaar aktief is</string>
     <string name="pie_control_disabled">Gedeaktiveer</string>
     <string name="pie_control_sensitivity_title">Sensitiwiteit</string>
     <string name="pie_control_sensitivity_low">Laag</string>

@@ -560,7 +560,7 @@ Elke regel in de lijst van helderheidsstanden komt overeen met één <i>controle
     <string name="navring_action_google_now">Google Nu</string>
     <string name="navring_choose_action_title">Actie selecteren</string>
     <string name="pie_control_title">Zwevende knoppen</string>
-    <string name="pie_control_enabled">\'Pie controls\' ingeschakeld als \'Uitgebreid bureaublad\' ingeschakeld is</string>
+    <string name="pie_control_expanded">\'Pie controls\' ingeschakeld als \'Uitgebreid bureaublad\' ingeschakeld is</string>
     <string name="pie_control_disabled">\'Pie controls\' uitgeschakeld</string>
     <string name="pie_control_sensitivity_title">Reactiesnelheid</string>
     <string name="pie_control_sensitivity_low">Laag</string>

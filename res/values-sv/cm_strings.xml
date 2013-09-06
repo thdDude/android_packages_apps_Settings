@@ -588,7 +588,7 @@ Varje linje i belysningslistan korresponerar med en <i>kontrollpunkt</i> i belys
     <string name="navring_action_google_now">Google Now</string>
     <string name="navring_choose_action_title">Välj åtgärd</string>
     <string name="pie_control_title">PIE-kontroller</string>
-    <string name="pie_control_enabled">Svävande kontroller när exanderat skrivbord är aktiverat</string>
+    <string name="pie_control_expanded">Svävande kontroller när exanderat skrivbord är aktiverat</string>
     <string name="pie_control_disabled">Svävande kontroller avaktiverade</string>
     <string name="pie_control_sensitivity_title">Reaktionsförmåga</string>
     <string name="pie_control_sensitivity_low">Låg</string>

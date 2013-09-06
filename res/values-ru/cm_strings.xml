@@ -761,7 +761,7 @@
 
     <!-- Quick/Pie Control #CM -->
     <string name="pie_control_title">Панель навигации</string>
-    <string name="pie_control_enabled">Включается при активации \"Расширенного экрана\"</string>
+    <string name="pie_control_expanded">Включается при активации \"Расширенного экрана\"</string>
     <string name="pie_control_disabled">Выключено</string>
     <string name="pie_control_sensitivity_title">Чувствительность</string>
     <string name="pie_control_sensitivity_low">Низкая</string>

@@ -591,7 +591,7 @@ Des options supplémentaires sont disponibles en appuyant longtemps sur une lign
     <string name="navring_action_google_now">Google Now</string>
     <string name="navring_choose_action_title">Choisir une action</string>
     <string name="pie_control_title">Contrôles flottants</string>
-    <string name="pie_control_enabled">Activés lorsque le bureau étendu est actif</string>
+    <string name="pie_control_expanded">Activés lorsque le bureau étendu est actif</string>
     <string name="pie_control_disabled">Désactivés</string>
     <string name="pie_control_sensitivity_title">Réactivité</string>
     <string name="pie_control_sensitivity_low">Lente</string>

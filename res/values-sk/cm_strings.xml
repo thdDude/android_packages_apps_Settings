@@ -614,7 +614,7 @@ zmaže zvolený riadok.
     <string name="navring_action_google_now">Google Now</string>
     <string name="navring_choose_action_title">Vyberte akciu</string>
     <string name="pie_control_title">Ovládanie vo forme koláča</string>
-    <string name="pie_control_enabled">Plávajúce ovládanie pri povolenej rozšírenej ploche</string>
+    <string name="pie_control_expanded">Plávajúce ovládanie pri povolenej rozšírenej ploche</string>
     <string name="pie_control_disabled">Plávajúce ovládanie je zakázané</string>
     <string name="pie_control_sensitivity_title">Citlivosť</string>
     <string name="pie_control_sensitivity_low">Nízka</string>

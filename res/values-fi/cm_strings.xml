@@ -567,7 +567,7 @@ Lisää asetuksia on saaavilla painamalla riviä pitkään. Valitsemalla \'Muokk
     <string name="navring_action_google_now">Google Now</string>
     <string name="navring_choose_action_title">Valitse tehtävä</string>
     <string name="pie_control_title">Pie-ohjaus</string>
-    <string name="pie_control_enabled">Kelluva ohjaus kun Laajennettu työpöytä on käytössä</string>
+    <string name="pie_control_expanded">Kelluva ohjaus kun Laajennettu työpöytä on käytössä</string>
     <string name="pie_control_disabled">Kelluva ohjaus pois käytöstä</string>
     <string name="pie_control_sensitivity_title">Reagointi</string>
     <string name="pie_control_sensitivity_low">Matala</string>

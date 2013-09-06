@@ -601,7 +601,7 @@ Az \"Eltávolítás\" törli a kiválasztott sort.
     <string name="navring_action_google_now">Google Now</string>
     <string name="navring_choose_action_title">Válasszon eseményt</string>
     <string name="pie_control_title">Paletta beállítások</string>
-    <string name="pie_control_enabled">Engedélyezve bekapcsolt képernyő kiterjesztés esetén</string>
+    <string name="pie_control_expanded">Engedélyezve bekapcsolt képernyő kiterjesztés esetén</string>
     <string name="pie_control_disabled">Letiltva</string>
     <string name="pie_control_sensitivity_title">Érzékenység</string>
     <string name="pie_control_sensitivity_low">Alacsony</string>

@@ -17,8 +17,21 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
         android:title="@string/halo_settings_title">
 
+        <CheckBoxPreference
+            android:key="halo_enabled"
+            android:title="@string/halo_enabled_title"
+            android:summary="@string/halo_enabled_summary"
+            android:defaultValue="false" />
+
+        <CheckBoxPreference
+            android:key="halo_active"
+            android:dependency="halo_enabled"
+            android:title="@string/halo_active_title"
+            android:defaultValue="false" />
+
         <ListPreference
             android:key="halo_state"
+            android:dependency="halo_enabled"
             android:dialogTitle="@string/halo_state_title"
             android:title="@string/halo_state_title"
             android:summary="@string/halo_state_summary"
@@ -27,6 +40,7 @@
 
         <ListPreference
             android:key="halo_size"
+            android:dependency="halo_enabled"
             android:dialogTitle="@string/halo_size_title"
             android:title="@string/halo_size_title"
             android:summary="@string/halo_size_summary"
@@ -35,12 +49,14 @@
 
         <CheckBoxPreference
             android:key="halo_hide"
+            android:dependency="halo_enabled"
             android:title="@string/halo_hide_title"
             android:summary="@string/halo_hide_summary"
             android:defaultValue="false" />
 
         <CheckBoxPreference
             android:key="halo_reversed"
+            android:dependency="halo_enabled"
             android:title="@string/halo_reversed_title"
             android:summary="@string/halo_reversed_summary"
             android:defaultValue="true" />
@@ -48,11 +64,13 @@
 
         <CheckBoxPreference
             android:key="halo_pause"
+            android:dependency="halo_enabled"
             android:title="@string/halo_pause_title"
             android:summary="@string/halo_pause_summary" />
 
         <CheckBoxPreference
             android:key="halo_gone"
+            android:dependency="halo_enabled"
             android:title="@string/halo_gone_title" />
 
     <PreferenceCategory
@@ -61,11 +79,13 @@
 
         <PreferenceScreen
             android:key="halo_button_color"
+            android:dependency="halo_enabled"
             android:title="@string/halo_button_color_title">
         </PreferenceScreen>
 
         <PreferenceScreen
             android:key="halo_ping_color"
+            android:dependency="halo_enabled"
             android:title="@string/halo_ping_color_title">
         </PreferenceScreen>
 

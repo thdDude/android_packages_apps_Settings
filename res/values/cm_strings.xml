@@ -1428,6 +1428,9 @@ rience. Better keep it disabled on lower end devices.</string>
 
     <!-- HALO -->
     <string name="halo_settings_title">HALO</string>
+    <string name="halo_enabled_title">Enable HALO</string>
+    <string name="halo_enabled_summary">Completely enable or disable HALO</string>
+    <string name="halo_active_title">Activate HALO</string>
     <string name="halo_hide_title">Hide HALO after activity</string>
     <string name="halo_hide_summary">HALO will appear for incoming tasks and scroll out of sight after a while</string>
     <string name="halo_reversed_title">Reverse HALO</string>
@@ -1450,8 +1453,11 @@ rience. Better keep it disabled on lower end devices.</string>
 
 	<string name="halo_color_title">HALO color</string>
     <string name="halo_button_color_title">HALO button color</string>
-    <string name="halo_text_bubble_color_title">HALO text bubble color</string>
     <string name="halo_ping_color_title">HALO ping color</string>
     <string name="halo_gone_title">Remove HALO button from the notification drawer</string>
+
+    <!-- Toggle for Fastboot -->
+    <string name="fastboot_enable_title">Enable fast booting</string>
+    <string name="fastboot_enable_summary">Speed up shutdown/startup by avoiding full hardware restart</string>
 
 </resources>
