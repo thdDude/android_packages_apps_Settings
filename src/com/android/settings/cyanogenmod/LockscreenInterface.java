@@ -180,7 +180,7 @@ public class LockscreenInterface extends SettingsPreferenceFragment implements
     }
 
 	private void check_lockscreentarget() {
-            mLockscreenStyle = Settings.System.getInt(mResolver,
+            mLockscreenStyle = Settings.System.getInt(getActivity().getContentResolver(),
                     Settings.System.LOCKSCREEN_STYLE, 0);
             mUseJbLockscreen = (mLockscreenStyle == LOCK_STYLE_JB);
             if (!mUseJbLockscreen) {
@@ -247,7 +247,7 @@ public class LockscreenInterface extends SettingsPreferenceFragment implements
 
         // Set the style value
         if (mStylePref != null) {
-            int stylePref = Settings.System.getInt(mResolver,
+            int stylePref = Settings.System.getInt(getActivity().getContentResolver(),
                     Settings.System.LOCKSCREEN_STYLE, 0);
             mStylePref.setValue(String.valueOf(stylePref));
             mStylePref.setSummary(mStylePref.getEntries()[stylePref]);
@@ -298,6 +298,11 @@ public class LockscreenInterface extends SettingsPreferenceFragment implements
             return true;
         } else if (preference == mEnableWidgets) {
             updateKeyguardState(mEnableCamera.isChecked(), (Boolean) objValue);
+            return true;
+        } else if (preference == mStylePref) {
+            int value = Integer.valueOf((String) objValue);
+            Settings.System.putInt(cr, Settings.System.LOCKSCREEN_STYLE, value);
+            mStylePref.setSummary(mStylePref.getEntries()[value]);
             return true;
         }
 
@@ -399,14 +404,7 @@ public class LockscreenInterface extends SettingsPreferenceFragment implements
             updateCustomBackgroundSummary();
             return true;
 
-        } else if (preference == mStylePref) {
-            int value = Integer.valueOf((String) objValue);
-            Settings.System.putInt(getActivity().getApplicationContext().getContentResolver(),
-                    Settings.System.LOCKSCREEN_STYLE, value);
-            mStylePref.setSummary(mStylePref.getEntries()[value]);
-            return true;
         }
-
         return false;
     }
 
