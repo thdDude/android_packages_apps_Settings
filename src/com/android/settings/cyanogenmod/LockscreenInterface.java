@@ -183,11 +183,9 @@ public class LockscreenInterface extends SettingsPreferenceFragment implements
             mLockscreenStyle = Settings.System.getInt(getActivity().getContentResolver(),
                     Settings.System.LOCKSCREEN_STYLE, 0);
             mUseJbLockscreen = (mLockscreenStyle == LOCK_STYLE_JB);
-            if (!mUseJbLockscreen) {
-                Preference lockTargets = findPreference(KEY_LOCKSCREEN_TARGETS);
-                if (lockTargets != null) {
-                    getPreferenceScreen().removePreference(lockTargets);
-		}
+            Preference lockTargets = findPreference(KEY_LOCKSCREEN_TARGETS);
+            if (lockTargets != null) {
+            	lockTargets.setEnabled(mUseJbLockscreen);
 	    }
 	}
 
@@ -303,6 +301,7 @@ public class LockscreenInterface extends SettingsPreferenceFragment implements
             int value = Integer.valueOf((String) objValue);
             Settings.System.putInt(cr, Settings.System.LOCKSCREEN_STYLE, value);
             mStylePref.setSummary(mStylePref.getEntries()[value]);
+	    check_lockscreentarget();
             return true;
         }
 
