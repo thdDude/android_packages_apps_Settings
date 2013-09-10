@@ -82,6 +82,27 @@
 
     </PreferenceCategory>
 
+   <PreferenceCategory
+ 	android:key="optimus_color"
+	android:title="@string/optimus_lock_color_title">
+        <PreferenceScreen
+            android:key="circles_lock_bg_color"
+            android:title="@string/circles_lock_bg_color_title">
+        </PreferenceScreen>
+        <PreferenceScreen
+            android:key="circles_lock_ring_color"
+            android:title="@string/circles_lock_ring_color_title">
+        </PreferenceScreen>
+        <PreferenceScreen
+            android:key="circles_lock_halo_color"
+            android:title="@string/circles_lock_halo_color_title">
+        </PreferenceScreen>
+        <PreferenceScreen
+            android:key="circles_lock_wave_color"
+            android:title="@string/circles_lock_wave_color_title">
+        </PreferenceScreen>
+    </PreferenceCategory>
+
     <PreferenceCategory
         android:title="@string/lockscreen_widgets_category_title"
         android:key="lockscreen_widgets_category" >
