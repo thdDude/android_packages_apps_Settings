@@ -75,6 +75,10 @@ public class LockscreenInterface extends SettingsPreferenceFragment implements
     private static final String KEY_LOCKSCREEN_ENABLE_WIDGETS = "lockscreen_enable_widgets";
     private static final String KEY_LOCKSCREEN_ENABLE_CAMERA = "lockscreen_enable_camera";
 
+    private static final String KEY_STYLE_PREF = "lockscreen_style";
+    private static final int LOCK_STYLE_JB = 0;
+    private static final String KEY_LOCKSCREEN_TARGETS = "lockscreen_targets";
+
     private PreferenceScreen mLockscreenButtons;
     private CheckBoxPreference mSeeThrough;
     private CheckBoxPreference mAutoRotate;
@@ -83,6 +87,7 @@ public class LockscreenInterface extends SettingsPreferenceFragment implements
     private ListPreference mBatteryStatus;
     private CheckBoxPreference mEnableWidgets;
     private CheckBoxPreference mEnableCamera;
+    private ListPreference mStylePref;
 
     private File mWallpaperImage;
     private File mWallpaperTemporary;
@@ -93,6 +98,8 @@ public class LockscreenInterface extends SettingsPreferenceFragment implements
     public boolean hasButtons() {
         return !getResources().getBoolean(com.android.internal.R.bool.config_showNavigationBar);
     }
+    private boolean mUseJbLockscreen;
+    private int mLockscreenStyle;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -109,6 +116,9 @@ public class LockscreenInterface extends SettingsPreferenceFragment implements
         mAutoRotate = (CheckBoxPreference) findPreference(KEY_AUTO_ROTATE_PREF);
         mAutoRotate.setChecked((Settings.System.getInt(getActivity().getApplicationContext().getContentResolver(),
                 Settings.System.LOCKSCREEN_AUTO_ROTATE, 0) == 1));
+
+        mStylePref = (ListPreference) findPreference(KEY_STYLE_PREF);
+        mStylePref.setOnPreferenceChangeListener(this);
 
         mTextColor = (Preference) findPreference(KEY_TEXT_COLOR);
 
@@ -138,6 +148,8 @@ public class LockscreenInterface extends SettingsPreferenceFragment implements
             generalCategory.removePreference(findPreference(KEY_ALWAYS_BATTERY));
             generalCategory.removePreference(findPreference(KEY_LOCKSCREEN_BUTTONS));
         }
+	
+	check_lockscreentarget();
 
         // This applies to all users
         mCustomBackground = (ListPreference) findPreference(KEY_BACKGROUND);
@@ -166,6 +178,18 @@ public class LockscreenInterface extends SettingsPreferenceFragment implements
         // Don't display the lock clock preference if its not installed
         removePreferenceIfPackageNotInstalled(findPreference(KEY_LOCK_CLOCK), widgetsCategory);
     }
+
+	private void check_lockscreentarget() {
+            mLockscreenStyle = Settings.System.getInt(mResolver,
+                    Settings.System.LOCKSCREEN_STYLE, 0);
+            mUseJbLockscreen = (mLockscreenStyle == LOCK_STYLE_JB);
+            if (!mUseJbLockscreen) {
+                Preference lockTargets = findPreference(KEY_LOCKSCREEN_TARGETS);
+                if (lockTargets != null) {
+                    getPreferenceScreen().removePreference(lockTargets);
+		}
+	    }
+	}
 
     private void updateCustomBackgroundSummary() {
         int resId;
@@ -219,6 +243,15 @@ public class LockscreenInterface extends SettingsPreferenceFragment implements
                 mBatteryStatus.setValueIndex(batteryStatus);
                 mBatteryStatus.setSummary(mBatteryStatus.getEntries()[batteryStatus]);
             }
+        }
+
+        // Set the style value
+        if (mStylePref != null) {
+            int stylePref = Settings.System.getInt(mResolver,
+                    Settings.System.LOCKSCREEN_STYLE, 0);
+            mStylePref.setValue(String.valueOf(stylePref));
+            mStylePref.setSummary(mStylePref.getEntries()[stylePref]);
+	    check_lockscreentarget();
         }
     }
 
@@ -364,6 +397,13 @@ public class LockscreenInterface extends SettingsPreferenceFragment implements
             Settings.System.putString(getContentResolver(),
                     Settings.System.LOCKSCREEN_BACKGROUND, null);
             updateCustomBackgroundSummary();
+            return true;
+
+        } else if (preference == mStylePref) {
+            int value = Integer.valueOf((String) objValue);
+            Settings.System.putInt(getActivity().getApplicationContext().getContentResolver(),
+                    Settings.System.LOCKSCREEN_STYLE, value);
+            mStylePref.setSummary(mStylePref.getEntries()[value]);
             return true;
         }
 

@@ -29,6 +29,14 @@
             <extra android:name="cm_security" android:value="true" />
         </PreferenceScreen>
 
+    <ListPreference
+        android:key="lockscreen_style"
+        android:title="@string/lockscreen_style_title"
+        android:summary="@string/lockscreen_style_summary"
+        android:entries="@array/entries_lockscreen_style"
+        android:entryValues="@array/values_lockscreen_style"
+        android:defaultValue="0"/>
+
     <CheckBoxPreference
         android:key="lockscreen_see_through"
         android:title="@string/lockscreen_see_through_title"
