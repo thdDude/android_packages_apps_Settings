@@ -649,6 +649,8 @@
     <string name="circles_lock_ring_color_title">Ring color</string>
     <string name="circles_lock_halo_color_title">Halo color</string>
     <string name="circles_lock_wave_color_title">Wave color</string>
+    <string name="lockscreen_useop4color_title">Use above background color for lockscreen</string>
+    <string name="lockscreen_useop4color_summary">This replaces other lockscreen background settings with the above color selection</string>
 
     <string name="lockscreen_buttons_title">Button actions</string>
     <string name="lockscreen_buttons_summary">View or change lock screen button actions</string>

@@ -89,6 +89,10 @@
             android:key="circles_lock_bg_color"
             android:title="@string/circles_lock_bg_color_title">
         </PreferenceScreen>
+        <com.android.settings.cyanogenmod.SystemSettingCheckBoxPreference
+            android:key="lockscreen_useop4color"
+            android:title="@string/lockscreen_useop4color_title"
+            android:summary="@string/lockscreen_useop4color_summary" />
         <PreferenceScreen
             android:key="circles_lock_ring_color"
             android:title="@string/circles_lock_ring_color_title">
