@@ -28,6 +28,7 @@ import android.preference.PreferenceCategory;
 import android.preference.PreferenceScreen;
 import android.provider.Settings;
 import android.provider.Settings.SettingNotFoundException;
+import android.text.format.DateFormat;
 import android.util.Log;
 
 import com.android.settings.R;
@@ -62,20 +63,17 @@ public class StatusBarClock extends SettingsPreferenceFragment implements OnPref
 
         mClockAmPmstyle = (ListPreference) prefSet.findPreference(PREF_AM_PM_STYLE);
 
-        try {
-            if (Settings.System.getInt(getActivity().getApplicationContext().getContentResolver(),
-                    Settings.System.TIME_12_24) == 24) {
+        if (DateFormat.is24HourFormat(getActivity())) {
                 mClockAmPmstyle.setEnabled(false);
                 mClockAmPmstyle.setSummary(R.string.status_bar_am_pm_info);
-            }
-        } catch (SettingNotFoundException e ) {
-        }
-
+        } else {
+                mClockAmPmstyle.setEnabled(true);
 	int clockAmPmstyle = Settings.System.getInt(getActivity().getApplicationContext().getContentResolver(),
 		Settings.System.STATUSBAR_CLOCK_AM_PM_STYLE, 2);
         mClockAmPmstyle.setValue(String.valueOf(clockAmPmstyle));
 	mClockAmPmstyle.setSummary(mClockAmPmstyle.getEntry());
         mClockAmPmstyle.setOnPreferenceChangeListener(this);
+	}
 
 	mStatusBarClockColor = (Preference) prefSet.findPreference(STATUS_BAR_CLOCK_COLOR);
 

@@ -26,6 +26,7 @@ import java.util.Set;
 import android.content.ContentResolver;
 import android.content.res.Resources;
 import android.os.Bundle;
+import android.preference.CheckBoxPreference;
 import android.preference.ListPreference;
 import android.preference.MultiSelectListPreference;
 import android.preference.Preference;
@@ -52,13 +53,16 @@ public class QuickSettings extends SettingsPreferenceFragment implements
     private static final String GENERAL_SETTINGS = "pref_general_settings";
     private static final String STATIC_TILES = "static_tiles";
     private static final String DYNAMIC_TILES = "pref_dynamic_tiles";
+
     private static final String QUICK_SETTINGS_COLUMNS = "quick_settings_columns";
+    private static final String FLOATING_WINDOW ="floating_window";
 
     private MultiSelectListPreference mRingMode;
     private ListPreference mNetworkMode;
     private ListPreference mScreenTimeoutMode;
     private ListPreference mQuickPulldown;
     private ListPreference mQuickSettingsColumns;
+    private CheckBoxPreference mFloatingWindow;
     private PreferenceCategory mGeneralSettings;
     private PreferenceCategory mStaticTiles;
     private PreferenceCategory mDynamicTiles;
@@ -93,6 +97,9 @@ public class QuickSettings extends SettingsPreferenceFragment implements
             mQuickPulldown.setValue(String.valueOf(quickPulldownValue));
             updatePulldownSummary(quickPulldownValue);
         }
+        
+        mFloatingWindow = (CheckBoxPreference) prefSet.findPreference(FLOATING_WINDOW);
+        mFloatingWindow.setChecked(Settings.System.getInt(resolver, Settings.System.QS_FLOATING_WINDOW, 0) == 1);
 
         // Add the sound mode
         mRingMode = (MultiSelectListPreference) prefSet.findPreference(EXP_RING_MODE);
@@ -135,6 +142,7 @@ public class QuickSettings extends SettingsPreferenceFragment implements
         int quickSettingsColumnsValue = Settings.System.getInt(resolver,
         	Settings.System.QUICK_SETTINGS_COLUMNS, 3);
         mQuickSettingsColumns.setValue(String.valueOf(quickSettingsColumnsValue));
+        mQuickSettingsColumns.setSummary(mQuickSettingsColumns.getEntry());
     }
 
     @Override
@@ -161,6 +169,10 @@ public class QuickSettings extends SettingsPreferenceFragment implements
             cp.setDefaultColor(0xFF161616);
             cp.show();
             return true;
+        } else if (preference == mFloatingWindow) {
+            Settings.System.putInt(resolver, Settings.System.QS_FLOATING_WINDOW,
+                    mFloatingWindow.isChecked() ? 1 : 0);
+            return true;            
         }
         return super.onPreferenceTreeClick(preferenceScreen, preference);
     }

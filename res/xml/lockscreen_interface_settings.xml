@@ -29,6 +29,14 @@
             <extra android:name="cm_security" android:value="true" />
         </PreferenceScreen>
 
+    <ListPreference
+        android:key="lockscreen_style"
+        android:title="@string/lockscreen_style_title"
+        android:summary="@string/lockscreen_style_summary"
+        android:entries="@array/entries_lockscreen_style"
+        android:entryValues="@array/values_lockscreen_style"
+        android:defaultValue="0"/>
+
     <CheckBoxPreference
         android:key="lockscreen_see_through"
         android:title="@string/lockscreen_see_through_title"
@@ -72,6 +80,31 @@
             android:title="@string/lockscreen_buttons_title"
             android:summary="@string/lockscreen_buttons_summary" />
 
+    </PreferenceCategory>
+
+   <PreferenceCategory
+ 	android:key="optimus_color"
+	android:title="@string/optimus_lock_color_title">
+        <PreferenceScreen
+            android:key="circles_lock_bg_color"
+            android:title="@string/circles_lock_bg_color_title">
+        </PreferenceScreen>
+        <com.android.settings.cyanogenmod.SystemSettingCheckBoxPreference
+            android:key="lockscreen_useop4color"
+            android:title="@string/lockscreen_useop4color_title"
+            android:summary="@string/lockscreen_useop4color_summary" />
+        <PreferenceScreen
+            android:key="circles_lock_ring_color"
+            android:title="@string/circles_lock_ring_color_title">
+        </PreferenceScreen>
+        <PreferenceScreen
+            android:key="circles_lock_halo_color"
+            android:title="@string/circles_lock_halo_color_title">
+        </PreferenceScreen>
+        <PreferenceScreen
+            android:key="circles_lock_wave_color"
+            android:title="@string/circles_lock_wave_color_title">
+        </PreferenceScreen>
     </PreferenceCategory>
 
     <PreferenceCategory
