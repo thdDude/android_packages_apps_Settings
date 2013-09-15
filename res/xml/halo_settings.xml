@@ -47,14 +47,12 @@
             android:entries="@array/entries_halo_size"
             android:entryValues="@array/values_halo_size" />
 
-        <ListPreference
-            android:key="halo_hidden"
+        <CheckBoxPreference
+            android:key="halo_hide"
             android:dependency="halo_enabled"
-            android:title="@string/halo_hidden_title"
-            android:summary="@string/halo_hidden_summary"
-            android:entries="@array/entries_halo_hidden"
-            android:entryValues="@array/values_halo_hidden" />
-
+            android:title="@string/halo_hide_title"
+            android:summary="@string/halo_hide_summary"
+            android:defaultValue="false" />
 
         <CheckBoxPreference
             android:key="halo_reversed"

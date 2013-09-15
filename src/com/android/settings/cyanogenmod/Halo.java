@@ -37,7 +37,7 @@ public class Halo extends SettingsPreferenceFragment
     private static final String KEY_HALO_ENABLED = "halo_enabled";
     private static final String KEY_HALO_ACTIVE = "halo_active";
     private static final String KEY_HALO_STATE = "halo_state";
-    private static final String KEY_HALO_HIDDEN = "halo_hidden";
+    private static final String KEY_HALO_HIDE = "halo_hide";
     private static final String KEY_HALO_REVERSED = "halo_reversed";
     private static final String KEY_HALO_SIZE = "halo_size";
     private static final String KEY_HALO_PAUSE = "halo_pause";
@@ -49,7 +49,7 @@ public class Halo extends SettingsPreferenceFragment
     private CheckBoxPreference mHaloActive;
     private ListPreference mHaloState;
     private ListPreference mHaloSize;
-    private ListPreference mHaloHide;
+    private CheckBoxPreference mHaloHide;
     private CheckBoxPreference mHaloReversed;
     private CheckBoxPreference mHaloPause;
     private Preference mHaloButtonColor;
@@ -82,12 +82,9 @@ public class Halo extends SettingsPreferenceFragment
         mHaloState.setValue(String.valueOf((isHaloPolicyBlack() ? "1" : "0")));
         mHaloState.setOnPreferenceChangeListener(this);
 
-        mHaloHide = (ListPreference) prefSet.findPreference(KEY_HALO_HIDDEN);
-        int halohide = Settings.System.getInt(mContext.getContentResolver(),
-                Settings.System.HALO_HIDDEN, 0);
-            mHaloHide.setValue(String.valueOf(halohide));
-        mHaloHide.setSummary(mHaloHide.getEntry());
-        mHaloHide.setOnPreferenceChangeListener(this);
+        mHaloHide = (CheckBoxPreference) prefSet.findPreference(KEY_HALO_HIDE);
+        mHaloHide.setChecked(Settings.System.getInt(mContext.getContentResolver(),
+                Settings.System.HALO_HIDE, 0) == 1);
 
         mHaloReversed = (CheckBoxPreference) prefSet.findPreference(KEY_HALO_REVERSED);
         mHaloReversed.setChecked(Settings.System.getInt(mContext.getContentResolver(),
@@ -133,6 +130,10 @@ public class Halo extends SettingsPreferenceFragment
             Settings.System.putInt(mContext.getContentResolver(),
                     Settings.System.HALO_ENABLED, mHaloEnabled.isChecked()
                     ? 1 : 0);  
+        } else if  (preference == mHaloHide) {  
+            Settings.System.putInt(mContext.getContentResolver(),
+                    Settings.System.HALO_HIDE, mHaloHide.isChecked()
+                    ? 1 : 0);
         } else if (preference == mHaloActive) {
             Settings.System.putInt(mContext.getContentResolver(),
                     Settings.System.HALO_ACTIVE, mHaloActive.isChecked()
@@ -172,13 +173,6 @@ public class Halo extends SettingsPreferenceFragment
             float haloSize = Float.valueOf((String) newValue);
             Settings.System.putFloat(getActivity().getContentResolver(),
                     Settings.System.HALO_SIZE, haloSize);
-            return true;
-        } else if  (preference == mHaloHide) {
-            int index = mHaloHide.findIndexOfValue((String) newValue);
-            int value = Integer.valueOf((String) newValue);
-            Settings.System.putInt(mContext.getContentResolver(),
-                    Settings.System.HALO_HIDDEN, value);
-            mHaloHide.setSummary(mHaloHide.getEntries()[index]);
             return true;
         } else if (preference == mHaloState) {
             boolean state = Integer.valueOf((String) newValue) == 1;
