@@ -257,7 +257,7 @@ public class Halo extends SettingsPreferenceFragment
             }
             return true;
         } else if (preference == mWeWantPopups) {
-            boolean checked = (Boolean) objValue;
+            boolean checked = (Boolean) newValue;
                         Settings.System.putBoolean(getActivity().getContentResolver(),
                                 Settings.System.WE_WANT_POPUPS, checked);
             return true;
