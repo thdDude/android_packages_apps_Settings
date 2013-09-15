@@ -50,6 +50,7 @@ public class Halo extends SettingsPreferenceFragment
     private static final String KEY_HALO_BUTTON_COLOR = "halo_button_color";
     private static final String KEY_HALO_PING_COLOR = "halo_ping_color";
     private static final String KEY_HALO_GONE = "halo_gone";
+    private static final String KEY_WE_WANT_POPUPS = "show_popup";
 
     private CheckBoxPreference mHaloEnabled;
     private CheckBoxPreference mHaloActive;
@@ -67,6 +68,7 @@ public class Halo extends SettingsPreferenceFragment
     private Preference mHaloButtonColor;
     private Preference mHaloPingColor;
     private CheckBoxPreference mHaloGone;
+    private CheckBoxPreference mWeWantPopups;
 
     private Context mContext;
     private INotificationManager mNotificationManager;
@@ -109,6 +111,12 @@ public class Halo extends SettingsPreferenceFragment
         mHaloUnlockPing = (CheckBoxPreference) prefSet.findPreference(KEY_HALO_UNLOCK_PING);
         mHaloUnlockPing.setChecked(Settings.System.getInt(mContext.getContentResolver(),
                 Settings.System.HALO_UNLOCK_PING, 0) == 1);
+
+        int showPopups = Settings.System.getInt(getContentResolver(), Settings.System.WE_WANT_POPUPS, 1);
+
+        mWeWantPopups = (CheckBoxPreference) findPreference(KEY_WE_WANT_POPUPS);
+        mWeWantPopups.setOnPreferenceChangeListener(this);
+        mWeWantPopups.setChecked(showPopups > 0);
 
         mHaloNotifyCount = (ListPreference) prefSet.findPreference(KEY_HALO_NOTIFY_COUNT);
         try {
@@ -247,6 +255,11 @@ public class Halo extends SettingsPreferenceFragment
             } catch (android.os.RemoteException ex) {
                 // System dead
             }
+            return true;
+        } else if (preference == mWeWantPopups) {
+            boolean checked = (Boolean) objValue;
+                        Settings.System.putBoolean(getActivity().getContentResolver(),
+                                Settings.System.WE_WANT_POPUPS, checked);
             return true;
         }
         return false;
