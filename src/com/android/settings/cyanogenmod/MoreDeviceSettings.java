@@ -69,9 +69,11 @@ public class MoreDeviceSettings extends SettingsPreferenceFragment {
         }
 
         Preference advanced = findPreference("advanced_settings");
-        if (!isAdvanced(advanced)) {
-            getPreferenceScreen().removePreference(advanced);
-        }
+	if (advanced != null) {
+            if (!isAdvanced(advanced)) {
+            	getPreferenceScreen().removePreference(advanced);
+            }
+	}
     }
 
     private boolean isAdvanced(Preference preference) {
