@@ -83,6 +83,7 @@ public class LockscreenInterface extends SettingsPreferenceFragment implements
     public static final String KEY_CIRCLES_LOCK_WAVE_COLOR = "circles_lock_wave_color";
     public static final String KEY_OPTIMUS_COLOR_CATEGORY = "optimus_color";
     private static final String KEY_LOCKSCREEN_TARGETS = "lockscreen_targets";
+    private static final String KEY_LOCKSCREEN_HIDE_INITIAL_PAGE_HINTS = "lockscreen_hide_initial_page_hints";
 
     private PreferenceScreen mLockscreenButtons;
     private CheckBoxPreference mSeeThrough;
@@ -100,6 +101,7 @@ public class LockscreenInterface extends SettingsPreferenceFragment implements
     private File mWallpaperImage;
     private File mWallpaperTemporary;
     private DevicePolicyManager mDPM;
+    private CheckBoxPreference mLockscreenHideInitialPageHints;
 
     private boolean mIsPrimary;
     private int mLockscreenStyle;
@@ -162,6 +164,21 @@ public class LockscreenInterface extends SettingsPreferenceFragment implements
         mLockRingColor = (Preference) findPreference(KEY_CIRCLES_LOCK_RING_COLOR);
         mLockHaloColor = (Preference) findPreference(KEY_CIRCLES_LOCK_HALO_COLOR);
         mLockWaveColor = (Preference) findPreference(KEY_CIRCLES_LOCK_WAVE_COLOR);
+
+        mLockscreenHideInitialPageHints = (CheckBoxPreference)findPreference
+		(KEY_LOCKSCREEN_HIDE_INITIAL_PAGE_HINTS);
+        if (!Utils.isPhone(getActivity())) {
+            getPreferenceScreen().removePreference(mLockscreenHideInitialPageHints);
+            mLockscreenHideInitialPageHints = null;
+        } else {
+            mLockscreenHideInitialPageHints.setOnPreferenceChangeListener(this);
+        }
+
+        if (mLockscreenHideInitialPageHints != null) {
+            mLockscreenHideInitialPageHints.setChecked(Settings.System.getInt(getActivity().
+		getApplicationContext().getContentResolver(),
+                Settings.System.LOCKSCREEN_HIDE_INITIAL_PAGE_HINTS, 0) == 1);
+        }
 	
 	check_lockscreentarget();
 	check_optimus();
@@ -361,6 +378,10 @@ public class LockscreenInterface extends SettingsPreferenceFragment implements
             Settings.System.putInt(cr, Settings.System.LOCKSCREEN_STYLE, value);
             mStylePref.setSummary(mStylePref.getEntries()[value]);
 	    check_lockscreentarget();
+            return true;
+        } else if (preference == mLockscreenHideInitialPageHints) {
+            boolean value = (Boolean) objValue;
+            Settings.System.putInt(cr, Settings.System.LOCKSCREEN_HIDE_INITIAL_PAGE_HINTS, value ? 1 : 0);
             return true;
         }
 
