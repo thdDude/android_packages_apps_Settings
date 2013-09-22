@@ -38,13 +38,11 @@ public class StatusBar extends SettingsPreferenceFragment implements OnPreferenc
 
     private static final String STATUS_BAR_BATTERY = "status_bar_battery";
     private static final String STATUS_BAR_SIGNAL = "status_bar_signal";
-    private static final String STATUS_BAR_TRANSPARENCY = "status_bar_transparency";
     private static final String STATUS_BAR_CATEGORY_GENERAL = "status_bar_general";
     private static final String NOTIFICATION_PANEL_TRANSPARENCY = "notification_panel_transparency";
 
     private ListPreference mStatusBarBattery;
     private ListPreference mStatusBarCmSignal;
-    private SeekBarPreference mStatusbarTransparency;
     private SeekBarPreference mNotificationpanelTransparency;
 
     @Override
@@ -58,20 +56,6 @@ public class StatusBar extends SettingsPreferenceFragment implements OnPreferenc
 
         mStatusBarBattery = (ListPreference) prefSet.findPreference(STATUS_BAR_BATTERY);
         mStatusBarCmSignal = (ListPreference) prefSet.findPreference(STATUS_BAR_SIGNAL);
-
-        float statusbarAlpha;
-        try{
-            statusbarAlpha = Settings.System.getFloat(getActivity()
-                     .getContentResolver(), Settings.System.STATUS_BAR_TRANSPARENCY);
-        } catch (Exception e) {
-            statusbarAlpha = 0.0f;
-                     Settings.System.putFloat(getActivity().getContentResolver(), Settings.System.STATUS_BAR_TRANSPARENCY, 0.0f);
-        }
-
-        mStatusbarTransparency = (SeekBarPreference) prefSet.findPreference(STATUS_BAR_TRANSPARENCY);
-        mStatusbarTransparency.setProperty(Settings.System.STATUS_BAR_TRANSPARENCY);
-        mStatusbarTransparency.setInitValue((int) (statusbarAlpha * 100));
-        mStatusbarTransparency.setOnPreferenceChangeListener(this);
 
         float notificationAlpha;
         try{
@@ -129,12 +113,6 @@ public class StatusBar extends SettingsPreferenceFragment implements OnPreferenc
             int index = mStatusBarBattery.findIndexOfValue((String) newValue);
             Settings.System.putInt(resolver, Settings.System.STATUS_BAR_BATTERY, statusBarBattery);
             mStatusBarBattery.setSummary(mStatusBarBattery.getEntries()[index]);
-            return true;
-       } else if (preference == mStatusbarTransparency) {
-            float val = Float.parseFloat((String) newValue);
-             Settings.System.putFloat(resolver,
-             	Settings.System.STATUS_BAR_TRANSPARENCY,
-                val / 100);
             return true;
         } else if (preference == mNotificationpanelTransparency) {
             float val = Float.parseFloat((String) newValue);
