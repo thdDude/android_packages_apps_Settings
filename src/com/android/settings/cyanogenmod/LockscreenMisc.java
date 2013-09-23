@@ -202,5 +202,5 @@ ColorPickerDialog.OnColorChangedListener mCirclesBgColorListener =
             }
     };
 
-
+}
 
