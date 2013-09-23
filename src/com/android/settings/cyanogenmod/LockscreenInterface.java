@@ -73,16 +73,11 @@ public class LockscreenInterface extends SettingsPreferenceFragment implements
     private static final String LOCKSCREEN_WIDGETS_CATEGORY = "lockscreen_widgets_category";
     private static final String KEY_LOCKSCREEN_ENABLE_WIDGETS = "lockscreen_enable_widgets";
     private static final String KEY_LOCKSCREEN_ENABLE_CAMERA = "lockscreen_enable_camera";
+    private static final String KEY_LOCKSCREEN_MISC = "lockscreen_misc";
 
     private static final String KEY_STYLE_PREF = "lockscreen_style";
     private static final int LOCK_STYLE_JB = 0;
     private static final int LOCK_STYLE_OP4 = 4; 
-    public static final String KEY_CIRCLES_LOCK_BG_COLOR = "circles_lock_bg_color";
-    public static final String KEY_CIRCLES_LOCK_RING_COLOR = "circles_lock_ring_color";
-    public static final String KEY_CIRCLES_LOCK_HALO_COLOR = "circles_lock_halo_color";
-    public static final String KEY_CIRCLES_LOCK_WAVE_COLOR = "circles_lock_wave_color";
-    public static final String KEY_OPTIMUS_COLOR_CATEGORY = "optimus_color";
-    private static final String KEY_LOCKSCREEN_TARGETS = "lockscreen_targets";
     private static final String KEY_LOCKSCREEN_HIDE_INITIAL_PAGE_HINTS = "lockscreen_hide_initial_page_hints";
 
     private PreferenceScreen mLockscreenButtons;
@@ -90,10 +85,6 @@ public class LockscreenInterface extends SettingsPreferenceFragment implements
     private CheckBoxPreference mAutoRotate;
     private Preference mTextColor;
     private ListPreference mCustomBackground;
-    private Preference mLockBgColor;
-    private Preference mLockRingColor;
-    private Preference mLockHaloColor;
-    private Preference mLockWaveColor;
     private ListPreference mBatteryStatus;
     private CheckBoxPreference mEnableWidgets;
     private CheckBoxPreference mEnableCamera;
@@ -160,11 +151,6 @@ public class LockscreenInterface extends SettingsPreferenceFragment implements
             generalCategory.removePreference(findPreference(KEY_LOCKSCREEN_BUTTONS));
         }
 
-        mLockBgColor = (Preference) findPreference(KEY_CIRCLES_LOCK_BG_COLOR);
-        mLockRingColor = (Preference) findPreference(KEY_CIRCLES_LOCK_RING_COLOR);
-        mLockHaloColor = (Preference) findPreference(KEY_CIRCLES_LOCK_HALO_COLOR);
-        mLockWaveColor = (Preference) findPreference(KEY_CIRCLES_LOCK_WAVE_COLOR);
-
         mLockscreenHideInitialPageHints = (CheckBoxPreference)findPreference
 		(KEY_LOCKSCREEN_HIDE_INITIAL_PAGE_HINTS);
         if (!Utils.isPhone(getActivity())) {
@@ -180,8 +166,7 @@ public class LockscreenInterface extends SettingsPreferenceFragment implements
                 Settings.System.LOCKSCREEN_HIDE_INITIAL_PAGE_HINTS, 0) == 1);
         }
 	
-	check_lockscreentarget();
-	check_optimus();
+	check_lockscreenstyle();
 
         // This applies to all users
         mCustomBackground = (ListPreference) findPreference(KEY_BACKGROUND);
@@ -211,25 +196,14 @@ public class LockscreenInterface extends SettingsPreferenceFragment implements
         removePreferenceIfPackageNotInstalled(findPreference(KEY_LOCK_CLOCK), widgetsCategory);
     }
 
-	private void check_lockscreentarget() {
+	private void check_lockscreenstyle() {
             mLockscreenStyle = Settings.System.getInt(getActivity().getContentResolver(),
                     Settings.System.LOCKSCREEN_STYLE, 0);
             mUseJbLockscreen = (mLockscreenStyle == LOCK_STYLE_JB);
-            Preference lockTargets = findPreference(KEY_LOCKSCREEN_TARGETS);
-            if (lockTargets != null) {
-            	lockTargets.setEnabled(mUseJbLockscreen);
-	    }
-	}
-
-	private void check_optimus() {
-       	PreferenceCategory optimuscolorCategory = (PreferenceCategory) findPreference(KEY_OPTIMUS_COLOR_CATEGORY);
-            mLockscreenStyle = Settings.System.getInt(getActivity().getContentResolver(),
-                    Settings.System.LOCKSCREEN_STYLE, 0);
             mUseOp4Lockscreen = (mLockscreenStyle == LOCK_STYLE_OP4);
-            if (optimuscolorCategory != null) {
-		if (!mUseOp4Lockscreen) {
-		getPreferenceScreen().removePreference(optimuscolorCategory);
-		}
+            Preference miscSettings = findPreference(KEY_LOCKSCREEN_MISC);
+            if (miscSettings != null) {
+            	miscSettings.setEnabled(mUseJbLockscreen || mUseOp4Lockscreen);
 	    }
 	}
 
@@ -270,38 +244,6 @@ public class LockscreenInterface extends SettingsPreferenceFragment implements
             cp.setDefaultColor(0xFFFFFFFF);
             cp.show();
             return true;
-        } else if (preference == mLockBgColor) {
-            ColorPickerDialog cp = new ColorPickerDialog(getActivity(),
-                    mCirclesBgColorListener, Settings.System.getInt(getActivity()
-                    .getApplicationContext()
-                    .getContentResolver(), Settings.System.CIRCLES_LOCK_BG_COLOR, 0xD2000000));
-            cp.setDefaultColor(0xD2000000);
-            cp.show();
-            return true;
-        } else if (preference == mLockRingColor) {
-            ColorPickerDialog cp = new ColorPickerDialog(getActivity(),
-                    mCirclesRingColorListener, Settings.System.getInt(getActivity()
-                    .getApplicationContext()
-                    .getContentResolver(), Settings.System.CIRCLES_LOCK_RING_COLOR, 0xFFFFFFFF));
-            cp.setDefaultColor(0xFFFFFFFF);
-            cp.show();
-            return true;
-        } else if (preference == mLockHaloColor) {
-            ColorPickerDialog cp = new ColorPickerDialog(getActivity(),
-                    mCirclesHaloColorListener, Settings.System.getInt(getActivity()
-                    .getApplicationContext()
-                    .getContentResolver(), Settings.System.CIRCLES_LOCK_HALO_COLOR, 0xFFFFFFFF));
-            cp.setDefaultColor(0xFFFFFFFF);
-            cp.show();
-            return true;
-        } else if (preference == mLockWaveColor) {
-            ColorPickerDialog cp = new ColorPickerDialog(getActivity(),
-                    mCirclesWaveColorListener, Settings.System.getInt(getActivity()
-                    .getApplicationContext()
-                    .getContentResolver(), Settings.System.CIRCLES_LOCK_WAVE_COLOR, 0xD2FFFFFF));
-            cp.setDefaultColor(0xD2FFFFFF);
-            cp.show();
-            return true;
         }
         return super.onPreferenceTreeClick(preferenceScreen, preference);
     }
@@ -325,7 +267,7 @@ public class LockscreenInterface extends SettingsPreferenceFragment implements
                     Settings.System.LOCKSCREEN_STYLE, 0);
             mStylePref.setValue(String.valueOf(stylePref));
             mStylePref.setSummary(mStylePref.getEntries()[stylePref]);
-	    check_lockscreentarget();
+	    check_lockscreenstyle();
         }
     }
 
@@ -377,7 +319,7 @@ public class LockscreenInterface extends SettingsPreferenceFragment implements
             int value = Integer.valueOf((String) objValue);
             Settings.System.putInt(cr, Settings.System.LOCKSCREEN_STYLE, value);
             mStylePref.setSummary(mStylePref.getEntries()[value]);
-	    check_lockscreentarget();
+	    check_lockscreenstyle();
             return true;
         } else if (preference == mLockscreenHideInitialPageHints) {
             boolean value = (Boolean) objValue;
@@ -397,43 +339,7 @@ public class LockscreenInterface extends SettingsPreferenceFragment implements
             public void colorUpdate(int color) {
             }
     };
-
-    ColorPickerDialog.OnColorChangedListener mCirclesBgColorListener =
-        new ColorPickerDialog.OnColorChangedListener() {
-            public void colorChanged(int color) {
-                Settings.System.putInt(getContentResolver(),
-                        Settings.System.CIRCLES_LOCK_BG_COLOR, color);
-            }
-            public void colorUpdate(int color) {
-            }
-    };
-    ColorPickerDialog.OnColorChangedListener mCirclesRingColorListener =
-        new ColorPickerDialog.OnColorChangedListener() {
-            public void colorChanged(int color) {
-                Settings.System.putInt(getContentResolver(),
-                        Settings.System.CIRCLES_LOCK_RING_COLOR, color);
-            }
-            public void colorUpdate(int color) {
-            }
-    };
-    ColorPickerDialog.OnColorChangedListener mCirclesHaloColorListener =
-        new ColorPickerDialog.OnColorChangedListener() {
-            public void colorChanged(int color) {
-                Settings.System.putInt(getContentResolver(),
-                        Settings.System.CIRCLES_LOCK_HALO_COLOR, color);
-            }
-            public void colorUpdate(int color) {
-            }
-    };
-    ColorPickerDialog.OnColorChangedListener mCirclesWaveColorListener =
-        new ColorPickerDialog.OnColorChangedListener() {
-            public void colorChanged(int color) {
-                Settings.System.putInt(getContentResolver(),
-                        Settings.System.CIRCLES_LOCK_WAVE_COLOR, color);
-            }
-            public void colorUpdate(int color) {
-            }
-    };
+    
 
     private void updateKeyguardState(boolean enableCamera, boolean enableWidgets) {
         ComponentName dpmAdminName = new ComponentName(getActivity(),
