@@ -52,8 +52,7 @@ import com.android.settings.Utils;
 import com.android.settings.SettingsPreferenceFragment;
 import com.android.settings.notificationlight.ColorPickerView;
 
-public class LockscreenMisc extends SettingsPreferenceFragment implements
-        Preference.OnPreferenceChangeListener {
+public class LockscreenMisc extends SettingsPreferenceFragment {
 
     private static final String KEY_LOCKSCREEN_TARGETS = "lockscreen_targets";
     private static final String KEY_STYLE_PREF = "lockscreen_style";
@@ -114,16 +113,8 @@ public class LockscreenMisc extends SettingsPreferenceFragment implements
 
     public void onResume() {
         super.onResume();
-
-        // Set the style value
-        if (mStylePref != null) {
-            int stylePref = Settings.System.getInt(getActivity().getContentResolver(),
-                    Settings.System.LOCKSCREEN_STYLE, 0);
-            mStylePref.setValue(String.valueOf(stylePref));
-            mStylePref.setSummary(mStylePref.getEntries()[stylePref]);
 	    check_lockscreentarget();
 	    check_optimus();
-        }
     }
 
 
