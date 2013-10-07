@@ -361,7 +361,7 @@ public class ButtonSettings extends SettingsPreferenceFragment implements
             int swapVolumeKeys = Settings.System.getInt(getContentResolver(),
                     Settings.System.SWAP_VOLUME_KEYS_ON_ROTATION, 0);
             mSwapVolumeButtons = (CheckBoxPreference)
-                    prefScreen.findPreference(KEY_SWAP_VOLUME_BUTTONS);
+                    prefSet.findPreference(KEY_SWAP_VOLUME_BUTTONS);
             mSwapVolumeButtons.setChecked(swapVolumeKeys > 0);
             if (!getResources().getBoolean(R.bool.config_show_volumeRockerWake)) {
                 volumeCategory.removePreference(findPreference(Settings.System.VOLUME_WAKE_SCREEN));
