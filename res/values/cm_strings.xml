@@ -224,6 +224,7 @@
     <string name="lockscreen_battery_status_title">Battery status</string>
     <string name="lockscreen_battery_status_charging">Only when charging</string>
     <string name="lockscreen_battery_status_alwayson">Always on</string>
+    <string name="lockscreen_battery_status_alwaysoff">Always off</string>
 
     <string name="lockscreen_hide_initial_page_hints_title">Hide initial page hints</string>
     <string name="lockscreen_hide_initial_page_hints_summary">Disable hints on left and right when the screen is turned on.</string>
@@ -559,6 +560,7 @@
     <string name="hardware_keys_assist_long_press_title">Search key (long press)</string>
     <string name="hardware_keys_app_switch_press_title">App switch key</string>
     <string name="hardware_keys_app_switch_long_press_title">App switch key (long press)</string>
+    <string name="hardware_keys_camera_key_title">Camera button</string>
     <string name="hardware_keys_volume_keys_title">Volume buttons</string>
     <string name="hardware_keys_show_overflow_title">Show action overflow</string>
     <string name="hardware_keys_show_overflow_summary">Display the 3-dot overflow menu button within apps</string>
@@ -577,13 +579,14 @@
     <string name="key_menu_enabled">Menu Key Enabled</string>
     <string name="key_back_enabled">Back Key Enabled</string>
     <string name="key_home_enabled">Home Key Enabled</string>
+    <string name="hardware_keys_action_launch_camera">Launch Camera</string>
     <string name="home_wake_title">Home button wake</string>
     <string name="home_wake_summary">Pressing the home button will wake your device</string>
     <string name="volume_wake_title">Volume button wake</string>
     <string name="volume_wake_summary">Pressing a volume button will wake your device</string>
 
     <!-- Swap volume buttons when the screen is rotated -->
-    <string name="swap_volume_buttons_title">Swap volume buttons</string>
+    <string name="swap_volume_buttons_title">Reorient volume buttons</string>
     <string name="swap_volume_buttons_summary">Swap volume buttons when the screen is rotated</string>
 
     <!-- Kill app long-press back -->
@@ -674,6 +677,7 @@
     <string name="lockscreen_buttons_previous">Previous song</string>
     <string name="lockscreen_buttons_playpause">Play/Pause music</string>
     <string name="lockscreen_buttons_toggle_sound">Toggle sound</string>
+    <string name="lockscreen_buttons_sleep">Go to sleep</string>
 
     <!-- Quick settings panel  -->
     <string name="quick_settings_panel_title">Quick Settings panel</string>
@@ -1510,6 +1514,8 @@ rience. Better keep it disabled on lower end devices.</string>
     <!-- Hardware tunables - Gamma calibration -->
     <string name="gamma_tuning_title_head">Gamma calibration</string>
     <string name="gamma_tuning_summary_head">Tweak gamma values</string>
+    <string name="gamma_tuning_contrast">Contrast</string>
+    <string name="gamma_tuning_brightness">Brightness</string>
 
     <!--  Other device settings -->
     <string name="more_device_controls_title">More\u2026</string>

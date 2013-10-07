@@ -50,12 +50,15 @@ public class ButtonSettings extends SettingsPreferenceFragment implements
     private static final String HARDWARE_KEYS_ASSIST_LONG_PRESS = "hardware_keys_assist_long_press";
     private static final String HARDWARE_KEYS_APP_SWITCH_PRESS = "hardware_keys_app_switch_press";
     private static final String HARDWARE_KEYS_APP_SWITCH_LONG_PRESS = "hardware_keys_app_switch_long_press";
+    private static final String HARDWARE_KEYS_CAMERA_PRESS = "hardware_keys_camera_press";
+    private static final String HARDWARE_KEYS_CAMERA_LONG_PRESS = "hardware_keys_camera_long_press";
 
     private static final String CATEGORY_VOLUME = "volume_keys";
     private static final String CATEGORY_HOME = "home_key";
     private static final String CATEGORY_BACKLIGHT = "key_backlight";
 
     private static final String KEY_BUTTON_BACKLIGHT = "button_backlight";
+    private static final String KEY_SWAP_VOLUME_BUTTONS = "swap_volume_buttons";
 
     // Available custom actions to perform on a key press.
     // Must match values for KEY_HOME_LONG_PRESS_ACTION in:
@@ -69,6 +72,7 @@ public class ButtonSettings extends SettingsPreferenceFragment implements
     private static final int ACTION_LAST_APP = 6;
     private static final int ACTION_POWER = 7;
     private static final int ACTION_CUSTOM_APP = 8;
+    private static final int ACTION_CAMERA = 9;
 
     // Masks for checking presence of hardware keys.
     // Must match values in frameworks/base/core/res/res/values/config.xml
@@ -77,6 +81,7 @@ public class ButtonSettings extends SettingsPreferenceFragment implements
     public static final int KEY_MASK_MENU = 0x04;
     public static final int KEY_MASK_ASSIST = 0x08;
     public static final int KEY_MASK_APP_SWITCH = 0x10;
+    public static final int KEY_MASK_CAMERA = 0x20;
 
     private CheckBoxPreference mMenuKeyEnabled;
     private CheckBoxPreference mBackKeyEnabled;
@@ -90,6 +95,9 @@ public class ButtonSettings extends SettingsPreferenceFragment implements
     private ListPreference mAppSwitchPressAction;
     private ListPreference mAppSwitchLongPressAction;
     private CheckBoxPreference mShowActionOverflow;
+    private CheckBoxPreference mSwapVolumeButtons;
+    private ListPreference mCameraPressAction;
+    private ListPreference mCameraLongPressAction;
 
     private ShortcutPickerHelper mPicker;
     private Preference mCustomAppPreference;
@@ -104,6 +112,7 @@ public class ButtonSettings extends SettingsPreferenceFragment implements
         final boolean hasMenuKey = (deviceKeys & KEY_MASK_MENU) != 0;
         final boolean hasAssistKey = (deviceKeys & KEY_MASK_ASSIST) != 0;
         final boolean hasAppSwitchKey = (deviceKeys & KEY_MASK_APP_SWITCH) != 0;
+        final boolean hasCameraKey = (deviceKeys & KEY_MASK_CAMERA) != 0;
 
         addPreferencesFromResource(R.xml.button_settings);
         PreferenceScreen prefSet = getPreferenceScreen();
@@ -134,6 +143,10 @@ public class ButtonSettings extends SettingsPreferenceFragment implements
                 HARDWARE_KEYS_APP_SWITCH_PRESS);
         mAppSwitchLongPressAction = (ListPreference) prefSet.findPreference(
                 HARDWARE_KEYS_APP_SWITCH_LONG_PRESS);
+        mCameraPressAction = (ListPreference) prefSet.findPreference(
+                HARDWARE_KEYS_CAMERA_PRESS);
+        mCameraLongPressAction = (ListPreference) prefSet.findPreference(
+                HARDWARE_KEYS_CAMERA_LONG_PRESS);
         PreferenceCategory bindingsCategory = (PreferenceCategory) prefSet.findPreference(
                 HARDWARE_KEYS_CATEGORY_BINDINGS);
 
@@ -286,6 +299,45 @@ public class ButtonSettings extends SettingsPreferenceFragment implements
             bindingsCategory.removePreference(mAppSwitchLongPressAction);
         }
 
+        if (hasCameraKey) {
+            hasAnyBindableKey = true;
+            String cameraPressAction = Settings.System.getString(getContentResolver(),
+                    Settings.System.KEY_CAMERA_ACTION);
+            if (cameraPressAction == null)
+                cameraPressAction = Integer.toString(ACTION_CAMERA);
+
+            try {
+                Integer.parseInt(cameraPressAction);
+                mCameraPressAction.setValue(cameraPressAction);
+                mCameraPressAction.setSummary(mCameraPressAction.getEntry());
+            } catch (NumberFormatException e) {
+                mCameraPressAction.setValue(Integer.toString(ACTION_CUSTOM_APP));
+                mCameraPressAction.setSummary(mPicker.getFriendlyNameForUri(cameraPressAction));
+            }
+
+            mCameraPressAction.setOnPreferenceChangeListener(this);
+
+            String cameraLongPressAction = Settings.System.getString(getContentResolver(),
+                    Settings.System.KEY_CAMERA_LONG_PRESS_ACTION);
+            if (cameraLongPressAction == null)
+                cameraLongPressAction = Integer.toString(ACTION_NOTHING);
+
+            try {
+                Integer.parseInt(cameraLongPressAction);
+                mCameraLongPressAction.setValue(cameraLongPressAction);
+                mCameraLongPressAction.setSummary(mCameraLongPressAction.getEntry());
+            } catch (NumberFormatException e) {
+                mCameraLongPressAction.setValue(Integer.toString(ACTION_CUSTOM_APP));
+                mCameraLongPressAction.setSummary(mPicker.getFriendlyNameForUri(cameraLongPressAction));
+            }
+
+            mCameraLongPressAction.setOnPreferenceChangeListener(this);
+        } else {
+            bindingsCategory.removePreference(mCameraPressAction);
+            bindingsCategory.removePreference(mCameraLongPressAction);
+        }
+        // All done buttons
+
         mMenuKeyEnabled.setChecked((Settings.System.getInt(getActivity().
 		getApplicationContext().getContentResolver(),
                 Settings.System.KEY_MENU_ENABLED, 1) == 1));
@@ -306,7 +358,11 @@ public class ButtonSettings extends SettingsPreferenceFragment implements
         }
 
         if (Utils.hasVolumeRocker(getActivity())) {
-
+            int swapVolumeKeys = Settings.System.getInt(getContentResolver(),
+                    Settings.System.SWAP_VOLUME_KEYS_ON_ROTATION, 0);
+            mSwapVolumeButtons = (CheckBoxPreference)
+                    prefScreen.findPreference(KEY_SWAP_VOLUME_BUTTONS);
+            mSwapVolumeButtons.setChecked(swapVolumeKeys > 0);
             if (!getResources().getBoolean(R.bool.config_show_volumeRockerWake)) {
                 volumeCategory.removePreference(findPreference(Settings.System.VOLUME_WAKE_SCREEN));
             }
@@ -382,6 +438,20 @@ public class ButtonSettings extends SettingsPreferenceFragment implements
                 Settings.System.putInt(getContentResolver(),
                         Settings.System.KEY_APP_SWITCH_LONG_PRESS_ACTION, value);
                 return true;
+            } else if (preference == mCameraPressAction) {
+                int index = mCameraPressAction.findIndexOfValue((String) newValue);
+                mCameraPressAction.setSummary(
+                        mCameraPressAction.getEntries()[index]);
+                Settings.System.putInt(getContentResolver(),
+                        Settings.System.KEY_CAMERA_ACTION, value);
+                return true;
+            } else if (preference == mCameraLongPressAction) {
+                int index = mCameraLongPressAction.findIndexOfValue((String) newValue);
+                mCameraLongPressAction.setSummary(
+                        mCameraLongPressAction.getEntries()[index]);
+                Settings.System.putInt(getContentResolver(),
+                        Settings.System.KEY_CAMERA_LONG_PRESS_ACTION, value);
+                return true;
             }
         }
         return false;
@@ -411,7 +481,14 @@ public class ButtonSettings extends SettingsPreferenceFragment implements
         } else if (preference == mHomeKeyEnabled) {
             handleCheckboxClick(mHomeKeyEnabled, Settings.System.KEY_HOME_ENABLED);
             return true;
+        } else if (preference == mSwapVolumeButtons) {
+            int value = mSwapVolumeButtons.isChecked()
+                    ? (Utils.isTablet(getActivity()) ? 2 : 1) : 0;
+            Settings.System.putInt(getActivity().getContentResolver(),
+                    Settings.System.SWAP_VOLUME_KEYS_ON_ROTATION, value);
+            return true;
         }
+
         return super.onPreferenceTreeClick(preferenceScreen, preference);
     }
 
@@ -438,6 +515,12 @@ public class ButtonSettings extends SettingsPreferenceFragment implements
         } else if (preference == mAppSwitchLongPressAction) {
             Settings.System.putString(getContentResolver(),
                     Settings.System.KEY_APP_SWITCH_LONG_PRESS_ACTION, uri);
+        } else if (preference == mCameraPressAction) {
+            Settings.System.putString(getContentResolver(),
+                    Settings.System.KEY_CAMERA_ACTION, uri);
+        } else if (preference == mCameraLongPressAction) {
+            Settings.System.putString(getContentResolver(),
+                    Settings.System.KEY_CAMERA_LONG_PRESS_ACTION, uri);
         }
         preference.setSummary(friendlyName);
     }
