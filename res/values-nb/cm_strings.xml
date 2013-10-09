@@ -507,7 +507,7 @@
     <string name="navring_action_google_now">Google Now</string>
     <string name="navring_choose_action_title">Velg handling</string>
     <string name="pie_control_title">Paikontroller</string>
-    <string name="pie_control_enabled">Aktivert når Utvidet skrivebord er aktivert</string>
+    <string name="pie_control_expanded">Aktivert når Utvidet skrivebord er aktivert</string>
     <string name="pie_control_disabled">Deaktivert</string>
     <string name="pie_control_size">Størrelse på navigasjonstast</string>
     <string name="pie_control_trigger_positions">Utløsende posisjoner</string>

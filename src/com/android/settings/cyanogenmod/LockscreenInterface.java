@@ -55,7 +55,9 @@ import com.android.settings.notificationlight.ColorPickerView;
 public class LockscreenInterface extends SettingsPreferenceFragment implements
         Preference.OnPreferenceChangeListener {
     private static final String TAG = "LockscreenInterface";
-
+    public static final String KEY_SEE_TRHOUGH_PREF = "lockscreen_see_through";
+    public static final String KEY_AUTO_ROTATE_PREF = "lockscreen_auto_rotate";
+    public static final String KEY_TEXT_COLOR = "lockscreen_custom_text_color";
     private static final int REQUEST_CODE_BG_WALLPAPER = 1024;
 
     private static final int LOCKSCREEN_BACKGROUND_COLOR_FILL = 0;
@@ -67,22 +69,35 @@ public class LockscreenInterface extends SettingsPreferenceFragment implements
     private static final String KEY_LOCK_CLOCK = "lock_clock";
     private static final String KEY_BACKGROUND = "lockscreen_background";
     private static final String KEY_SCREEN_SECURITY = "screen_security";
-
     private static final String LOCKSCREEN_GENERAL_CATEGORY = "lockscreen_general_category";
     private static final String LOCKSCREEN_WIDGETS_CATEGORY = "lockscreen_widgets_category";
     private static final String KEY_LOCKSCREEN_ENABLE_WIDGETS = "lockscreen_enable_widgets";
     private static final String KEY_LOCKSCREEN_ENABLE_CAMERA = "lockscreen_enable_camera";
+    private static final String KEY_LOCKSCREEN_MISC = "lockscreen_misc";
 
+    private static final String KEY_STYLE_PREF = "lockscreen_style";
+    private static final int LOCK_STYLE_JB = 0;
+    private static final int LOCK_STYLE_OP4 = 4; 
+    private static final String KEY_LOCKSCREEN_HIDE_INITIAL_PAGE_HINTS = "lockscreen_hide_initial_page_hints";
+
+    private PreferenceScreen mLockscreenButtons;
+    private CheckBoxPreference mSeeThrough;
+    private CheckBoxPreference mAutoRotate;
+    private Preference mTextColor;
     private ListPreference mCustomBackground;
     private ListPreference mBatteryStatus;
     private CheckBoxPreference mEnableWidgets;
     private CheckBoxPreference mEnableCamera;
-
+    private ListPreference mStylePref;
     private File mWallpaperImage;
     private File mWallpaperTemporary;
     private DevicePolicyManager mDPM;
+    private CheckBoxPreference mLockscreenHideInitialPageHints;
 
     private boolean mIsPrimary;
+    private int mLockscreenStyle;
+    private boolean mUseJbLockscreen;
+    private boolean mUseOp4Lockscreen;
 
     public boolean hasButtons() {
         return !getResources().getBoolean(com.android.internal.R.bool.config_showNavigationBar);
@@ -95,6 +110,19 @@ public class LockscreenInterface extends SettingsPreferenceFragment implements
         addPreferencesFromResource(R.xml.lockscreen_interface_settings);
         PreferenceCategory generalCategory = (PreferenceCategory) findPreference(LOCKSCREEN_GENERAL_CATEGORY);
         PreferenceCategory widgetsCategory = (PreferenceCategory) findPreference(LOCKSCREEN_WIDGETS_CATEGORY);
+
+        mSeeThrough = (CheckBoxPreference) findPreference(KEY_SEE_TRHOUGH_PREF);
+        mSeeThrough.setChecked((Settings.System.getInt(getActivity().getApplicationContext().getContentResolver(),
+                Settings.System.LOCKSCREEN_SEE_THROUGH, 0) == 1));
+
+        mAutoRotate = (CheckBoxPreference) findPreference(KEY_AUTO_ROTATE_PREF);
+        mAutoRotate.setChecked((Settings.System.getInt(getActivity().getApplicationContext().getContentResolver(),
+                Settings.System.LOCKSCREEN_AUTO_ROTATE, 0) == 1));
+
+        mStylePref = (ListPreference) findPreference(KEY_STYLE_PREF);
+        mStylePref.setOnPreferenceChangeListener(this);
+
+        mTextColor = (Preference) findPreference(KEY_TEXT_COLOR);
 
         // Determine which user is logged in
         mIsPrimary = UserHandle.myUserId() == UserHandle.USER_OWNER;
@@ -122,6 +150,23 @@ public class LockscreenInterface extends SettingsPreferenceFragment implements
             generalCategory.removePreference(findPreference(KEY_BATTERY_STATUS));
             generalCategory.removePreference(findPreference(KEY_LOCKSCREEN_BUTTONS));
         }
+
+        mLockscreenHideInitialPageHints = (CheckBoxPreference)findPreference
+		(KEY_LOCKSCREEN_HIDE_INITIAL_PAGE_HINTS);
+        if (!Utils.isPhone(getActivity())) {
+            getPreferenceScreen().removePreference(mLockscreenHideInitialPageHints);
+            mLockscreenHideInitialPageHints = null;
+        } else {
+            mLockscreenHideInitialPageHints.setOnPreferenceChangeListener(this);
+        }
+
+        if (mLockscreenHideInitialPageHints != null) {
+            mLockscreenHideInitialPageHints.setChecked(Settings.System.getInt(getActivity().
+		getApplicationContext().getContentResolver(),
+                Settings.System.LOCKSCREEN_HIDE_INITIAL_PAGE_HINTS, 0) == 1);
+        }
+	
+	check_lockscreenstyle();
 
         // This applies to all users
         mCustomBackground = (ListPreference) findPreference(KEY_BACKGROUND);
@@ -151,6 +196,17 @@ public class LockscreenInterface extends SettingsPreferenceFragment implements
         removePreferenceIfPackageNotInstalled(findPreference(KEY_LOCK_CLOCK), widgetsCategory);
     }
 
+	private void check_lockscreenstyle() {
+            mLockscreenStyle = Settings.System.getInt(getActivity().getContentResolver(),
+                    Settings.System.LOCKSCREEN_STYLE, 0);
+            mUseJbLockscreen = (mLockscreenStyle == LOCK_STYLE_JB);
+            mUseOp4Lockscreen = (mLockscreenStyle == LOCK_STYLE_OP4);
+            Preference miscSettings = findPreference(KEY_LOCKSCREEN_MISC);
+            if (miscSettings != null) {
+            	miscSettings.setEnabled(mUseJbLockscreen || mUseOp4Lockscreen);
+	    }
+	}
+
     private void updateCustomBackgroundSummary() {
         int resId;
         String value = Settings.System.getString(getContentResolver(),
@@ -169,6 +225,29 @@ public class LockscreenInterface extends SettingsPreferenceFragment implements
     }
 
     @Override
+    public boolean onPreferenceTreeClick(PreferenceScreen preferenceScreen, Preference preference) {
+        if (preference == mSeeThrough) {
+            int value = mSeeThrough.isChecked() ? 1 : 0;
+            Settings.System.putInt(getActivity().getApplicationContext().getContentResolver(),
+                    Settings.System.LOCKSCREEN_SEE_THROUGH, value);
+            return true;
+       } else if (preference == mAutoRotate) {
+            int value = mAutoRotate.isChecked() ? 1 : 0;
+            Settings.System.putInt(getActivity().getApplicationContext().getContentResolver(),
+                    Settings.System.LOCKSCREEN_AUTO_ROTATE, value);
+            return true;
+        } else if (preference == mTextColor) {
+            ColorPickerDialog cp = new ColorPickerDialog(getActivity(),
+                    mTextColorListener, Settings.System.getInt(getActivity()
+                    .getApplicationContext()
+                    .getContentResolver(), Settings.System.LOCKSCREEN_CUSTOM_TEXT_COLOR, 0xFFFFFFFF));
+            cp.setDefaultColor(0xFFFFFFFF);
+            cp.show();
+            return true;
+        }
+        return super.onPreferenceTreeClick(preferenceScreen, preference);
+    }
+
     public void onResume() {
         super.onResume();
 
@@ -178,6 +257,15 @@ public class LockscreenInterface extends SettingsPreferenceFragment implements
                     Settings.System.LOCKSCREEN_BATTERY_VISIBILITY, 0);
             mBatteryStatus.setValueIndex(batteryStatus);
             mBatteryStatus.setSummary(mBatteryStatus.getEntries()[batteryStatus]);
+        }
+
+        // Set the style value
+        if (mStylePref != null) {
+            int stylePref = Settings.System.getInt(getActivity().getContentResolver(),
+                    Settings.System.LOCKSCREEN_STYLE, 0);
+            mStylePref.setValue(String.valueOf(stylePref));
+            mStylePref.setSummary(mStylePref.getEntries()[stylePref]);
+	    check_lockscreenstyle();
         }
     }
 
@@ -225,10 +313,31 @@ public class LockscreenInterface extends SettingsPreferenceFragment implements
         } else if (preference == mEnableWidgets) {
             updateKeyguardState(mEnableCamera.isChecked(), (Boolean) objValue);
             return true;
+        } else if (preference == mStylePref) {
+            int value = Integer.valueOf((String) objValue);
+            Settings.System.putInt(cr, Settings.System.LOCKSCREEN_STYLE, value);
+            mStylePref.setSummary(mStylePref.getEntries()[value]);
+	    check_lockscreenstyle();
+            return true;
+        } else if (preference == mLockscreenHideInitialPageHints) {
+            boolean value = (Boolean) objValue;
+            Settings.System.putInt(cr, Settings.System.LOCKSCREEN_HIDE_INITIAL_PAGE_HINTS, value ? 1 : 0);
+            return true;
         }
 
         return false;
     }
+
+    ColorPickerDialog.OnColorChangedListener mTextColorListener =
+        new ColorPickerDialog.OnColorChangedListener() {
+            public void colorChanged(int color) {
+                Settings.System.putInt(getContentResolver(),
+                        Settings.System.LOCKSCREEN_CUSTOM_TEXT_COLOR, color);
+            }
+            public void colorUpdate(int color) {
+            }
+    };
+    
 
     private void updateKeyguardState(boolean enableCamera, boolean enableWidgets) {
         ComponentName dpmAdminName = new ComponentName(getActivity(),
@@ -314,8 +423,8 @@ public class LockscreenInterface extends SettingsPreferenceFragment implements
                     Settings.System.LOCKSCREEN_BACKGROUND, null);
             updateCustomBackgroundSummary();
             return true;
-        }
 
+        }
         return false;
     }
 

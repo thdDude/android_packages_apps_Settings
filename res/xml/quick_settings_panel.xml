@@ -32,6 +32,21 @@
             android:key="qs_collapse_panel"
             android:title="@string/title_collapse_panel"
             android:summary="@string/summary_collapse_panel" />
+        
+        <CheckBoxPreference
+            android:key="floating_window"
+            android:title="@string/title_floating_window"
+            android:summary="@string/summary_floating_window" />
+
+        <ListPreference
+            android:key="quick_settings_columns"
+            android:title="@string/quick_settings_columns_title"
+            android:entries="@array/quick_settings_columns_entries"
+            android:entryValues="@array/quick_settings_columns_values" />
+
+        <Preference
+            android:key="tile_color"
+            android:title="@string/tile_color_title" />
 
     </PreferenceCategory>
 

@@ -461,7 +461,7 @@
     <string name="navring_action_google_now">Google Now</string>
     <string name="navring_choose_action_title">Виберіть дію</string>
     <string name="pie_control_title">Кругові кнопки</string>
-    <string name="pie_control_enabled">Увікнено при розширеному екрані</string>
+    <string name="pie_control_expanded">Увікнено при розширеному екрані</string>
     <string name="pie_control_disabled">Вимкнено</string>
     <string name="pie_control_size">Розмір кнопок</string>
     <string name="pie_control_trigger_positions">Розташування</string>

@@ -496,7 +496,7 @@
     <string name="wifi_mode_ibss">Rede Ad-Hoc (IBSS)</string>
     <string name="wifi_mode_ibss_short">Ad-Hoc</string>
     <string name="pie_control_title">Controles circulares</string>
-    <string name="pie_control_enabled">Controles flutuantes quando quando a área de trabalho Expandida estiver ativa</string>
+    <string name="pie_control_expanded">Controles flutuantes quando quando a área de trabalho Expandida estiver ativa</string>
     <string name="pie_control_disabled">Controles flutuantes desativados</string>
     <string name="pie_control_size">Tamanho dos botões de navegação</string>
     <string name="pie_control_trigger_positions">Posições de ativação</string>
@@ -721,6 +721,7 @@ controle adicionais. \'Remover\' apaga a linha selecionada.
     <string name="backlight_summary_enabled_with_timeout">Ativado por <xliff:g id="timeout" xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">%s</xliff:g></string>
     <string name="backlight_summary_enabled">Ativado</string>
     <string name="font_size_sample">Amostra</string>
+
     <string name="selinux_enable_title">Segurança Reforçada Android</string>
     <string name="selinux_enable_warning">Você está prestes a ativar SEAndroid, um mecanismo de segurança avançado, no seu dispositivo.\n\nEsta opção existe para fins de depuração, e pode ser muito provável que seu dispositivo não esteja pronto para ele, no qual pode causar partes (ou todas) do seu dispositivo a bloquear ou travar.\n\nVocê tem certeza que deseja continuar?</string>
     <string name="title_tile_network_adb">ADB pela rede</string>

@@ -26,6 +26,7 @@ import java.util.Set;
 import android.content.ContentResolver;
 import android.content.res.Resources;
 import android.os.Bundle;
+import android.preference.CheckBoxPreference;
 import android.preference.ListPreference;
 import android.preference.MultiSelectListPreference;
 import android.preference.Preference;
@@ -53,13 +54,19 @@ public class QuickSettings extends SettingsPreferenceFragment implements
     private static final String STATIC_TILES = "static_tiles";
     private static final String DYNAMIC_TILES = "pref_dynamic_tiles";
 
+    private static final String QUICK_SETTINGS_COLUMNS = "quick_settings_columns";
+    private static final String FLOATING_WINDOW ="floating_window";
+
     private MultiSelectListPreference mRingMode;
     private ListPreference mNetworkMode;
     private ListPreference mScreenTimeoutMode;
     private ListPreference mQuickPulldown;
+    private ListPreference mQuickSettingsColumns;
+    private CheckBoxPreference mFloatingWindow;
     private PreferenceCategory mGeneralSettings;
     private PreferenceCategory mStaticTiles;
     private PreferenceCategory mDynamicTiles;
+    private Preference mTileColor;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -77,6 +84,7 @@ public class QuickSettings extends SettingsPreferenceFragment implements
         mStaticTiles = (PreferenceCategory) prefSet.findPreference(STATIC_TILES);
         mDynamicTiles = (PreferenceCategory) prefSet.findPreference(DYNAMIC_TILES);
         mQuickPulldown = (ListPreference) prefSet.findPreference(QUICK_PULLDOWN);
+        mQuickSettingsColumns = (ListPreference) prefSet.findPreference(QUICK_SETTINGS_COLUMNS);
 
         if (!Utils.isPhone(getActivity())) {
             if (mQuickPulldown != null) {
@@ -89,6 +97,9 @@ public class QuickSettings extends SettingsPreferenceFragment implements
             mQuickPulldown.setValue(String.valueOf(quickPulldownValue));
             updatePulldownSummary(quickPulldownValue);
         }
+        
+        mFloatingWindow = (CheckBoxPreference) prefSet.findPreference(FLOATING_WINDOW);
+        mFloatingWindow.setChecked(Settings.System.getInt(resolver, Settings.System.QS_FLOATING_WINDOW, 0) == 1);
 
         // Add the sound mode
         mRingMode = (MultiSelectListPreference) prefSet.findPreference(EXP_RING_MODE);
@@ -126,6 +137,12 @@ public class QuickSettings extends SettingsPreferenceFragment implements
         if (!QSUtils.deviceSupportsWifiDisplay(getActivity())) {
             mDynamicTiles.removePreference(findPreference(Settings.System.QS_DYNAMIC_WIFI));
         }
+
+        mQuickSettingsColumns.setOnPreferenceChangeListener(this);
+        int quickSettingsColumnsValue = Settings.System.getInt(resolver,
+        	Settings.System.QUICK_SETTINGS_COLUMNS, 3);
+        mQuickSettingsColumns.setValue(String.valueOf(quickSettingsColumnsValue));
+        mQuickSettingsColumns.setSummary(mQuickSettingsColumns.getEntry());
     }
 
     @Override
@@ -140,6 +157,24 @@ public class QuickSettings extends SettingsPreferenceFragment implements
                 mStaticTiles.removePreference(mNetworkMode);
             }
         }
+        mTileColor = findPreference("tile_color");
+    }
+
+    public boolean onPreferenceTreeClick(PreferenceScreen preferenceScreen, Preference preference) {
+        ContentResolver resolver = getActivity().getContentResolver();
+	if (preference == mTileColor) {
+            ColorPickerDialog cp = new ColorPickerDialog(getActivity(),
+                    mTileColorListener, Settings.System.getInt(getContentResolver(),
+                    Settings.System.SETTINGS_TILE_COLOR, 0xFF161616));
+            cp.setDefaultColor(0xFF161616);
+            cp.show();
+            return true;
+        } else if (preference == mFloatingWindow) {
+            Settings.System.putInt(resolver, Settings.System.QS_FLOATING_WINDOW,
+                    mFloatingWindow.isChecked() ? 1 : 0);
+            return true;            
+        }
+        return super.onPreferenceTreeClick(preferenceScreen, preference);
     }
 
     private class MultiSelectListPreferenceComparator implements Comparator<String> {
@@ -183,6 +218,12 @@ public class QuickSettings extends SettingsPreferenceFragment implements
             Settings.System.putInt(resolver, Settings.System.EXPANDED_SCREENTIMEOUT_MODE, value);
             mScreenTimeoutMode.setSummary(mScreenTimeoutMode.getEntries()[index]);
             return true;
+        } else if (preference == mQuickSettingsColumns) {
+            int value = Integer.valueOf((String) newValue);
+            int index = mQuickSettingsColumns.findIndexOfValue((String) newValue);
+            Settings.System.putInt(resolver, Settings.System.QUICK_SETTINGS_COLUMNS, value);
+            mQuickSettingsColumns.setSummary(mQuickSettingsColumns.getEntries()[index]);
+            return true;
         }
         return false;
     }
@@ -213,6 +254,8 @@ public class QuickSettings extends SettingsPreferenceFragment implements
         if (value == 0) {
             /* quick pulldown deactivated */
             mQuickPulldown.setSummary(res.getString(R.string.quick_pulldown_off));
+        } else if (value == 3) {
+             mQuickPulldown.setSummary(res.getString(R.string.quick_pulldown_summary_on_off));
         } else {
             String direction = res.getString(value == 2
                     ? R.string.quick_pulldown_summary_left
@@ -228,4 +271,14 @@ public class QuickSettings extends SettingsPreferenceFragment implements
             return val.toString().split(SEPARATOR);
         }
     }
+
+    ColorPickerDialog.OnColorChangedListener mTileColorListener =
+        new ColorPickerDialog.OnColorChangedListener() {
+            public void colorChanged(int color) {
+                Settings.System.putInt(getContentResolver(),
+                        Settings.System.SETTINGS_TILE_COLOR, color);
+            }
+            public void colorUpdate(int color) {
+            }
+    };
 }

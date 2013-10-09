@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Copyright (C) 2013 The CyanogenMod Project
+<!-- Copyright (C) 2013 SlimRoms
 
      Licensed under the Apache License, Version 2.0 (the "License");
      you may not use this file except in compliance with the License.
@@ -18,51 +18,78 @@
     android:title="@string/pie_control_title"
     xmlns:settings="http://schemas.android.com/apk/res/com.android.settings">
 
-    <CheckBoxPreference
-        android:key="pie_control_checkbox"
-        android:title="@string/pie_control_title"
-        android:persistent="false"
-        android:defaultValue="false" />
-
     <ListPreference
-        android:key="pie_control_sensitivity"
-        android:title="@string/pie_control_sensitivity_title"
-        android:dialogTitle="@string/pie_control_sensitivity_title"
-        android:entries="@array/pie_control_sensitivity_entries"
-        android:entryValues="@array/pie_control_sensitivity_values"
-        android:persistent="false"/>
+        android:key="pie_control"
+        android:entries="@array/pie_control_entries"
+        android:entryValues="@array/pie_control_values"
+        android:title="@string/pie_control_title"
+        android:dialogTitle="@string/pie_control_dialog_title" />
 
-    <com.android.settings.cyanogenmod.PieSizePreference
-        android:key="pie_control_size"
-        android:title="@string/pie_control_size"
-        android:dialogTitle="@string/pie_control_size" />
+    <PreferenceScreen
+        android:key="pie_button_style"
+        android:fragment="com.android.settings.slim.PieButtonStyleSettings"
+        android:title="@string/pie_button_style" />
+
+    <PreferenceScreen
+        android:key="pie_style"
+        android:fragment="com.android.settings.slim.PieStyleSettings"
+        android:title="@string/pie_style" />
+
+    <PreferenceScreen
+        android:key="pie_trigger"
+        android:fragment="com.android.settings.slim.PieTriggerSettings"
+        android:title="@string/pie_trigger" />
 
     <PreferenceCategory
-        android:title="@string/pie_control_trigger_positions">
+        android:title="@string/pie_buttons_options">
+
+        <PreferenceScreen
+            android:key="pie_button"
+            android:fragment="com.android.settings.slim.PieButtonSettings"
+            android:title="@string/pie_button" />
 
         <CheckBoxPreference
-            android:key="pie_control_trigger_left"
-            android:title="@string/pie_control_trigger_left"
-            android:persistent="false"
+            android:key="pie_second_layer"
+            android:title="@string/pie_second_layer_title"
+            android:summary="@string/pie_second_layer_summary"
             android:defaultValue="false" />
 
-        <CheckBoxPreference
-            android:key="pie_control_trigger_bottom"
-            android:title="@string/pie_control_trigger_bottom"
-            android:persistent="false"
-            android:defaultValue="false" />
+        <PreferenceScreen
+            android:key="pie_button_second_layer"
+            android:fragment="com.android.settings.slim.PieButtonSecondLayerSettings"
+            android:title="@string/pie_button_second_layer"
+            android:dependency="pie_second_layer" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:title="@string/pie_additional_options">
 
         <CheckBoxPreference
-            android:key="pie_control_trigger_right"
-            android:title="@string/pie_control_trigger_right"
-            android:persistent="false"
-            android:defaultValue="false" />
+            android:key="pie_show_background"
+            android:title="@string/pie_show_background_title"
+            android:summary="@string/pie_show_background_summary"
+            android:defaultValue="true" />
 
         <CheckBoxPreference
-            android:key="pie_control_trigger_top"
-            android:title="@string/pie_control_trigger_top"
-            android:summary="@string/pie_control_trigger_top_summary"
-            android:persistent="false"
+            android:key="pie_show_snap"
+            android:title="@string/pie_show_snap_title"
+            android:summary="@string/pie_show_snap_summary"
+            android:defaultValue="true" />
+
+        <CheckBoxPreference
+            android:key="pie_show_text"
+            android:title="@string/pie_show_text_title"
+            android:summary="@string/pie_show_text_summary"
+            android:defaultValue="true" />
+
+        <CheckBoxPreference
+            android:key="pie_disable_statusbar_info"
+            android:title="@string/pie_disable_statusbar_info_title"
+            android:summary="@string/pie_disable_statusbar_info_summary"
+            android:dependency="pie_show_text"
             android:defaultValue="false" />
-   </PreferenceCategory>
+
+    </PreferenceCategory>
+
 </PreferenceScreen>

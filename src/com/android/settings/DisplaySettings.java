@@ -66,7 +66,6 @@ public class DisplaySettings extends SettingsPreferenceFragment implements
     private static final String KEY_SCREEN_SAVER = "screensaver";
     private static final String KEY_WIFI_DISPLAY = "wifi_display";
     private static final String KEY_DISPLAY_ROTATION = "display_rotation";
-    private static final String KEY_LOCKSCREEN_ROTATION = "lockscreen_rotation";
     private static final String KEY_ADAPTIVE_BACKLIGHT = "adaptive_backlight";
     private static final String KEY_WAKE_WHEN_PLUGGED_OR_UNPLUGGED = "wake_when_plugged_or_unplugged";
 
@@ -121,25 +120,17 @@ public class DisplaySettings extends SettingsPreferenceFragment implements
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ContentResolver resolver = getActivity().getContentResolver();
-        Resources res = getResources();
+	Resources res = getResources();
 
         addPreferencesFromResource(R.xml.display_settings);
 
         mDisplayRotationPreference = (PreferenceScreen) findPreference(KEY_DISPLAY_ROTATION);
 
-        final CheckBoxPreference lockScreenRotation =
-                (CheckBoxPreference) findPreference(KEY_LOCKSCREEN_ROTATION);
-        if (lockScreenRotation != null) {
-            if (!res.getBoolean(com.android.internal.R.bool.config_enableLockScreenRotation)) {
-                getPreferenceScreen().removePreference(lockScreenRotation);
-            }
-        }
-
         mScreenSaverPreference = findPreference(KEY_SCREEN_SAVER);
-        if (mScreenSaverPreference != null) {
-            if (!res.getBoolean(com.android.internal.R.bool.config_dreamsSupported)) {
-                getPreferenceScreen().removePreference(mScreenSaverPreference);
-            }
+        if (mScreenSaverPreference != null
+                && getResources().getBoolean(
+                        com.android.internal.R.bool.config_dreamsSupported) == false) {
+            getPreferenceScreen().removePreference(mScreenSaverPreference);
         }
 
         mScreenTimeoutPreference = (ListPreference) findPreference(KEY_SCREEN_TIMEOUT);
@@ -464,7 +455,6 @@ public class DisplaySettings extends SettingsPreferenceFragment implements
         } else if (preference == mAdaptiveBacklight) {
             return AdaptiveBacklight.setEnabled(mAdaptiveBacklight.isChecked());
         }
-
         return super.onPreferenceTreeClick(preferenceScreen, preference);
     }
 

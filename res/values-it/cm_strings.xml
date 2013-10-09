@@ -593,7 +593,7 @@ inserire punti di controllo aggiuntivi. \'Rimuovi\' cancella la riga selezionata
     <string name="wifi_mode_ibss">Rete Ad-Hoc (IBSS)</string>
     <string name="wifi_mode_ibss_short">Ad-Hoc</string>
     <string name="pie_control_title">Controlli a disco</string>
-    <string name="pie_control_enabled">\"Pie controls\": attivati quando il Desktop esteso è attivo</string>
+    <string name="pie_control_expanded">\"Pie controls\": attivati quando il Desktop esteso è attivo</string>
     <string name="pie_control_disabled">\"Pie controls\": disattivati</string>
     <string name="pie_control_sensitivity_title">Reattività</string>
     <string name="pie_control_sensitivity_low">Bassa</string>

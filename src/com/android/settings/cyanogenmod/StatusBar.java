@@ -26,24 +26,24 @@ import android.preference.PreferenceCategory;
 import android.preference.PreferenceScreen;
 import android.provider.Settings;
 import android.provider.Settings.SettingNotFoundException;
-import android.text.format.DateFormat;
 import android.util.Log;
 
 import com.android.settings.R;
 import com.android.settings.SettingsPreferenceFragment;
 import com.android.settings.Utils;
+import com.android.settings.util.Helpers;
+import com.android.settings.widget.SeekBarPreference;
 
 public class StatusBar extends SettingsPreferenceFragment implements OnPreferenceChangeListener {
 
-    private static final String STATUS_BAR_CLOCK_CATEGORY = "category_status_bar_clock";
-    private static final String STATUS_BAR_AM_PM = "status_bar_am_pm";
     private static final String STATUS_BAR_BATTERY = "status_bar_battery";
     private static final String STATUS_BAR_SIGNAL = "status_bar_signal";
     private static final String STATUS_BAR_CATEGORY_GENERAL = "status_bar_general";
+    private static final String NOTIFICATION_PANEL_TRANSPARENCY = "notification_panel_transparency";
 
-    private ListPreference mStatusBarAmPm;
     private ListPreference mStatusBarBattery;
     private ListPreference mStatusBarCmSignal;
+    private SeekBarPreference mNotificationpanelTransparency;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -54,22 +54,22 @@ public class StatusBar extends SettingsPreferenceFragment implements OnPreferenc
         PreferenceScreen prefSet = getPreferenceScreen();
         ContentResolver resolver = getActivity().getContentResolver();
 
-        mStatusBarAmPm = (ListPreference) prefSet.findPreference(STATUS_BAR_AM_PM);
         mStatusBarBattery = (ListPreference) prefSet.findPreference(STATUS_BAR_BATTERY);
         mStatusBarCmSignal = (ListPreference) prefSet.findPreference(STATUS_BAR_SIGNAL);
 
-        if (DateFormat.is24HourFormat(getActivity())) {
-            ((PreferenceCategory) prefSet.findPreference(STATUS_BAR_CLOCK_CATEGORY))
-                    .removePreference(prefSet.findPreference(STATUS_BAR_AM_PM));
-        } else {
-            mStatusBarAmPm = (ListPreference) prefSet.findPreference(STATUS_BAR_AM_PM);
-            int statusBarAmPm = Settings.System.getInt(resolver,
-                    Settings.System.STATUS_BAR_AM_PM, 2);
-
-            mStatusBarAmPm.setValue(String.valueOf(statusBarAmPm));
-            mStatusBarAmPm.setSummary(mStatusBarAmPm.getEntry());
-            mStatusBarAmPm.setOnPreferenceChangeListener(this);
+        float notificationAlpha;
+        try{
+            notificationAlpha = Settings.System.getFloat(getActivity()
+                     .getContentResolver(), Settings.System.NOTIFICATION_PANEL_TRANSPARENCY);
+        } catch (Exception e) {
+            notificationAlpha = 0.0f;
+                     Settings.System.putFloat(getActivity().getContentResolver(), Settings.System.NOTIFICATION_PANEL_TRANSPARENCY, 0.0f);
         }
+
+        mNotificationpanelTransparency = (SeekBarPreference) prefSet.findPreference(NOTIFICATION_PANEL_TRANSPARENCY);
+        mNotificationpanelTransparency.setProperty(Settings.System.NOTIFICATION_PANEL_TRANSPARENCY);
+        mNotificationpanelTransparency.setInitValue((int) (notificationAlpha * 100));
+        mNotificationpanelTransparency.setOnPreferenceChangeListener(this);
 
         CheckBoxPreference statusBarBrightnessControl = (CheckBoxPreference)
                 prefSet.findPreference(Settings.System.STATUS_BAR_BRIGHTNESS_CONTROL);
@@ -108,26 +108,25 @@ public class StatusBar extends SettingsPreferenceFragment implements OnPreferenc
     @Override
     public boolean onPreferenceChange(Preference preference, Object newValue) {
         ContentResolver resolver = getActivity().getContentResolver();
-        if (mStatusBarAmPm != null && preference == mStatusBarAmPm) {
-            int statusBarAmPm = Integer.valueOf((String) newValue);
-            int index = mStatusBarAmPm.findIndexOfValue((String) newValue);
-            Settings.System.putInt(resolver, Settings.System.STATUS_BAR_AM_PM, statusBarAmPm);
-            mStatusBarAmPm.setSummary(mStatusBarAmPm.getEntries()[index]);
-            return true;
-        } else if (preference == mStatusBarBattery) {
+	if (preference == mStatusBarBattery) {
             int statusBarBattery = Integer.valueOf((String) newValue);
             int index = mStatusBarBattery.findIndexOfValue((String) newValue);
             Settings.System.putInt(resolver, Settings.System.STATUS_BAR_BATTERY, statusBarBattery);
             mStatusBarBattery.setSummary(mStatusBarBattery.getEntries()[index]);
             return true;
-        } else if (preference == mStatusBarCmSignal) {
+        } else if (preference == mNotificationpanelTransparency) {
+            float val = Float.parseFloat((String) newValue);
+            Settings.System.putFloat(resolver,
+		Settings.System.NOTIFICATION_PANEL_TRANSPARENCY,
+                val / 100);
+            return true;
+    	} else if (preference == mStatusBarCmSignal) {
             int signalStyle = Integer.valueOf((String) newValue);
             int index = mStatusBarCmSignal.findIndexOfValue((String) newValue);
             Settings.System.putInt(resolver, Settings.System.STATUS_BAR_SIGNAL_TEXT, signalStyle);
             mStatusBarCmSignal.setSummary(mStatusBarCmSignal.getEntries()[index]);
             return true;
         }
-
         return false;
     }
 }

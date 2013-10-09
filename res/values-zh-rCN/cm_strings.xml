@@ -576,7 +576,7 @@
     <string name="navring_action_google_now">Google 即时</string>
     <string name="navring_choose_action_title">选择操作</string>
     <string name="pie_control_title">扇行控制</string>
-    <string name="pie_control_enabled">扩展桌面处于活动状态时启用</string>
+    <string name="pie_control_expanded">扩展桌面处于活动状态时启用</string>
     <string name="pie_control_disabled">已禁用</string>
     <string name="pie_control_sensitivity_title">响应度</string>
     <string name="pie_control_sensitivity_low">低</string>
